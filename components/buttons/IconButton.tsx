@@ -67,10 +67,8 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         borderRadius: 6,
-        flexDirection: "row",
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 16,
     },
 });
 
