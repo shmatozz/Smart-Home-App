@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     text: {
+        fontFamily: "Inter",
         fontSize: 14,
     }
 });

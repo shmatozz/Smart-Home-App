@@ -31,10 +31,12 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 12,
+        fontFamily: "Inter",
         color: Colors.light.base['40'],
     },
     text: {
         fontSize: 14,
+        fontFamily: "Inter",
         color: Colors.light.base['90'],
     }
 });

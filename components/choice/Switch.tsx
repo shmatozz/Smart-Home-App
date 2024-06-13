@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 1,
+        fontFamily: "Inter",
         fontSize: 14,
     },
     switchBackground: {

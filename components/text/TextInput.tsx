@@ -111,14 +111,17 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 14,
+        fontFamily: "Inter",
         color: Colors.light.base['40'],
     },
     labelFocused: {
         fontSize: 12,
+        fontFamily: "Inter",
         color: Colors.light.blue['50'],
     },
     labelInput: {
         fontSize: 12,
+        fontFamily: "Inter",
         color: Colors.light.base['50'],
     },
     inputContainer: {
@@ -145,6 +148,7 @@ const styles = StyleSheet.create({
     },
     helperText: {
         fontSize: 12,
+        fontFamily: "Inter",
         color: Colors.light.base['40'],
         marginTop: 4,
     },
