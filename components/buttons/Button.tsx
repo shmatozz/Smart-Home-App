@@ -92,12 +92,12 @@ const styles = StyleSheet.create({
 
 const stylesPrimary = StyleSheet.create({
     default: {
-        width: '100%',
+        flex: 1,
         backgroundColor: Colors.light.blue["50"],
         borderRadius: 6,
     },
     pressed: {
-        width: '100%',
+        flex: 1,
         backgroundColor: Colors.light.blue["70"],
         borderRadius: 6,
     },
@@ -113,14 +113,14 @@ const stylesPrimary = StyleSheet.create({
 
 const stylesSecondary = StyleSheet.create({
     default: {
-        width: '100%',
+        flex: 1,
         borderRadius: 6,
         borderStyle: "solid",
         borderColor: Colors.light.blue["50"],
         borderWidth: 2,
     },
     pressed: {
-        width: '100%',
+        flex: 1,
         backgroundColor: Colors.light.blue["10"],
         borderRadius: 6,
         borderStyle: "solid",
@@ -139,11 +139,11 @@ const stylesSecondary = StyleSheet.create({
 
 const stylesTertiary = StyleSheet.create({
     default: {
-        width: '100%',
+        flex: 1,
         borderRadius: 6,
     },
     pressed: {
-        width: '100%',
+        flex: 1,
         backgroundColor: Colors.light.blue["5"],
         borderRadius: 6,
     },
