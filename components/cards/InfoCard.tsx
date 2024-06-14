@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 4,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         backgroundColor: Colors.light.base['0'],
         borderRadius: 12,
         // iOS shadow

@@ -2,14 +2,13 @@ import React from 'react';
 import {
     Text,
     View,
-    StyleSheet,
-    Image, ImageProps, ImageBackground,
+    StyleSheet, ImageBackground,
 } from 'react-native';
 import Colors from "@/constants/Colors";
 import {BlurView} from "expo-blur";
 
 interface ImageCardProps {
-    image: Image | null,
+    image: string | null,
     title: string,
     subtitle?: string | null,
 }
@@ -33,14 +32,17 @@ const ImageCard: React.FC<ImageCardProps> = ({
 
 const styles = StyleSheet.create({
     cardContainer: {
-        width: '100%',
-        height: '100%',
+        flex: 1,
+        minWidth: 144,
+        minHeight: 144,
         borderRadius: 12,
         overflow: 'hidden',
     },
     image: {
-        width: '100%',
-        height: '100%',
+        flex: 1,
+        minWidth: 144,
+        minHeight: 144,
+        borderRadius: 12,
         justifyContent: 'flex-end',
     },
     textContainer: {

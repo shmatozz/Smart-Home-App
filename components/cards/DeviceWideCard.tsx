@@ -2,10 +2,9 @@ import React from 'react';
 import {
     Text,
     View,
-    StyleSheet, ImageBackground, Image,
+    StyleSheet, Image,
 } from 'react-native';
 import Colors from "@/constants/Colors";
-import {BlurView} from "expo-blur";
 import Switch from "@/components/choice/Switch";
 
 interface DeviceWideCardProps {
