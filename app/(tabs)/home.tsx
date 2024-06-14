@@ -6,7 +6,6 @@ import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
 import Button from "@/components/buttons/Button";
 import ImageCard from "@/components/cards/ImageCard";
-import {color} from "ansi-fragments";
 import DeviceWideCard from "@/components/cards/DeviceWideCard";
 
 const cardsData = [
