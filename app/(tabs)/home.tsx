@@ -39,7 +39,7 @@ const devicesData = [
     },
     {
         image: null,
-        title: 'Aircooler',
+        title: 'Air cooler',
         subtitle: 'Kitchen',
     },
 ]
@@ -65,7 +65,7 @@ const Home = () => {
                         </View>
 
                         <FlatList
-                            style={{ overflow: 'visible' }}
+                            style={ styles.scrollContainer }
                             horizontal={ true }
                             data={ cardsData }
                             showsHorizontalScrollIndicator={ false }
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         flexDirection: "column",
+        paddingHorizontal: 16,
         gap: 16,
-        padding: 16,
     },
     infoCards: {
         height: 120,
@@ -122,6 +122,9 @@ const styles = StyleSheet.create({
         flex: 3,
         fontFamily: "Inter",
         fontSize: 20,
+    },
+    scrollContainer: {
+        flex: 1,
     },
     recentDevicesContainer: {
         gap: 16,
