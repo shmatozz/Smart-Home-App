@@ -17,32 +17,34 @@ const ImageCard: React.FC<ImageCardProps> = ({
                                                  image,
                                                  title,
                                                  subtitle
-                                           }) => {
+                                             }) => {
     return (
-        <View style={ styles.cardContainer }>
-            <ImageBackground source={ image ? image : require("../../assets/images/placeholder.png") } style={styles.image}>
-                <BlurView style={ styles.textContainer } intensity={ 95 } >
-                    <Text style={ styles.title }>{ title }</Text>
-                    { subtitle && <Text style={ styles.subtitle }>{ subtitle }</Text> }
-                </BlurView>
-            </ImageBackground>
+        <View style={styles.cardWrapper}>
+            <View style={styles.cardContainer}>
+                <ImageBackground source={image ? {uri: image} : require("../../assets/images/placeholder.png")} style={styles.image}>
+                    <BlurView style={styles.textContainer} intensity={95}>
+                        <Text style={styles.title}>{title}</Text>
+                        {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+                    </BlurView>
+                </ImageBackground>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    cardContainer: {
+    cardWrapper: {
         flex: 1,
         minWidth: 144,
         minHeight: 144,
+    },
+    cardContainer: {
+        flex: 1,
         borderRadius: 12,
         overflow: 'hidden',
     },
     image: {
         flex: 1,
-        minWidth: 144,
-        minHeight: 144,
-        borderRadius: 12,
         justifyContent: 'flex-end',
     },
     textContainer: {
@@ -54,12 +56,12 @@ const styles = StyleSheet.create({
     title: {
         color: Colors.light.base["0"],
         fontSize: 14,
-        fontFamily: "Inter"
+        fontFamily: "Inter",
     },
     subtitle: {
         color: Colors.light.base["20"],
         fontSize: 12,
-        fontFamily: "Inter"
+        fontFamily: "Inter",
     }
 });
 
