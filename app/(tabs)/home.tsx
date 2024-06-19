@@ -1,5 +1,5 @@
 import React from "react";
-import {Text, View, StyleSheet, FlatList, ScrollView, StatusBar} from 'react-native';
+import { Text, View, StyleSheet, FlatList, ScrollView, StatusBar, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
@@ -41,10 +41,14 @@ const devicesData = [
         image: null,
         title: 'Air cooler',
         subtitle: 'Kitchen',
-    },
+    }
 ]
 
 const Home = () => {
+    const windowWidth = Dimensions.get('window').width - 32 - 8 * (cardsData.length - 1);
+    let cardWidth = windowWidth / cardsData.length;
+    if (cardWidth < 144) cardWidth = 144;
+
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
@@ -63,18 +67,24 @@ const Home = () => {
                             <Text style={ styles.roomsTitle }>{ "Your Rooms" }</Text>
                             <Button text={ "See all" } type={ "tertiary" } />
                         </View>
-
-                        <FlatList
-                            style={ styles.scrollContainer }
-                            horizontal={ true }
-                            data={ cardsData }
-                            showsHorizontalScrollIndicator={ false }
-                            overScrollMode={ "never" }
-                            renderItem={({item}) => <ImageCard image={ item.image } title={ item.title } subtitle={ item.subtitle }/>}
-                            ItemSeparatorComponent={() => <View style={{ width: 8 }}/>}
-                            keyExtractor={item => item.title}
-                        />
                     </View>
+
+                    <ScrollView style={ styles.scrollContainer }
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                overScrollMode={'never'}>
+                        <View style={{ width: 12 }}/>
+                        <View style={{ flexDirection: 'row' }}>
+                            { cardsData.map((item, index) => (
+                                <ImageCard image={ item.image }
+                                           title={ item.title }
+                                           subtitle={ item.subtitle }
+                                           style={{ width: cardWidth, marginHorizontal: 4}}
+                                           key={ index }/>
+                            ))}
+                        </View>
+                        <View style={{ width: 12 }}/>
+                    </ScrollView>
 
                     <View style={ styles.recentDevicesContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -105,18 +115,19 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         flexDirection: "column",
-        paddingHorizontal: 16,
+        paddingVertical: 16,
         gap: 16,
     },
     infoCards: {
+        paddingHorizontal: 16,
         height: 120,
         flexDirection: "row",
         gap: 16,
     },
     roomsContainer: {
-        overflow: 'visible',
+        paddingHorizontal: 16,
         gap: 16,
-        paddingVertical: 20,
+        paddingTop: 20,
     },
     roomsTitle: {
         flex: 3,
@@ -125,8 +136,10 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flex: 1,
+        paddingBottom: 20,
     },
     recentDevicesContainer: {
+        paddingHorizontal: 16,
         gap: 16,
     }
 });
