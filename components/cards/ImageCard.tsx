@@ -2,44 +2,44 @@ import React from 'react';
 import {
     Text,
     View,
-    StyleSheet, ImageBackground,
+    StyleSheet,
+    ImageBackground,
+    StyleProp,
+    ViewStyle,
 } from 'react-native';
 import Colors from "@/constants/Colors";
-import {BlurView} from "expo-blur";
+import { BlurView } from "expo-blur";
 
 interface ImageCardProps {
     image: string | null,
     title: string,
     subtitle?: string | null,
+    style?: StyleProp<ViewStyle> | null,
 }
 
 const ImageCard: React.FC<ImageCardProps> = ({
                                                  image,
                                                  title,
-                                                 subtitle
+                                                 subtitle,
+                                                 style = null,
                                              }) => {
     return (
-        <View style={styles.cardWrapper}>
-            <View style={styles.cardContainer}>
-                <ImageBackground source={image ? {uri: image} : require("../../assets/images/placeholder.png")} style={styles.image}>
-                    <BlurView style={styles.textContainer} intensity={95}>
-                        <Text style={styles.title}>{title}</Text>
-                        {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-                    </BlurView>
-                </ImageBackground>
-            </View>
+        <View style={[styles.cardContainer, style]}>
+            <ImageBackground source={image ? { uri: image } : require("../../assets/images/placeholder.png")} style={styles.image}>
+                <BlurView style={styles.textContainer} intensity={95}>
+                    <Text style={styles.title}>{title}</Text>
+                    {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+                </BlurView>
+            </ImageBackground>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    cardWrapper: {
+    cardContainer: {
         flex: 1,
         minWidth: 144,
         minHeight: 144,
-    },
-    cardContainer: {
-        flex: 1,
         borderRadius: 12,
         overflow: 'hidden',
     },
