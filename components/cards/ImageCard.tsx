@@ -14,6 +14,7 @@ interface ImageCardProps {
     image: string | null,
     title: string,
     subtitle?: string | null,
+    size?: string,
     style?: StyleProp<ViewStyle> | null,
 }
 
@@ -21,14 +22,18 @@ const ImageCard: React.FC<ImageCardProps> = ({
                                                  image,
                                                  title,
                                                  subtitle,
+                                                 size = 'S',
                                                  style = null,
                                              }) => {
+    const titleContainerSize = size === 'S' ? 52 : 60;
+    const fontSize = size === 'S' ? 12 : 14;
+
     return (
         <View style={[styles.cardContainer, style]}>
             <ImageBackground source={image ? { uri: image } : require("../../assets/images/placeholder.png")} style={styles.image}>
-                <BlurView style={styles.textContainer} intensity={95}>
-                    <Text style={styles.title}>{title}</Text>
-                    {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+                <BlurView style={ [styles.textContainer, { height: titleContainerSize }] } intensity={95}>
+                    <Text style={ [styles.title, { fontSize: fontSize + 2 }] }>{title}</Text>
+                    { subtitle && <Text style={ [styles.subtitle, { fontSize: fontSize }] }>{subtitle}</Text> }
                 </BlurView>
             </ImageBackground>
         </View>
