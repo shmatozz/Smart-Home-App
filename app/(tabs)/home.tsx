@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, FlatList, ScrollView, StatusBar, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, StatusBar, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
@@ -57,7 +57,7 @@ const Home = () => {
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"}>
                 <View style={ styles.contentContainer }>
                     <View style={ styles.infoCards }>
-                        <InfoCard icon={ "thermostat" } title={ "Inside\ntemperature" } info={ "26" }/>
+                        <InfoCard icon={ "thermostat" } title={ "Inside\ntemperature" } info={ "26°" }/>
                         <InfoCard icon={ "devices-other" } title={ "Active\ndevices" } info={ "5" }/>
                         <InfoCard icon={ "bolt" } title={ "Electricity usage" } info={ "36 kWh" }/>
                     </View>
