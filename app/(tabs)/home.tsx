@@ -11,18 +11,23 @@ import DeviceWideCard from "@/components/cards/DeviceWideCard";
 const cardsData = [
     {
         image: null,
-        title: 'Title 1',
-        subtitle: 'Subtitle 1',
+        title: 'Living room',
+        subtitle: '6 Devices',
     },
     {
         image: null,
-        title: 'Title 2',
-        subtitle: 'Subtitle 2',
+        title: 'Bedroom',
+        subtitle: '7 Devices',
     },
     {
         image: null,
-        title: 'Title 3',
-        subtitle: 'Subtitle 3',
+        title: 'Kitchen',
+        subtitle: '9 Devices',
+    },
+    {
+        image: null,
+        title: 'Hallway',
+        subtitle: '3 Devices',
     },
 ];
 
