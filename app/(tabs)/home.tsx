@@ -7,7 +7,7 @@ import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
 import Button from "@/components/buttons/Button";
 import ImageCard from "@/components/cards/ImageCard";
-import DeviceWideCard from "@/components/cards/DeviceWideCard";
+import DeviceCard from "@/components/cards/DeviceCard";
 
 const cardsData = [
     {
@@ -104,10 +104,11 @@ const Home = () => {
 
                         <View style={{ gap: 12 }}>
                             { devicesData.map((device, index) => (
-                                <DeviceWideCard key={ index }
-                                                image={ device.image }
-                                                title={ device.title }
-                                                subtitle={ device.subtitle }/>
+                                <DeviceCard key={ index }
+                                            image={ device.image }
+                                            title={ device.title }
+                                            subtitle={ device.subtitle }
+                                            type={ 'horizontal' }/>
                             ))}
                         </View>
                     </View>
