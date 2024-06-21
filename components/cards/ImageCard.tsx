@@ -43,8 +43,6 @@ const ImageCard: React.FC<ImageCardProps> = ({
 const styles = StyleSheet.create({
     cardContainer: {
         flex: 1,
-        minWidth: 144,
-        minHeight: 144,
         borderRadius: 12,
         overflow: 'hidden',
     },
