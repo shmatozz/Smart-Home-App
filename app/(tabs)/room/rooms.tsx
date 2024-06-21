@@ -28,7 +28,7 @@ const cardsData = [
     },
 ];
 
-const Room = () => {
+const Rooms = () => {
     const windowHeight = Dimensions.get('window').height - 52 - 16 * (cardsData.length - 1) - 56 * 2;
     let cardHeight = windowHeight / cardsData.length;
     if (cardHeight < 160) cardHeight = 160;
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
         flex: 1,
     }
 });
-export default Room;
+export default Rooms;
