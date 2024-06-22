@@ -52,7 +52,9 @@ function RootLayoutNav() {
       //                                         no DarkTheme yet
     <ThemeProvider value={colorScheme === 'dark' ? DefaultTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false, navigationBarColor: "#FFFFFF", statusBarStyle: 'dark', }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false, navigationBarColor: "#FFFFFF", statusBarStyle: 'dark'}} />
+        <Stack.Screen name="(onboarding)" options={{ headerShown: false, navigationBarColor: "#FFFFFF", statusBarStyle: 'light' }} />
       </Stack>
     </ThemeProvider>
   );
