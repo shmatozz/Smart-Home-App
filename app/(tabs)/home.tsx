@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView, StatusBar, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from "expo-router";
+import {Link, useRouter} from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
@@ -51,6 +51,8 @@ const devicesData = [
 ]
 
 const Home = () => {
+    const router = useRouter()
+
     const windowWidth = Dimensions.get('window').width - 32 - 8 * (cardsData.length - 1);
     let cardWidth = windowWidth / cardsData.length;
     if (cardWidth < 144) cardWidth = 144;
@@ -71,7 +73,8 @@ const Home = () => {
                     <View style={ styles.roomsContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Text style={ styles.roomsTitle }>{ "Your Rooms" }</Text>
-                            <Button text={ "See all" } type={ "tertiary" } />
+                            <Button text={ "See all" } type={ "tertiary" }
+                                    onPress={() => router.navigate('room/rooms') } />
                         </View>
                     </View>
 
@@ -84,7 +87,7 @@ const Home = () => {
                             { cardsData.map((item, index) => (
                                 <Link key={item.title}
                                       style={{ marginHorizontal: 4 }}
-                                      href={{ pathname: "room/[room]", params: { room: item.title } }}>
+                                      href={{ pathname: "room/rooms", params: { redirect: 1, room: item.title } }}>
                                     <ImageCard image={ item.image }
                                                title={ item.title }
                                                subtitle={ item.subtitle }

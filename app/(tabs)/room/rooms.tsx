@@ -1,7 +1,7 @@
 import React from "react";
 import {Dimensions, ScrollView, StatusBar, StyleSheet, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import { Link } from "expo-router";
+import {Link, useLocalSearchParams, useRouter} from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import ImageCard from "@/components/cards/ImageCard";
@@ -30,6 +30,15 @@ const cardsData = [
 ];
 
 const Rooms = () => {
+    const router = useRouter();
+
+    const params = useLocalSearchParams<{ redirect: string, room: string }>()
+
+    if (params.redirect && params.room && params.redirect == '1') {
+        console.log(params)
+        router.push({ pathname: '../room/[room]', params: { room: params.room } });
+    }
+
     const windowHeight = Dimensions.get('window').height - 52 - 16 * (cardsData.length - 1) - 56 * 2;
     const windowWidth = Dimensions.get('window').width - 32;
     let cardHeight = windowHeight / cardsData.length;
@@ -49,7 +58,7 @@ const Rooms = () => {
                         { cardsData.map((item, index) => (
                             <Link key={item.title}
                                   style={{ marginVertical: 8, }}
-                                  href={{ pathname: "room/[room]", params: { room: item.title } }}>
+                                  href={{ pathname: '../room/[room]', params: { room: item.title } }}>
                                 <ImageCard image={ item.image }
                                            title={ item.title }
                                            subtitle={ item.subtitle }
