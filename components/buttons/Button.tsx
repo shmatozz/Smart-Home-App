@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import {Text, View, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-native";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '@/constants/Colors';
 
@@ -10,6 +10,7 @@ interface ButtonProps {
     size?: 'S' | 'M';
     type?: 'primary' | 'secondary' | 'tertiary';
     onPress?: () => void;
+    style?: StyleProp<ViewStyle> | null;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -19,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
                                            size = 'S',
                                            type = 'primary',
                                            onPress = () => console.log("Button pressed"),
+                                           style = null,
                                        }) => {
     const [isPress, setIsPress] = useState(false);
 
@@ -52,7 +54,7 @@ const Button: React.FC<ButtonProps> = ({
     }
 
     const touchProps = {
-        style: isPress ? buttonStyle.pressed : buttonStyle.default,
+        style: isPress ? [buttonStyle.pressed, style] : [buttonStyle.default, style],
         onPressIn: () => setIsPress(true),
         onPressOut: () => setIsPress(false),
         onPress: onPress,
@@ -92,12 +94,12 @@ const styles = StyleSheet.create({
 
 const stylesPrimary = StyleSheet.create({
     default: {
-        flex: 1,
+        width: 'auto',
         backgroundColor: Colors.light.blue["50"],
         borderRadius: 6,
     },
     pressed: {
-        flex: 1,
+        width: 'auto',
         backgroundColor: Colors.light.blue["70"],
         borderRadius: 6,
     },
@@ -113,14 +115,14 @@ const stylesPrimary = StyleSheet.create({
 
 const stylesSecondary = StyleSheet.create({
     default: {
-        flex: 1,
+        width: 'auto',
         borderRadius: 6,
         borderStyle: "solid",
         borderColor: Colors.light.blue["50"],
         borderWidth: 2,
     },
     pressed: {
-        flex: 1,
+        width: 'auto',
         backgroundColor: Colors.light.blue["10"],
         borderRadius: 6,
         borderStyle: "solid",
@@ -139,11 +141,11 @@ const stylesSecondary = StyleSheet.create({
 
 const stylesTertiary = StyleSheet.create({
     default: {
-        flex: 1,
+        width: 'auto',
         borderRadius: 6,
     },
     pressed: {
-        flex: 1,
+        width: 'auto',
         backgroundColor: Colors.light.blue["5"],
         borderRadius: 6,
     },
