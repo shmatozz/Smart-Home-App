@@ -54,7 +54,8 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false, navigationBarColor: "#FFFFFF", statusBarStyle: 'dark', }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false, navigationBarColor: "#FFFFFF", statusBarStyle: 'dark'}} />
-        <Stack.Screen name="(onboarding)" options={{ headerShown: false, navigationBarColor: "#FFFFFF", statusBarStyle: 'light' }} />
+        <Stack.Screen name="(onboarding)" options={{ headerShown: false, statusBarStyle: 'light' }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false, statusBarStyle: 'light' }} />
       </Stack>
     </ThemeProvider>
   );
