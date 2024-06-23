@@ -53,7 +53,7 @@ const Login = () => {
                                 size={ 'M' }
                                 type={ 'secondary' }
                                 style={{ width: '100%' }}
-                                onPress={ () => { router.navigate("registration") } }/>
+                                onPress={ () => { router.push("registration") } }/>
                     </View>
 
                     <View style={ styles.splitterContainer }>
