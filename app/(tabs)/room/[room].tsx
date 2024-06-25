@@ -39,7 +39,10 @@ const Room = () => {
                 ListHeaderComponent={
                     <View style={ styles.listHeaderContainer }>
                         <View style={ styles.infoCards }>
-                            <InfoCard icon={ "thermostat" } title={ "Room\ntemperature" } info={ "25°" }/>
+                            <InfoCard icon={ "thermostat" }
+                                      title={ "Room\ntemperature" }
+                                      info={ "25°" }
+                                      onPress={() => { router.push({ pathname: '../room/climate', params: { room: room.room }}) }}/>
                             <InfoCard icon={ "devices-other" } title={ "Active\ndevices" } info={ "2" }/>
                             <InfoCard icon={ "bolt" } title={ "Electricity usage" } info={ "15 kWh" }/>
                         </View>
