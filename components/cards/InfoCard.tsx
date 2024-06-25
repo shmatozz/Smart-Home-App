@@ -29,7 +29,9 @@ const InfoCard: React.FC<InfoCardProps> = ({
         <Pressable {...touchProps}>
             <View style={ styles.container }>
                 <MaterialIcons name={ icon } size={ 32 } color={ Colors.light.blue['50'] }/>
+
                 <Text style={ styles.title }>{ title }</Text>
+
                 <Text style={ styles.info }>{ info }</Text>
             </View>
         </Pressable>
@@ -45,8 +47,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 4,
+        gap: 2,
         paddingHorizontal: 10,
+        paddingVertical: 8,
         backgroundColor: Colors.light.base['0'],
         borderRadius: 12,
         // iOS shadow
@@ -58,10 +61,12 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     title: {
+        flex: 1,
         fontSize: 12,
         color:  Colors.light.base['90'],
         fontFamily: "Inter",
-        textAlign: 'center'
+        textAlign: 'center',
+        textAlignVertical: 'center',
     },
     info: {
         fontSize: 20,
