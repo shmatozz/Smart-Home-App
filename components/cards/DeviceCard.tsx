@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Text,
     View,
-    StyleSheet, Image, StyleProp, ViewStyle, ImageSourcePropType,
+    StyleSheet, Image, StyleProp, ViewStyle, ImageSourcePropType, Pressable,
 } from 'react-native';
 import Colors from "@/constants/Colors";
 import Switch from "@/components/choice/Switch";
@@ -13,6 +13,7 @@ interface DeviceCardProps {
     subtitle?: string | null,
     type: 'horizontal' | 'vertical',
     style?: StyleProp<ViewStyle> | null,
+    onPress?: () => void,
 }
 
 const DeviceCard: React.FC<DeviceCardProps> = ({
@@ -21,42 +22,50 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                                                  subtitle,
                                                  type,
                                                  style = null,
+                                                 onPress = () => console.log("Device Card pressed"),
                                              }) => {
+    const touchProps = {
+        style: styles.touchContainer,
+        onPress: onPress,
+    };
+
     if (type === 'horizontal') {
         return (
-            <View style={ [styles.cardContainer, style] }>
-                <Image source={ image ? image : require("../../assets/images/placeholder.png") }
-                       style={ [styles.image, { borderTopLeftRadius: 12, borderBottomLeftRadius: 12, }] }/>
+            <Pressable {...touchProps}>
+                <View style={ [styles.cardContainer, style] }>
+                    <Image source={ image ? image : require("../../assets/images/placeholder.png") }
+                           style={ [styles.image, { borderTopLeftRadius: 12, borderBottomLeftRadius: 12, }] }/>
 
-                <View style={ styles.textContainer }>
-                    <Text style={ styles.title }>{ title }</Text>
-                    { subtitle && <Text style={ styles.subtitle }>{ subtitle }</Text> }
+                    <View style={ styles.textContainer }>
+                        <Text style={ styles.title }>{ title }</Text>
+                        { subtitle && <Text style={ styles.subtitle }>{ subtitle }</Text> }
+                    </View>
+
+                    <Switch style={{ flex: 0 }}/>
                 </View>
-
-                <Switch/>
-            </View>
+            </Pressable>
         );
     }
 
     return (
-        <View style={ [{ flexDirection: 'column', flex: 1, }, style, ] }>
-            <Image source={ image ? image : require("../../assets/images/placeholder.png") }
-                   style={{ width: '100%', flex: 1, borderTopLeftRadius: 12, borderTopRightRadius: 12 }}
-                   resizeMode='cover'/>
+        <Pressable {...touchProps}>
+            <View style={ [{ flexDirection: 'column', flex: 1, }, style, ] }>
+                <Image source={ image ? image : require("../../assets/images/placeholder.png") }
+                       style={{ width: '100%', flex: 1, borderTopLeftRadius: 12, borderTopRightRadius: 12 }}
+                       resizeMode='cover'/>
 
-            <View style={ styles.infoContainer }>
-                <View style={ styles.textContainer }>
-                    <Text style={ [styles.title, { fontSize: 14 }] }>{ title }</Text>
-                    { subtitle && <Text style={ [styles.subtitle, { fontSize: 12 }] }>{ subtitle }</Text> }
+                <View style={ styles.infoContainer }>
+                    <Switch text={ title }/>
                 </View>
-
-                <Switch/>
             </View>
-        </View>
+        </Pressable>
     );
 }
 
 const styles = StyleSheet.create({
+    touchContainer: {
+        flex: 1,
+    },
     cardContainer: {
         flex: 1,
         flexDirection: 'row',
