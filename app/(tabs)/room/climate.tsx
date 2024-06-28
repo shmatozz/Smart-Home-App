@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import {StatusBar, StyleSheet, View, Text} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
+import CircleSliderSelect from "@/components/choice/CircleSliderSelect";
+import Button from "@/components/buttons/Button";
 
 const RoomClimate = () => {
     const router = useRouter();
@@ -12,9 +14,11 @@ const RoomClimate = () => {
     const params = useLocalSearchParams<{ room: string }>()
     let room = 'error';
 
+    const [mode, setMode] = useState<string>();
+
     if (params.room != undefined) {
-        console.log(params)
-        room = params.room
+        console.log(params);
+        room = params.room;
     }
 
     return (
@@ -35,6 +39,33 @@ const RoomClimate = () => {
 
                 <View style={ styles.settingsContainer }>
                     <Text style={ styles.title }>Temperature settings</Text>
+
+                    <View style={ styles.circleInputContainer }>
+
+                    </View>
+
+                    <View style={ styles.modeSelectContainer }>
+                        <Button text={ "Cooling" }
+                                size={ 'M' }
+                                leftIcon={'severe-cold'}
+                                onPress={() => setMode('cooling') }
+                                type={ mode == 'cooling' ? 'primary' : "secondary" }
+                                style={{ flex: 1 }}/>
+
+                        <Button text={ "Heating" }
+                                size={ 'M' }
+                                leftIcon={'local-fire-department'}
+                                onPress={() => setMode('heating') }
+                                type={ mode == 'heating' ? 'primary' : "secondary" }
+                                style={{ flex: 1 }}/>
+
+                        <Button text={ "Wetting" }
+                                size={ 'M' }
+                                leftIcon={'water'}
+                                onPress={() => setMode('wetting') }
+                                type={ mode == 'wetting' ? 'primary' : "secondary" }
+                                style={{ flex: 1 }}/>
+                    </View>
                 </View>
             </View>
         </SafeAreaView>
@@ -60,11 +91,20 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 20,
     },
+    circleInputContainer: {
+        flex: 1,
+        alignItems: "center",
+        elevation: 4,
+    },
     title: {
         fontSize: 20,
         fontFamily: 'Inter',
         color: Colors.light.base["90"]
-    }
+    },
+    modeSelectContainer: {
+        flexDirection: 'row',
+        gap: 16,
+    },
 });
 
 export default RoomClimate;
