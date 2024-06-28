@@ -1,12 +1,11 @@
-import React, {useState} from "react";
+import React, {useRef} from "react";
 import {StatusBar, StyleSheet, View, Text} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
-import CircleSliderSelect from "@/components/choice/CircleSliderSelect";
-import Button from "@/components/buttons/Button";
+import SegmentedSelect from "@/components/choice/SegmentedSelect";
 
 const RoomClimate = () => {
     const router = useRouter();
@@ -14,7 +13,7 @@ const RoomClimate = () => {
     const params = useLocalSearchParams<{ room: string }>()
     let room = 'error';
 
-    const [mode, setMode] = useState<string>();
+    const mode = useRef(0);
 
     if (params.room != undefined) {
         console.log(params);
@@ -44,28 +43,9 @@ const RoomClimate = () => {
 
                     </View>
 
-                    <View style={ styles.modeSelectContainer }>
-                        <Button text={ "Cooling" }
-                                size={ 'M' }
-                                leftIcon={'severe-cold'}
-                                onPress={() => setMode('cooling') }
-                                type={ mode == 'cooling' ? 'primary' : "secondary" }
-                                style={{ flex: 1 }}/>
-
-                        <Button text={ "Heating" }
-                                size={ 'M' }
-                                leftIcon={'local-fire-department'}
-                                onPress={() => setMode('heating') }
-                                type={ mode == 'heating' ? 'primary' : "secondary" }
-                                style={{ flex: 1 }}/>
-
-                        <Button text={ "Wetting" }
-                                size={ 'M' }
-                                leftIcon={'water'}
-                                onPress={() => setMode('wetting') }
-                                type={ mode == 'wetting' ? 'primary' : "secondary" }
-                                style={{ flex: 1 }}/>
-                    </View>
+                    <SegmentedSelect titles={['Cooling', 'Heating', 'Wetting']}
+                                     icons={['severe-cold', 'local-fire-department', 'water']}
+                                     onChangeSelected={(i) => mode.current = i } />
                 </View>
             </View>
         </SafeAreaView>
