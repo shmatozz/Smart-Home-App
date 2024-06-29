@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Colors from "@/constants/Colors";
@@ -8,7 +8,7 @@ interface DropdownSelectProps {
     placeholder?: string;
     leftIcon?: keyof typeof MaterialIcons.glyphMap | null;
     options: string[];
-    selectedOption: MutableRefObject<string>;
+    selectedOption: string;
     onOptionSelected: (option: string) => void;
 }
 
@@ -28,7 +28,6 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     };
 
     const handleOptionSelect = (option: string) => {
-        selectedOption.current = option;
         onOptionSelected(option);
         toggleDropdown();
     };
@@ -55,8 +54,8 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
                                              size={ 24 }
                                              color={ Colors.light.blue["50"] }/> }
 
-                <Text style={ selectedOption.current === 'null' ? styles.placeholderText : styles.selectedText }>
-                    { selectedOption.current === 'null' ? placeholder : selectedOption.current }
+                <Text style={ selectedOption === 'null' ? styles.placeholderText : styles.selectedText }>
+                    { selectedOption === 'null' ? placeholder : selectedOption }
                 </Text>
 
                 <MaterialIcons name={ isOpen ? 'keyboard-arrow-up' : 'keyboard-arrow-down' }
