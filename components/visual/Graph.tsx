@@ -8,9 +8,18 @@ const Graph = () => {
     const [devicesCategory, setDevicesCategory] = useState('All');
     const [data, setData] = useState(dayData)
 
+    const [max, setMax] = useState(0);
+    const [min, setMin] = useState(Number.MAX_VALUE);
+
+
     useEffect(() => {
         setData(period === 'Day' ? dayData : (period === 'Week' ? weekData : monthData));
     }, [period]);
+
+    useEffect(() => {
+        setMax(Math.max(...data.map(item => item.consumption)))
+        setMin(Math.min(...data.map(item => item.consumption)))
+    }, [data]);
 
     return (
         <View style={ styles.graphicsContainer }>
@@ -18,7 +27,10 @@ const Graph = () => {
                 { data.map((item, index) => (
                     <View key={ index } style={ graphStyles.columnContainer }>
                         <View style={ graphStyles.barContainer }>
-                            <View style={ [graphStyles.bar, { height: `70%` }] } />
+                            <View style={[
+                                graphStyles.bar,
+                                { height: `${20 + ((item.consumption - min) / (max - min)) * (90 - 20)}%` }
+                            ]} />
                         </View>
                         <Text style={ graphStyles.unitText }>{ item.unit }</Text>
                     </View>
@@ -106,7 +118,7 @@ const weekData = [
 
 const monthData = [
     { unit: 'Jan', consumption: 900, },
-    { unit: 'Fep', consumption: 1000, },
+    { unit: 'Feb', consumption: 1000, },
     { unit: 'Mar', consumption: 750, },
     { unit: 'Apr', consumption: 780, },
     { unit: 'May', consumption: 660, },
