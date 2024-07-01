@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {View, Text, StyleSheet, Pressable} from "react-native";
 import Colors from "@/constants/Colors";
 import DropdownSelect from "@/components/choice/DropdownSelect";
 
@@ -11,9 +11,11 @@ const Graph = () => {
     const [max, setMax] = useState(0);
     const [min, setMin] = useState(Number.MAX_VALUE);
 
+    const [selected, setSelected] = useState<number | null>(null);
 
     useEffect(() => {
         setData(period === 'Day' ? dayData : (period === 'Week' ? weekData : monthData));
+        setSelected(null)
     }, [period]);
 
     useEffect(() => {
@@ -27,10 +29,19 @@ const Graph = () => {
                 { data.map((item, index) => (
                     <View key={ index } style={ graphStyles.columnContainer }>
                         <View style={ graphStyles.barContainer }>
-                            <View style={[
+                            {
+                                selected == index &&
+                                <View style={ styles.infoContainer }>
+                                    <Text style={ styles.infoText }>{ item.consumption + ' kWh'}</Text>
+                                </View>
+                            }
+
+                            <Pressable style={ [
                                 graphStyles.bar,
-                                { height: `${20 + ((item.consumption - min) / (max - min)) * (90 - 20)}%` }
-                            ]} />
+                                { height: `${20 + ((item.consumption - min) / (max - min)) * (90 - 20)}%` },
+                                selected == index ? graphStyles.barSelected : {}
+                            ] }
+                                       onPress={ () => setSelected(index) }/>
                         </View>
                         <Text style={ graphStyles.unitText }>{ item.unit }</Text>
                     </View>
@@ -63,8 +74,23 @@ const styles = StyleSheet.create({
         gap: 16,
         flexDirection: 'row',
     },
+    infoContainer: {
+        height: 28,
+        width: 70,
+        position: 'absolute',
+        backgroundColor: Colors.light.blue["50"],
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        top: 0,
+    },
+    infoText: {
+        fontSize: 12,
+        fontFamily: "Inter",
+        color: Colors.light.base["0"],
+    }
 })
-
 
 const graphStyles = StyleSheet.create({
     graphContainer: {
@@ -76,6 +102,7 @@ const graphStyles = StyleSheet.create({
     columnContainer: {
         flex: 1,
         height: '100%',
+        flexDirection: 'column',
     },
     unitText: {
         fontSize: 14,
@@ -86,9 +113,14 @@ const graphStyles = StyleSheet.create({
     barContainer: {
         flex: 1,
         justifyContent: 'flex-end',
+        position: 'relative', // Добавляем это, чтобы infoContainer позиционировался относительно barContainer
     },
     bar: {
         backgroundColor: Colors.light.blue["5"],
+        borderRadius: 6,
+    },
+    barSelected: {
+        backgroundColor: Colors.light.blue["50"],
         borderRadius: 6,
     }
 });
