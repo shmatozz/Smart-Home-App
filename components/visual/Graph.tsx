@@ -76,14 +76,13 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         height: 28,
-        width: 70,
-        position: 'absolute',
+        width: 64,
         backgroundColor: Colors.light.blue["50"],
         borderRadius: 6,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-        top: 0,
+        zIndex: 1,
     },
     infoText: {
         fontSize: 12,
@@ -103,6 +102,7 @@ const graphStyles = StyleSheet.create({
         flex: 1,
         height: '100%',
         flexDirection: 'column',
+        overflow: 'visible',
     },
     unitText: {
         fontSize: 14,
@@ -113,7 +113,8 @@ const graphStyles = StyleSheet.create({
     barContainer: {
         flex: 1,
         justifyContent: 'flex-end',
-        position: 'relative', // Добавляем это, чтобы infoContainer позиционировался относительно barContainer
+        position: 'relative',
+        gap: 6,
     },
     bar: {
         backgroundColor: Colors.light.blue["5"],
