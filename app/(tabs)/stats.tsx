@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import {Text, View, StyleSheet, StatusBar} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import Colors from "@/constants/Colors";
 import Header from "@/components/visual/PageHeader";
 import InfoCard from "@/components/cards/InfoCard";
-import DropdownSelect from "@/components/choice/DropdownSelect";
 import Graph from "@/components/visual/Graph";
 
 const Stats = () => {
-    const [period, setPeriod] = useState('null');
-    const [devicesCategory, setDevicesCategory] = useState('All');
-
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
@@ -24,23 +20,10 @@ const Stats = () => {
                     <InfoCard icon={'calendar-month'} title={'This month\nelectricity used'} info={'770 kWh'}/>
                 </View>
 
-                <View style={styles.graphContainer}>
-                    <Text style={styles.title}>Graphics</Text>
+                <View style={ styles.graphContainer }>
+                    <Text style={ styles.title }>Graphics</Text>
 
-                    <Graph period={ period } devices={ devicesCategory } />
-                </View>
-
-                <View style={ styles.selectContainer }>
-                    <DropdownSelect placeholder={ 'Period' }
-                                    options={['Day', 'Week', 'Month']}
-                                    selectedOption={ period }
-                                    onOptionSelected={ setPeriod }
-                                    leftIcon={ 'edit-calendar' }/>
-
-                    <DropdownSelect options={['All', 'Air', 'Lights', 'Audio']}
-                                    selectedOption={ devicesCategory }
-                                    onOptionSelected={ setDevicesCategory }
-                                    leftIcon={ 'devices-other' }/>
+                    <Graph/>
                 </View>
             </View>
         </SafeAreaView>

@@ -1,16 +1,11 @@
 import React, { useEffect, useState} from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "@/constants/Colors";
+import DropdownSelect from "@/components/choice/DropdownSelect";
 
-interface GraphProps {
-    period: string;
-    devices: string;
-}
-
-const Graph: React.FC<GraphProps> = ({
-                                         period,
-                                         devices
-}) => {
+const Graph = () => {
+    const [period, setPeriod] = useState('Day');
+    const [devicesCategory, setDevicesCategory] = useState('All');
     const [data, setData] = useState(dayData)
 
     useEffect(() => {
@@ -18,18 +13,46 @@ const Graph: React.FC<GraphProps> = ({
     }, [period]);
 
     return (
-        <View style={graphStyles.graphContainer}>
-             {data.map((item, index) => (
-                <View key={index} style={graphStyles.columnContainer}>
-                    <View style={graphStyles.barContainer}>
-                        <View style={[graphStyles.bar, { height: `70%` }]} />
+        <View style={ styles.graphicsContainer }>
+            <View style={ graphStyles.graphContainer }>
+                { data.map((item, index) => (
+                    <View key={ index } style={ graphStyles.columnContainer }>
+                        <View style={ graphStyles.barContainer }>
+                            <View style={ [graphStyles.bar, { height: `70%` }] } />
+                        </View>
+                        <Text style={ graphStyles.unitText }>{ item.unit }</Text>
                     </View>
-                    <Text style={graphStyles.unitText}>{item.unit}</Text>
-                </View>
-            )) }
+                )) }
+            </View>
+
+            <View style={ styles.selectContainer }>
+                <DropdownSelect placeholder={ 'Period' }
+                                options={ ['Day', 'Week', 'Month'] }
+                                selectedOption={ period }
+                                onOptionSelected={ setPeriod }
+                                leftIcon={ 'edit-calendar' }/>
+
+                <DropdownSelect options={ ['All', 'Air', 'Lights', 'Audio'] }
+                                selectedOption={ devicesCategory }
+                                onOptionSelected={ setDevicesCategory }
+                                leftIcon={ 'devices-other' }/>
+            </View>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    graphicsContainer: {
+        flex: 1,
+    },
+    selectContainer: {
+        paddingVertical: 16,
+        paddingHorizontal: 4,
+        gap: 16,
+        flexDirection: 'row',
+    },
+})
+
 
 const graphStyles = StyleSheet.create({
     graphContainer: {
