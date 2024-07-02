@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Text,
     View,
@@ -24,6 +24,8 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                                                  style = null,
                                                  onPress = () => console.log("Device Card pressed"),
                                              }) => {
+    const [state, setState] = useState(false)
+
     const touchProps = {
         style: styles.touchContainer,
         onPress: onPress,
@@ -41,7 +43,9 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                         { subtitle && <Text style={ styles.subtitle }>{ subtitle }</Text> }
                     </View>
 
-                    <Switch style={{ flex: 0 }}/>
+                    <Switch style={{ flex: 0 }}
+                            state={ state }
+                            setState={ setState }/>
                 </View>
             </Pressable>
         );
@@ -55,7 +59,10 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                        resizeMode='cover'/>
 
                 <View style={ styles.infoContainer }>
-                    <Switch text={ title }/>
+                    <Switch text={ title }
+                            style={{ flex: 1 }}
+                            state={ state }
+                            setState={ setState }/>
                 </View>
             </View>
         </Pressable>
