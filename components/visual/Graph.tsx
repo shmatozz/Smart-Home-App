@@ -53,12 +53,14 @@ const Graph = () => {
                                 options={ ['Day', 'Week', 'Month'] }
                                 selectedOption={ period }
                                 onOptionSelected={ setPeriod }
-                                leftIcon={ 'edit-calendar' }/>
+                                leftIcon={ 'edit-calendar' }
+                                style={{ flex: 1 }}/>
 
                 <DropdownSelect options={ ['All', 'Air', 'Lights', 'Audio'] }
                                 selectedOption={ devicesCategory }
                                 onOptionSelected={ setDevicesCategory }
-                                leftIcon={ 'devices-other' }/>
+                                leftIcon={ 'devices-other' }
+                                style={{ flex: 1 }}/>
             </View>
         </View>
     );

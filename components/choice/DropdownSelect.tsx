@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import {View, Text, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Colors from "@/constants/Colors";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -10,7 +10,8 @@ interface DropdownSelectProps {
     options: string[];
     selectedOption: string;
     onOptionSelected: (option: string) => void;
-    size: 'S' | 'M';
+    size?: 'S' | 'M';
+    style?: StyleProp<ViewStyle> | null,
 }
 
 const DropdownSelect: React.FC<DropdownSelectProps> = ({
@@ -19,7 +20,8 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
                                                            options,
                                                            selectedOption,
                                                            onOptionSelected,
-                                                           size = 'M'
+                                                           size = 'M',
+                                                           style = null,
                                                        }) => {
     const [isOpen, setIsOpen] = useState(false);
     const optionsHeight = useSharedValue(0);
@@ -53,7 +55,7 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     });
 
     return (
-        <View style={ styles.contentContainer }>
+        <View style={ [styles.contentContainer, style] }>
             <Animated.View style={ [styles.optionsContainer, animatedStyle] }>
                 { options.map((option, index) => (
                     <Pressable key={ index } onPress={ () => handleOptionSelect(option) } style={ styles.option }>
@@ -81,7 +83,6 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
 
 const stylesM = StyleSheet.create({
     contentContainer: {
-        flex: 1,
         borderRadius: 6,
         borderColor: Colors.light.blue["50"],
         borderWidth: 2,
