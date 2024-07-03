@@ -25,6 +25,8 @@ const Add_Device = () => {
         }
     };
 
+    const [selected, setSelected] = useState(-1);
+
     return (
         <SafeAreaView style={ styles.safeArea }>
             <Header title={ "Add new device" }
@@ -48,7 +50,11 @@ const Add_Device = () => {
                                                    height: Math.max(240, roomsCardsHeight),
                                                    width: Math.max(144, roomsCardsWidth),
                                                }}
-                                               key={ index }/>
+                                               key={ index }
+                                               selectable={ true }
+                                               selected={ selected === index }
+                                               onPress={ () => setSelected(index) }
+                                    />
                                 ))}
                             </View>
                             <View style={{ width: 16 }}/>

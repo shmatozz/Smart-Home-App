@@ -1,7 +1,7 @@
 import React from "react";
 import {Dimensions, ScrollView, StatusBar, StyleSheet, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Link, useLocalSearchParams, useRouter} from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import ImageCard from "@/components/cards/ImageCard";
@@ -56,16 +56,17 @@ const Rooms = () => {
                     <View style={{ height: 8 }}/>
                     <View style={{ flexDirection: 'column' }}>
                         { cardsData.map((item, index) => (
-                            <Link key={item.title}
-                                  style={{ marginVertical: 8, }}
-                                  href={{ pathname: '../room/[room]', params: { room: item.title } }}>
+                            <View key={item.title}
+                                  style={{ marginVertical: 8, }}>
                                 <ImageCard image={ item.image }
                                            title={ item.title }
                                            subtitle={ item.subtitle }
                                            size={'M'}
                                            style={{ height: cardHeight, width: windowWidth }}
-                                           key={ index }/>
-                            </Link>
+                                           key={ index }
+                                           onPress={ () => router.navigate({ pathname: '../room/[room]', params: { room: item.title } })}
+                                />
+                            </View>
                         ))}
                     </View>
                     <View style={{ height: 8 }}/>

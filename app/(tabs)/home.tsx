@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView, StatusBar, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {Link, useRouter} from "expo-router";
+import {useRouter} from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
@@ -85,15 +85,16 @@ const Home = () => {
                         <View style={{ width: 12 }}/>
                         <View style={{ flexDirection: 'row' }}>
                             { cardsData.map((item, index) => (
-                                <Link key={item.title}
-                                      style={{ marginHorizontal: 4 }}
-                                      href={{ pathname: "room/rooms", params: { redirect: 1, room: item.title } }}>
+                                <View key={item.title}
+                                      style={{ marginHorizontal: 4 }}>
                                     <ImageCard image={ item.image }
                                                title={ item.title }
                                                subtitle={ item.subtitle }
                                                style={{ height: 144, width: cardWidth, }}
-                                               key={ index }/>
-                                </Link>
+                                               key={ index }
+                                               onPress={ () => router.navigate({ pathname: "room/rooms", params: { redirect: 1, room: item.title }})}
+                                    />
+                                </View>
                             ))}
                         </View>
                         <View style={{ width: 12 }}/>
