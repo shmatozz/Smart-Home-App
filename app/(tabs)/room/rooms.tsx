@@ -39,8 +39,7 @@ const Rooms = () => {
         router.push({ pathname: '../room/[room]', params: { room: params.room } });
     }
 
-    const windowHeight = Dimensions.get('window').height - 52 - 16 * (cardsData.length - 1) - 56 * 2;
-    const windowWidth = Dimensions.get('window').width - 32;
+    const windowHeight = Dimensions.get('window').height - 16 * (cardsData.length + 1) - 68 * 2;
     let cardHeight = windowHeight / cardsData.length;
     if (cardHeight < 160) cardHeight = 160;
 
@@ -53,23 +52,22 @@ const Rooms = () => {
                 <ScrollView style={ styles.scrollContainer }
                             showsVerticalScrollIndicator={false}
                             overScrollMode={'never'}>
-                    <View style={{ height: 8 }}/>
-                    <View style={{ flexDirection: 'column' }}>
-                        { cardsData.map((item, index) => (
-                            <View key={item.title}
-                                  style={{ marginVertical: 8, }}>
-                                <ImageCard image={ item.image }
-                                           title={ item.title }
-                                           subtitle={ item.subtitle }
-                                           size={'M'}
-                                           style={{ height: cardHeight, width: windowWidth }}
-                                           key={ index }
-                                           onPress={ () => router.navigate({ pathname: '../room/[room]', params: { room: item.title } })}
-                                />
-                            </View>
-                        ))}
+                    <View style={ styles.scrollView }>
+                        {
+                            cardsData.map((item, index) => (
+                                <View key={ item.title }>
+                                    <ImageCard image={ item.image }
+                                               title={ item.title }
+                                               subtitle={ item.subtitle }
+                                               size={'M'}
+                                               style={{ height: cardHeight, }}
+                                               key={ index }
+                                               onPress={ () => router.navigate({ pathname: '../room/[room]', params: { room: item.title } })}
+                                    />
+                                </View>
+                            ))
+                        }
                     </View>
-                    <View style={{ height: 8 }}/>
                 </ScrollView>
             </View>
         </SafeAreaView>
@@ -86,7 +84,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
     },
     scrollContainer: {
+    },
+    scrollView: {
         flex: 1,
+        gap: 16,
+        paddingVertical: 16,
     }
 });
 export default Rooms;
