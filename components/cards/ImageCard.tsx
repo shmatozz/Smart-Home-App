@@ -8,6 +8,7 @@ import {
     ViewStyle, Pressable,
 } from 'react-native';
 import Colors from "@/constants/Colors";
+import { BlurView } from "expo-blur";
 
 interface ImageCardProps {
     image: string | null,
@@ -40,15 +41,17 @@ const ImageCard: React.FC<ImageCardProps> = ({
                 style,
                 selectable && selected ? styles.selectedCardContainer : {}
             ] }>
-                <ImageBackground source={image ? { uri: image } : require("../../assets/images/placeholder.png")} style={styles.image}>
-                    <View style={ [
+                <ImageBackground source={image ? { uri: image } : require("../../assets/images/placeholder.png")}
+                                 style={styles.image}>
+                    <BlurView style={ [
                         styles.textContainer,
                         { height: titleContainerSize },
                         selectable && selected ? styles.selectedTextContainer : {}
-                    ] }>
+                    ] }
+                              intensity={ 5 }>
                         <Text style={ [styles.title, { fontSize: fontSize + 2 }] }>{ title }</Text>
                         { subtitle && <Text style={ [styles.subtitle, { fontSize: fontSize }] }>{ subtitle }</Text> }
-                    </View>
+                    </BlurView>
                 </ImageBackground>
             </View>
         </Pressable>
@@ -71,10 +74,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     textContainer: {
-        backgroundColor: 'rgba(39, 39, 39, 0.6)',
         justifyContent: 'center',
-        height: 52,
         padding: 10,
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(39, 39, 39, 0.6)',
     },
     selectedTextContainer: {
         backgroundColor: 'rgba(65, 112, 197, 0.6)',
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
         color: Colors.light.base["20"],
         fontSize: 12,
         fontFamily: "Inter",
-    }
+    },
 });
 
 export default ImageCard;
