@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
     textContainer: {
         justifyContent: 'center',
         padding: 10,
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
         backgroundColor: 'rgba(39, 39, 39, 0.6)',
     },
     selectedTextContainer: {
         backgroundColor: 'rgba(65, 112, 197, 0.6)',
+        left: -2,
+        bottom: -2,
+        width: '102%'
     },
     title: {
         color: Colors.light.base["0"],
