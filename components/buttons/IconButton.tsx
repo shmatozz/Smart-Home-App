@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '@/constants/Colors';
 
@@ -7,6 +7,7 @@ interface ButtonProps {
     icon?: keyof typeof MaterialIcons.glyphMap;
     size?: 'S' | 'M';
     type?: 'primary' | 'secondary' | 'tertiary';
+    disabled?: boolean;
     onPress?: () => void;
 }
 
@@ -14,6 +15,7 @@ const IconButton: React.FC<ButtonProps> = ({
                                            icon,
                                            size = 'S',
                                            type = 'primary',
+                                           disabled = false,
                                            onPress = () => console.log("Button pressed"),
                                        }) => {
     const [isPress, setIsPress] = useState(false);
@@ -45,9 +47,10 @@ const IconButton: React.FC<ButtonProps> = ({
     }
 
     const touchProps = {
-        style: isPress ?
-            ([buttonStyle.pressed, { height: buttonSize, width: buttonSize }]) :
-            ([buttonStyle.default, { height: buttonSize, width: buttonSize }]),
+        style: disabled ? ([buttonStyle.disabled, { height: buttonSize, width: buttonSize }]) :
+            (isPress ?
+                ([buttonStyle.pressed, { height: buttonSize, width: buttonSize }]) :
+                ([buttonStyle.default, { height: buttonSize, width: buttonSize }])),
         onPressIn: () => setIsPress(true),
         onPressOut: () => setIsPress(false),
         onPress: onPress,
@@ -81,6 +84,10 @@ const stylesPrimary = StyleSheet.create({
         backgroundColor: Colors.light.blue["70"],
         borderRadius: 6,
     },
+    disabled: {
+        backgroundColor: Colors.light.base["40"],
+        borderRadius: 6,
+    },
     iconColor: {
         color: Colors.light.base["0"],
     },
@@ -100,6 +107,12 @@ const stylesSecondary = StyleSheet.create({
         borderColor: Colors.light.blue["50"],
         borderWidth: 2,
     },
+    disabled: {
+        borderRadius: 6,
+        borderStyle: "solid",
+        borderColor: Colors.light.base["20"],
+        borderWidth: 2,
+    },
     iconColor: {
         color: Colors.light.blue["50"],
     },
@@ -111,6 +124,9 @@ const stylesTertiary = StyleSheet.create({
     },
     pressed: {
         backgroundColor: Colors.light.blue["5"],
+        borderRadius: 6,
+    },
+    disabled: {
         borderRadius: 6,
     },
     iconColor: {
