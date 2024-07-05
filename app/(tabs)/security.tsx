@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         paddingHorizontal: 16,
-        backgroundColor: Colors.light.base["5"],
     },
     doorsLockContainer: {
         padding: 8,
