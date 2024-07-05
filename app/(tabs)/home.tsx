@@ -9,52 +9,11 @@ import Button from "@/components/buttons/Button";
 import ImageCard from "@/components/cards/ImageCard";
 import DeviceCard from "@/components/cards/DeviceCard";
 
-const cardsData = [
-    {
-        image: null,
-        title: 'Living room',
-        subtitle: '6 Devices',
-    },
-    {
-        image: null,
-        title: 'Bedroom',
-        subtitle: '7 Devices',
-    },
-    {
-        image: null,
-        title: 'Kitchen',
-        subtitle: '9 Devices',
-    },
-    {
-        image: null,
-        title: 'Hallway',
-        subtitle: '3 Devices',
-    },
-];
-
-const devicesData = [
-    {
-        image: null,
-        title: 'TV',
-        subtitle: 'Living room',
-    },
-    {
-        image: null,
-        title: 'Lamp',
-        subtitle: 'Bedroom',
-    },
-    {
-        image: null,
-        title: 'Air cooler',
-        subtitle: 'Kitchen',
-    }
-]
-
 const Home = () => {
     const router = useRouter()
 
-    const windowWidth = Dimensions.get('window').width - 32 - 8 * (cardsData.length - 1);
-    let cardWidth = windowWidth / cardsData.length;
+    const windowWidth = Dimensions.get('window').width - 32 - 8 * (roomsData.length - 1);
+    let cardWidth = windowWidth / roomsData.length;
     if (cardWidth < 144) cardWidth = 144;
 
     return (
@@ -84,7 +43,7 @@ const Home = () => {
                                 overScrollMode={'never'}>
                         <View style={{ width: 12 }}/>
                         <View style={{ flexDirection: 'row' }}>
-                            { cardsData.map((item, index) => (
+                            { roomsData.map((item, index) => (
                                 <View key={item.title}
                                       style={{ marginHorizontal: 4 }}>
                                     <ImageCard image={ item.image }
@@ -158,5 +117,39 @@ const styles = StyleSheet.create({
         gap: 16,
     }
 });
+
+const roomsData = [
+    {
+        image: "https://www.mebelkaliningrada.ru/wp-content/uploads/2018/12/2750880675.jpg",
+        title: 'Living room', subtitle: '6 devices'
+    },
+    {
+        image: "https://colodu.club/uploads/posts/2022-10/1666684356_21-colodu-club-p-master-spalnya-planirovka-krasivo-21.jpg",
+        title: 'Bedroom', subtitle: '7 devices'
+    },
+    {
+        image: "https://www.service-general.gr/media/widgetkit/kitchen5-c512f9d4d63cc58aa6469df0fd830991.jpg",
+        title: 'Kitchen', subtitle: '9 devices'
+    },
+    {
+        image: "https://gagaru.club/uploads/posts/2023-02/thumbs/1676687091_gagaru-club-p-krasivaya-prikhozhaya-v-dome-vkontakte-8.jpg",
+        title: 'Hallway', subtitle: '3 devices'
+    },
+];
+
+const devicesData = [
+    {
+        image: "https://cdn.mos.cms.futurecdn.net/ZW4ZjyfpcZgoDQnmcw6YLK.jpg",
+        title: 'TV', subtitle: 'Living room',
+    },
+    {
+        image: "https://www.ikea.com/us/en/images/products/blidvaeder-table-lamp-off-white-ceramic-beige__1059592_pe849717_s5.jpg",
+        title: 'Lamp', subtitle: 'Bedroom',
+    },
+    {
+        image: "https://www.netrinc.com/wp-content/uploads/2023/01/Buying-a-Wall-Mounted-Air-Conditioner.jpg",
+        title: 'Air cooler', subtitle: 'Kitchen',
+    }
+]
 
 export default Home;

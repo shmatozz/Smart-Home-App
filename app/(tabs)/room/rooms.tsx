@@ -6,29 +6,6 @@ import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import ImageCard from "@/components/cards/ImageCard";
 
-const cardsData = [
-    {
-        image: null,
-        title: 'Living room',
-        subtitle: '6 Devices',
-    },
-    {
-        image: null,
-        title: 'Bedroom',
-        subtitle: '7 Devices',
-    },
-    {
-        image: null,
-        title: 'Kitchen',
-        subtitle: '9 Devices',
-    },
-    {
-        image: null,
-        title: 'Hallway',
-        subtitle: '3 Devices',
-    },
-];
-
 const Rooms = () => {
     const router = useRouter();
 
@@ -39,8 +16,8 @@ const Rooms = () => {
         router.push({ pathname: '../room/[room]', params: { room: params.room } });
     }
 
-    const windowHeight = Dimensions.get('window').height - 16 * (cardsData.length + 1) - 68 * 2;
-    let cardHeight = windowHeight / cardsData.length;
+    const windowHeight = Dimensions.get('window').height - 16 * (roomsData.length + 1) - 68 * 2;
+    let cardHeight = windowHeight / roomsData.length;
     if (cardHeight < 160) cardHeight = 160;
 
     return (
@@ -54,7 +31,7 @@ const Rooms = () => {
                             overScrollMode={'never'}>
                     <View style={ styles.scrollView }>
                         {
-                            cardsData.map((item, index) => (
+                            roomsData.map((item, index) => (
                                 <View key={ item.title }>
                                     <ImageCard image={ item.image }
                                                title={ item.title }
@@ -91,4 +68,24 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
     }
 });
+
+const roomsData = [
+    {
+        image: "https://www.mebelkaliningrada.ru/wp-content/uploads/2018/12/2750880675.jpg",
+        title: 'Living room', subtitle: '6 devices'
+    },
+    {
+        image: "https://colodu.club/uploads/posts/2022-10/1666684356_21-colodu-club-p-master-spalnya-planirovka-krasivo-21.jpg",
+        title: 'Bedroom', subtitle: '7 devices'
+    },
+    {
+        image: "https://www.service-general.gr/media/widgetkit/kitchen5-c512f9d4d63cc58aa6469df0fd830991.jpg",
+        title: 'Kitchen', subtitle: '9 devices'
+    },
+    {
+        image: "https://gagaru.club/uploads/posts/2023-02/thumbs/1676687091_gagaru-club-p-krasivaya-prikhozhaya-v-dome-vkontakte-8.jpg",
+        title: 'Hallway', subtitle: '3 devices'
+    },
+];
+
 export default Rooms;

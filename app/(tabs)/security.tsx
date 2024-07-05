@@ -139,9 +139,18 @@ const doorsData = [
 ]
 
 const camerasData = [
-    { name: "Main courtyard", preview: null },
-    { name: "Backyard", preview: null },
-    { name: "Behind gate", preview: null },
+    {
+        preview: "https://hobbyka.ru/upload/iblock/d25/d2526a8aecea1be55632241ee4b0e10c.jpg",
+        name: "Main courtyard",
+    },
+    {
+        preview: "https://m-strana.ru/upload/resize_cache/sprint.editor/964/830_830_1/96427c3e7182ccbce4f074754f251bb1.jpg",
+        name: "Backyard",
+    },
+    {
+        preview: "https://bigfoto.name/photo/uploads/posts/2024-02/thumbs/1709198930_bigfoto-name-p-landshaftnii-dizain-vdol-zabora-v-chastnom-82.jpg",
+        name: "Behind gate",
+    },
 ]
 
 export default Security;

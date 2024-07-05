@@ -7,14 +7,6 @@ import InfoCard from "@/components/cards/InfoCard";
 import React from "react";
 import DeviceCard from "@/components/cards/DeviceCard";
 
-const devicesData = [
-    { image: null, title: 'TV', subtitle: 'Living room', },
-    { image: null, title: 'Lamp', subtitle: 'Living room', },
-    { image: null, title: 'Main Lights', subtitle: 'Living room', },
-    { image: null, title: 'Play Station', subtitle: 'Living room', },
-    { image: null, title: 'Play Station2', subtitle: 'Living room', },
-]
-
 const Room = () => {
     let router = useRouter();
 
@@ -104,5 +96,28 @@ const styles = StyleSheet.create({
         color: Colors.light.base["90"]
     }
 })
+
+const devicesData = [
+    {
+        image: "https://cdn.mos.cms.futurecdn.net/ZW4ZjyfpcZgoDQnmcw6YLK.jpg",
+        title: 'TV', subtitle: 'Living room',
+    },
+    {
+        image: "https://www.ikea.com/us/en/images/products/blidvaeder-table-lamp-off-white-ceramic-beige__1059592_pe849717_s5.jpg",
+        title: 'Lamp', subtitle: 'Living room',
+    },
+    {
+        image: "https://www.lamps.eu/media/product/119170/354x354/wemude-ceiling-light-h3016183-0.jpg",
+        title: 'Main Lights', subtitle: 'Living room',
+    },
+    {
+        image: "https://static1.pocketlintimages.com/wordpress/wp-content/uploads/wm/154419-games-review-hands-on-playstation-5-hands-on-pics-image1-tbq3hzlrkw.jpg",
+        title: 'Play Station', subtitle: 'Living room',
+    },
+    {
+        image: "https://www.netrinc.com/wp-content/uploads/2023/01/Buying-a-Wall-Mounted-Air-Conditioner.jpg",
+        title: 'Air cooler', subtitle: 'Living room',
+    },
+]
 
 export default Room;
