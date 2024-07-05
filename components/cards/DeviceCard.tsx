@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import {
     Text,
     View,
-    StyleSheet, Image, StyleProp, ViewStyle, ImageSourcePropType, Pressable,
+    StyleSheet, Image, StyleProp, ViewStyle, Pressable,
 } from 'react-native';
 import Colors from "@/constants/Colors";
 import Switch from "@/components/choice/Switch";
 
 interface DeviceCardProps {
-    image: ImageSourcePropType | null,
+    image: string | null,
     title: string,
     subtitle?: string | null,
     type: 'horizontal' | 'vertical',
@@ -17,7 +17,7 @@ interface DeviceCardProps {
 }
 
 const DeviceCard: React.FC<DeviceCardProps> = ({
-                                                 image,
+                                                 image = null,
                                                  title,
                                                  subtitle,
                                                  type,
@@ -35,7 +35,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
         return (
             <Pressable {...touchProps}>
                 <View style={ [styles.cardContainer, style] }>
-                    <Image source={ image ? image : require("../../assets/images/placeholder.png") }
+                    <Image source={ image ? { uri: image } : require("../../assets/images/placeholder.png") }
                            style={ [styles.image, { borderTopLeftRadius: 12, borderBottomLeftRadius: 12, }] }/>
 
                     <View style={ styles.textContainer }>
@@ -54,7 +54,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
     return (
         <Pressable {...touchProps}>
             <View style={ [{ flexDirection: 'column', flex: 1, }, style, ] }>
-                <Image source={ image ? image : require("../../assets/images/placeholder.png") }
+                <Image source={ image ? { uri: image } : require("../../assets/images/placeholder.png") }
                        style={{ width: '100%', flex: 1, borderTopLeftRadius: 12, borderTopRightRadius: 12 }}
                        resizeMode='cover'/>
 
