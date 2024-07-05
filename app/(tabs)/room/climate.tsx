@@ -1,19 +1,17 @@
-import React, {useRef} from "react";
+import React from "react";
 import {StatusBar, StyleSheet, View, Text} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
-import SegmentedSelect from "@/components/choice/SegmentedSelect";
+import TemperatureConfig from "@/components/visual/TemperatureConfig";
 
 const RoomClimate = () => {
     const router = useRouter();
 
     const params = useLocalSearchParams<{ room: string }>()
     let room = 'error';
-
-    const mode = useRef(0);
 
     if (params.room != undefined) {
         console.log(params);
@@ -39,13 +37,7 @@ const RoomClimate = () => {
                 <View style={ styles.settingsContainer }>
                     <Text style={ styles.title }>Temperature settings</Text>
 
-                    <View style={ styles.circleInputContainer }>
-
-                    </View>
-
-                    <SegmentedSelect titles={['Cooling', 'Heating', 'Wetting']}
-                                     icons={['severe-cold', 'local-fire-department', 'water']}
-                                     onChangeSelected={(i) => mode.current = i } />
+                    <TemperatureConfig/>
                 </View>
             </View>
         </SafeAreaView>
@@ -70,11 +62,6 @@ const styles = StyleSheet.create({
     settingsContainer: {
         flex: 1,
         paddingTop: 20,
-    },
-    circleInputContainer: {
-        flex: 1,
-        alignItems: "center",
-        elevation: 4,
     },
     title: {
         fontSize: 20,
