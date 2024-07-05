@@ -11,14 +11,15 @@ const Security = () => {
     const [selectedCameras, setSelectedCameras] = useState('All');
 
     const [camerasContainerHeight, setCamerasContainerHeight] = useState(0);
-    const [layoutMeasured, setLayoutMeasured] = useState(false);
 
     const handleLayout = (event: { nativeEvent: { layout: { height: any; }; }; }) => {
-        if (!layoutMeasured) {
-            const { height } = event.nativeEvent.layout;
-            setCamerasContainerHeight(height);
-            setLayoutMeasured(true);
-        }
+        const { height } = event.nativeEvent.layout;
+        setCamerasContainerHeight(
+            Math.max(
+                160,
+                (height - 158 - 4 * (doorsData.length - 1) - doorsData.length * 40 - 12 * (camerasData.length - 1)) / camerasData.length
+            )
+        );
     };
 
     const [doorStates, setDoorStates] = useState(doorsData.map(door => door.status === 'closed'));
@@ -30,14 +31,15 @@ const Security = () => {
     };
 
     return (
-        <SafeAreaView style={ styles.safeArea }>
+        <SafeAreaView style={ styles.safeArea }
+                      onLayout={ handleLayout }>
             <Header title={'Security'}
                     accountIcon={ false }
                     firstIcon={ 'notifications' }/>
 
             <ScrollView style={ styles.contentContainer }
                         showsVerticalScrollIndicator={ false }
-                        overScrollMode={ 'never' }>
+                        overScrollMode={ 'never' } contentContainerStyle={{ flexGrow: 1}}>
                 <View style={ styles.doorsLockContainer }>
                     {
                         doorsData.map((item, index) => (
@@ -65,14 +67,13 @@ const Security = () => {
                                         size={'S'} />
                     </View>
 
-                    <View style={ styles.camerasPreviewContainer }
-                          onLayout={ handleLayout }>
+                    <View style={ styles.camerasPreviewContainer }>
                         {
                             camerasData.map((item, index) => (
                                 <ImageCard image={ item.preview }
                                            title={ item.name }
                                            size={'M'}
-                                           style={{ height: Math.max(160, camerasContainerHeight / camerasData.length) }}
+                                           style={{ height: camerasContainerHeight }}
                                            key={ index }/>
                             ))
                         }
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         paddingHorizontal: 16,
+        backgroundColor: Colors.light.base["5"],
     },
     doorsLockContainer: {
         padding: 8,
@@ -126,6 +128,7 @@ const styles = StyleSheet.create({
     camerasPreviewContainer: {
         flex: 1,
         gap: 12,
+        backgroundColor: Colors.light.base["5"],
     }
 })
 

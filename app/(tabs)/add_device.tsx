@@ -14,15 +14,17 @@ const Add_Device = () => {
 
     const [roomsCardsHeight, setRoomsCardsHeight] = useState(0);
     const [roomsCardsWidth, setRoomsCardsWidth] = useState(0);
-    const [layoutMeasured, setLayoutMeasured] = useState(false);
 
     const handleLayout = (event: { nativeEvent: { layout: { height: any; width: any }; }; }) => {
-        if (!layoutMeasured) {
-            const { height, width } = event.nativeEvent.layout;
-            setRoomsCardsHeight(height / roomsData.length);
-            setRoomsCardsWidth(width / roomsData.length);
-            setLayoutMeasured(true);
-        }
+        const { height, width } = event.nativeEvent.layout;
+        setRoomsCardsHeight(Math.max(
+            240,
+            (height - 28) / roomsData.length
+        ));
+        setRoomsCardsWidth(Math.max(
+            144,
+            (width - 32 - 8 * (roomsData.length - 1)) / roomsData.length
+        ));
     };
 
     const [selected, setSelected] = useState(-1);
@@ -34,28 +36,31 @@ const Add_Device = () => {
 
             <View style={ styles.contentContainer }>
                 <View style={ styles.deviceFormContainer }>
-                    <View style={ styles.selectRoomContainer }>
+                    <View style={ styles.selectRoomContainer }
+                          onLayout={ handleLayout }>
                         <Text style={ [textStyles.title, { paddingHorizontal: 16 }] }>Select room</Text>
 
                         <ScrollView horizontal={ true }
                                     showsHorizontalScrollIndicator={false}
                                     overScrollMode={'never'}>
                             <View style={{ width: 16 }}/>
-                            <View style={{ flexDirection: 'row', gap: 8 }}
-                                  onLayout={ handleLayout }>
-                                { roomsData.map((item, index) => (
-                                    <ImageCard image={ item.image }
-                                               title={ item.title }
-                                               style={{
-                                                   height: Math.max(240, roomsCardsHeight),
-                                                   width: Math.max(144, roomsCardsWidth),
-                                               }}
-                                               key={ index }
-                                               selectable={ true }
-                                               selected={ selected === index }
-                                               onPress={ () => setSelected(index) }
-                                    />
-                                ))}
+                            <View style={{ flexDirection: 'row', gap: 8 }}>
+                                {
+                                    roomsData.map((item, index) => (
+                                        <ImageCard image={ item.image }
+                                                   title={ item.title }
+                                                   subtitle={ item.subtitle }
+                                                   style={{
+                                                       height: roomsCardsHeight,
+                                                       width: roomsCardsWidth,
+                                                   }}
+                                                   key={ index }
+                                                   selectable={ true }
+                                                   selected={ selected === index }
+                                                   onPress={ () => setSelected(index) }
+                                        />
+                                    ))
+                                }
                             </View>
                             <View style={{ width: 16 }}/>
                         </ScrollView>
@@ -153,10 +158,10 @@ const textStyles = StyleSheet.create({
 })
 
 const roomsData = [
-    { image: null, title: 'Living room', },
-    { image: null, title: 'Bedroom', },
-    { image: null, title: 'Kitchen', },
-    { image: null, title: 'Hallway', },
+    { image: null, title: 'Living room', subtitle: '6 devices' },
+    { image: null, title: 'Bedroom', subtitle: '7 devices' },
+    { image: null, title: 'Kitchen', subtitle: '9 devices' },
+    { image: null, title: 'Hallway', subtitle: '3 devices' },
 ];
 
 export default Add_Device;

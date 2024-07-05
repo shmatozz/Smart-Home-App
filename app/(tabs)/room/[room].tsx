@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     },
     listHeaderContainer: {
         paddingHorizontal: 8,
+        gap: 16
     },
     infoCards: {
         flexDirection: 'row',
