@@ -11,6 +11,8 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 interface HeaderProps {
     backIcon?: boolean,
     onBackPress?: () => void,
+    accountIcon?: boolean,
+    onAccountPress?: () => void,
     title: string,
     firstIcon?: keyof typeof MaterialIcons.glyphMap | null,
     onFirstPress?: () => void,
@@ -21,6 +23,8 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({
                                            backIcon = false,
                                            onBackPress = () => console.log("Back pressed"),
+                                           accountIcon = true,
+                                           onAccountPress = () => console.log("Account pressed"),
                                            title,
                                            firstIcon = null,
                                            onFirstPress = () => console.log("First pressed"),
@@ -33,7 +37,9 @@ const Header: React.FC<HeaderProps> = ({
                 <MaterialIcons name={"arrow-back"} size={ 28 } color={ Colors.light.base['70'] }/>
             </Pressable> }
 
-            <MaterialIcons name="account-circle" size={ 32 } color={ Colors.light.base['70'] }/>
+            { accountIcon && <Pressable onPress={ () => onAccountPress() }>
+                <MaterialIcons name="account-circle" size={ 32 } color={ Colors.light.base['70'] }/>
+            </Pressable> }
 
             <Text style={ styles.text }>{ title }</Text>
 

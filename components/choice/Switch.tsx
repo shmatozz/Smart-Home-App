@@ -1,20 +1,30 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
     Text,
     StyleSheet,
-    Pressable, View, Animated,
+    Pressable, View, Animated, StyleProp, ViewStyle,
 } from 'react-native';
 import Colors from "@/constants/Colors";
 
 interface SwitchProps {
     text?: string,
+    style?: StyleProp<ViewStyle> | null,
+    state: boolean;
+    setState: (value: boolean) => void;
+    type?: 'default' | 'lock'
 }
 
-const Switch: React.FC<SwitchProps> = ({ text}) => {
-    const [checked, setChecked] = useState(false);
+const Switch: React.FC<SwitchProps> = ({
+                                           text,
+                                           style = null,
+                                           state,
+                                           setState,
+                                           type = 'default'
+                                       }) => {
     const moveAnimation = useRef(new Animated.Value(0)).current;
+
     useEffect(() => {
-        if (checked) {
+        if (state) {
             Animated.timing(moveAnimation, {
                 toValue: 16,
                 duration: 300,
@@ -27,17 +37,26 @@ const Switch: React.FC<SwitchProps> = ({ text}) => {
                 useNativeDriver: true,
             }).start();
         }
-    }, [checked])
+    }, [state])
+
+    let styles;
+
+    if (type === 'lock') {
+        styles = stylesLock;
+    } else {
+        styles = stylesDefault;
+    }
 
     return (
-        <Pressable style={ styles.container } onPress={ () => setChecked(!checked) }>
-            <Text style={ styles.text }>{ text }</Text>
-            <View style={ [styles.switchBackground,
-                checked ? {
-                backgroundColor: Colors.light.blue["50"],
-            } : {
-                backgroundColor: Colors.light.base["30"],
-            }] }>
+        <Pressable style={ [styles.container, style] } onPress={ () => setState(!state) }>
+            <Text style={ [
+                styles.text, style,
+                state ? styles.textColorOn : styles.textColorOff
+            ]}>{ text }</Text>
+            <View style={ [
+                styles.switchBackground,
+                state ? styles.switchBackgroundOn : styles.switchBackgroundOff]
+            }>
                 <Animated.View style={{
                     borderRadius: 200,
                     width: 20,
@@ -50,22 +69,69 @@ const Switch: React.FC<SwitchProps> = ({ text}) => {
     )
 }
 
-const styles = StyleSheet.create({
+const stylesDefault = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
     },
     text: {
-        flex: 1,
         fontFamily: "Inter",
         fontSize: 14,
+    },
+    textColorOn: {
+        color: Colors.light.base["90"],
+    },
+    textColorOff: {
+        color: Colors.light.base["90"],
     },
     switchBackground: {
         borderRadius: 200,
         width: 40,
         height: 24,
         padding: 2,
+    },
+    switchBackgroundOn: {
+        backgroundColor: Colors.light.blue["50"],
+    },
+    switchBackgroundOff: {
+        backgroundColor: Colors.light.base["30"],
+    },
+    switchCircle: {
+        borderRadius: 200,
+        width: 20,
+        height: 20,
+        backgroundColor: Colors.light.base["0"],
+    },
+});
+
+const stylesLock = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
+    text: {
+        fontFamily: "Inter",
+        fontSize: 16,
+    },
+    textColorOn: {
+        color: Colors.light.blue["50"],
+    },
+    textColorOff: {
+        color: Colors.light.red["60"],
+    },
+    switchBackground: {
+        borderRadius: 200,
+        width: 40,
+        height: 24,
+        padding: 2,
+    },
+    switchBackgroundOn: {
+        backgroundColor: Colors.light.blue["50"],
+    },
+    switchBackgroundOff: {
+        backgroundColor: Colors.light.red["60"],
     },
     switchCircle: {
         borderRadius: 200,

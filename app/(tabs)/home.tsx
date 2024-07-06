@@ -1,50 +1,21 @@
 import React from "react";
-import {Text, View, StyleSheet, FlatList, ScrollView, StatusBar} from 'react-native';
+import { Text, View, StyleSheet, ScrollView, StatusBar, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {useRouter} from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
 import Button from "@/components/buttons/Button";
 import ImageCard from "@/components/cards/ImageCard";
-import DeviceWideCard from "@/components/cards/DeviceWideCard";
-
-const cardsData = [
-    {
-        image: null,
-        title: 'Title 1',
-        subtitle: 'Subtitle 1',
-    },
-    {
-        image: null,
-        title: 'Title 2',
-        subtitle: 'Subtitle 2',
-    },
-    {
-        image: null,
-        title: 'Title 3',
-        subtitle: 'Subtitle 3',
-    },
-];
-
-const devicesData = [
-    {
-        image: null,
-        title: 'TV',
-        subtitle: 'Living room',
-    },
-    {
-        image: null,
-        title: 'Lamp',
-        subtitle: 'Bedroom',
-    },
-    {
-        image: null,
-        title: 'Aircooler',
-        subtitle: 'Kitchen',
-    },
-]
+import DeviceCard from "@/components/cards/DeviceCard";
 
 const Home = () => {
+    const router = useRouter()
+
+    const windowWidth = Dimensions.get('window').width - 32 - 8 * (roomsData.length - 1);
+    let cardWidth = windowWidth / roomsData.length;
+    if (cardWidth < 144) cardWidth = 144;
+
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
@@ -53,7 +24,7 @@ const Home = () => {
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"}>
                 <View style={ styles.contentContainer }>
                     <View style={ styles.infoCards }>
-                        <InfoCard icon={ "thermostat" } title={ "Inside\ntemperature" } info={ "26" }/>
+                        <InfoCard icon={ "thermostat" } title={ "Inside\ntemperature" } info={ "26°" }/>
                         <InfoCard icon={ "devices-other" } title={ "Active\ndevices" } info={ "5" }/>
                         <InfoCard icon={ "bolt" } title={ "Electricity usage" } info={ "36 kWh" }/>
                     </View>
@@ -61,20 +32,32 @@ const Home = () => {
                     <View style={ styles.roomsContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Text style={ styles.roomsTitle }>{ "Your Rooms" }</Text>
-                            <Button text={ "See all" } type={ "tertiary" } />
+                            <Button text={ "See all" } type={ "tertiary" }
+                                    onPress={() => router.navigate('room/rooms') } />
                         </View>
-
-                        <FlatList
-                            style={{ overflow: 'visible' }}
-                            horizontal={ true }
-                            data={ cardsData }
-                            showsHorizontalScrollIndicator={ false }
-                            overScrollMode={ "never" }
-                            renderItem={({item}) => <ImageCard image={ item.image } title={ item.title } subtitle={ item.subtitle }/>}
-                            ItemSeparatorComponent={() => <View style={{ width: 8 }}/>}
-                            keyExtractor={item => item.title}
-                        />
                     </View>
+
+                    <ScrollView style={ styles.scrollContainer }
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                overScrollMode={'never'}>
+                        <View style={{ width: 12 }}/>
+                        <View style={{ flexDirection: 'row' }}>
+                            { roomsData.map((item, index) => (
+                                <View key={item.title}
+                                      style={{ marginHorizontal: 4 }}>
+                                    <ImageCard image={ item.image }
+                                               title={ item.title }
+                                               subtitle={ item.subtitle }
+                                               style={{ height: 144, width: cardWidth, }}
+                                               key={ index }
+                                               onPress={ () => router.navigate({ pathname: "room/rooms", params: { redirect: 1, room: item.title }})}
+                                    />
+                                </View>
+                            ))}
+                        </View>
+                        <View style={{ width: 12 }}/>
+                    </ScrollView>
 
                     <View style={ styles.recentDevicesContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -84,10 +67,11 @@ const Home = () => {
 
                         <View style={{ gap: 12 }}>
                             { devicesData.map((device, index) => (
-                                <DeviceWideCard key={ index }
-                                                image={ device.image }
-                                                title={ device.title }
-                                                subtitle={ device.subtitle }/>
+                                <DeviceCard key={ index }
+                                            image={ device.image }
+                                            title={ device.title }
+                                            subtitle={ device.subtitle }
+                                            type={ 'horizontal' }/>
                             ))}
                         </View>
                     </View>
@@ -105,27 +89,67 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         flexDirection: "column",
+        paddingVertical: 16,
         gap: 16,
-        padding: 16,
     },
     infoCards: {
+        paddingHorizontal: 16,
         height: 120,
         flexDirection: "row",
         gap: 16,
     },
     roomsContainer: {
-        overflow: 'visible',
+        paddingHorizontal: 16,
         gap: 16,
-        paddingVertical: 20,
+        paddingTop: 20,
     },
     roomsTitle: {
         flex: 3,
         fontFamily: "Inter",
         fontSize: 20,
     },
+    scrollContainer: {
+        flex: 1,
+        paddingBottom: 20,
+    },
     recentDevicesContainer: {
+        paddingHorizontal: 16,
         gap: 16,
     }
 });
+
+const roomsData = [
+    {
+        image: "https://www.mebelkaliningrada.ru/wp-content/uploads/2018/12/2750880675.jpg",
+        title: 'Living room', subtitle: '6 devices'
+    },
+    {
+        image: "https://colodu.club/uploads/posts/2022-10/1666684356_21-colodu-club-p-master-spalnya-planirovka-krasivo-21.jpg",
+        title: 'Bedroom', subtitle: '7 devices'
+    },
+    {
+        image: "https://www.service-general.gr/media/widgetkit/kitchen5-c512f9d4d63cc58aa6469df0fd830991.jpg",
+        title: 'Kitchen', subtitle: '9 devices'
+    },
+    {
+        image: "https://gagaru.club/uploads/posts/2023-02/thumbs/1676687091_gagaru-club-p-krasivaya-prikhozhaya-v-dome-vkontakte-8.jpg",
+        title: 'Hallway', subtitle: '3 devices'
+    },
+];
+
+const devicesData = [
+    {
+        image: "https://cdn.mos.cms.futurecdn.net/ZW4ZjyfpcZgoDQnmcw6YLK.jpg",
+        title: 'TV', subtitle: 'Living room',
+    },
+    {
+        image: "https://www.ikea.com/us/en/images/products/blidvaeder-table-lamp-off-white-ceramic-beige__1059592_pe849717_s5.jpg",
+        title: 'Lamp', subtitle: 'Bedroom',
+    },
+    {
+        image: "https://www.netrinc.com/wp-content/uploads/2023/01/Buying-a-Wall-Mounted-Air-Conditioner.jpg",
+        title: 'Air cooler', subtitle: 'Kitchen',
+    }
+]
 
 export default Home;

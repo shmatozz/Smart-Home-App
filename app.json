@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "SmartHomeApp",
+    "name": "SmartHome",
     "slug": "SmartHomeApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#5B84DA"
     },
     "ios": {
       "supportsTablet": true
@@ -19,7 +19,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.shmatozz.SmartHomeApp"
+    },
+    "androidNavigationBar": {
+      "visible": "leanback"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +35,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "166ccabd-d392-4c16-b666-252da9028d4f"
+      }
     }
   }
 }

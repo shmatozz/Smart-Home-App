@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import {Text, View, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-native";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '@/constants/Colors';
 
@@ -9,7 +9,9 @@ interface ButtonProps {
     text?: string;
     size?: 'S' | 'M';
     type?: 'primary' | 'secondary' | 'tertiary';
+    disabled?: boolean;
     onPress?: () => void;
+    style?: StyleProp<ViewStyle> | null;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,12 +20,14 @@ const Button: React.FC<ButtonProps> = ({
                                            text = "",
                                            size = 'S',
                                            type = 'primary',
+                                           disabled = false,
                                            onPress = () => console.log("Button pressed"),
+                                           style = null,
                                        }) => {
     const [isPress, setIsPress] = useState(false);
 
     let buttonSize;
-    let buttonTextSize;
+    let buttonText;
     let buttonStyle;
     let iconSize;
 
@@ -43,16 +47,20 @@ const Button: React.FC<ButtonProps> = ({
 
     if (size === 'M') {
         buttonSize = [styles.container, { height: 52 }];
-        buttonTextSize = [buttonStyle.buttonText, { fontSize: 16 }];
+        buttonText = [buttonStyle.buttonText, { fontSize: 16 }];
         iconSize = 24;
     } else {
         buttonSize = styles.container;
-        buttonTextSize = buttonStyle.buttonText;
+        buttonText = buttonStyle.buttonText;
         iconSize = 16;
     }
 
+    if (disabled && (type == 'secondary' || type == 'tertiary')) {
+        buttonText = [buttonText, { color: Colors.light.base["20"] }]
+    }
+
     const touchProps = {
-        style: isPress ? buttonStyle.pressed : buttonStyle.default,
+        style: disabled ? buttonStyle.disabled : (isPress ? [buttonStyle.pressed, style] : [buttonStyle.default, style]),
         onPressIn: () => setIsPress(true),
         onPressOut: () => setIsPress(false),
         onPress: onPress,
@@ -64,7 +72,7 @@ const Button: React.FC<ButtonProps> = ({
                 {leftIcon && (
                     <MaterialIcons name={leftIcon} size={iconSize} color={buttonStyle.iconColor.color} />
                 )}
-                <Text style={buttonTextSize}>{text}</Text>
+                <Text style={ buttonText }>{text}</Text>
                 {rightIcon && (
                     <MaterialIcons name={rightIcon} size={iconSize} color={buttonStyle.iconColor.color} />
                 )}
@@ -92,13 +100,18 @@ const styles = StyleSheet.create({
 
 const stylesPrimary = StyleSheet.create({
     default: {
-        flex: 1,
+        width: 'auto',
         backgroundColor: Colors.light.blue["50"],
         borderRadius: 6,
     },
     pressed: {
-        flex: 1,
+        width: 'auto',
         backgroundColor: Colors.light.blue["70"],
+        borderRadius: 6,
+    },
+    disabled: {
+        width: 'auto',
+        backgroundColor: Colors.light.base["40"],
         borderRadius: 6,
     },
     buttonText: {
@@ -113,18 +126,25 @@ const stylesPrimary = StyleSheet.create({
 
 const stylesSecondary = StyleSheet.create({
     default: {
-        flex: 1,
+        width: 'auto',
         borderRadius: 6,
         borderStyle: "solid",
         borderColor: Colors.light.blue["50"],
         borderWidth: 2,
     },
     pressed: {
-        flex: 1,
+        width: 'auto',
         backgroundColor: Colors.light.blue["10"],
         borderRadius: 6,
         borderStyle: "solid",
         borderColor: Colors.light.blue["50"],
+        borderWidth: 2,
+    },
+    disabled: {
+        width: 'auto',
+        borderRadius: 6,
+        borderStyle: "solid",
+        borderColor: Colors.light.base["20"],
         borderWidth: 2,
     },
     buttonText: {
@@ -139,12 +159,16 @@ const stylesSecondary = StyleSheet.create({
 
 const stylesTertiary = StyleSheet.create({
     default: {
-        flex: 1,
+        width: 'auto',
         borderRadius: 6,
     },
     pressed: {
-        flex: 1,
+        width: 'auto',
         backgroundColor: Colors.light.blue["5"],
+        borderRadius: 6,
+    },
+    disabled: {
+        width: 'auto',
         borderRadius: 6,
     },
     buttonText: {

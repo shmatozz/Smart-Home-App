@@ -16,6 +16,9 @@ interface TextInputProps {
     leftIcon?: keyof typeof MaterialIcons.glyphMap | null;
     rightIcon?: keyof typeof MaterialIcons.glyphMap | null;
     size?: 'S' | 'M';
+    password?: boolean;
+    text: string;
+    onChangeText: (text: string) => void;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -24,8 +27,10 @@ const TextInput: React.FC<TextInputProps> = ({
                                                  leftIcon = null,
                                                  rightIcon = null,
                                                  size = 'S',
+                                                 password = false,
+                                                 text,
+                                                 onChangeText,
                                              }) => {
-    const [text, setText] = useState('');
     const [focused, setFocused] = useState(false);
 
     let inputContainer;
@@ -76,17 +81,21 @@ const TextInput: React.FC<TextInputProps> = ({
                         {(focused || text.length > 0) && <DefaultTextInput
                             autoFocus={ focused }
                             style={{ fontSize: textSize, color: Colors.light.base['90']}}
-                            onChangeText={ text => setText(text) }
+                            onChangeText={ onChangeText }
                             onPressIn={ () => setFocused(true) }
                             cursorColor={ Colors.light.base["40"] }
                             selectionColor={ Colors.light.blue["50"] }
                             onSubmitEditing={ () => setFocused(false) }
+                            secureTextEntry={ password }
+                            value={ text }
+                            onEndEditing={ () => setFocused(false) }
+                            autoCapitalize={'none'}
                         />}
 
                     </View>
 
                     <Pressable style={{ height: '100%', justifyContent: 'center' }} onPress={() => {
-                        setText("");
+                        onChangeText("");
                         setFocused(false);
                     }}>
                         { text.length > 0 && <MaterialIcons name="clear" size={ iconSize } color={ Colors.light.base["50"] } /> }
@@ -128,6 +137,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height: 50,
+        width: '100%',
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
@@ -139,6 +149,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height: 50,
+        width: '100%',
         borderWidth: 1,
         borderColor: Colors.light.blue['50'],
         borderRadius: 5,
