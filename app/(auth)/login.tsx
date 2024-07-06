@@ -47,7 +47,7 @@ const Login = () => {
                                 type={ 'primary' }
                                 style={{ width: '100%' }}
                                 disabled={ !filled }
-                                onPress={ () => { filled ? router.navigate("../(tabs)/home") : console.log("Not filled") } }/>
+                                onPress={ () => { filled ? router.replace("../(tabs)/home") : console.log("Not filled") } }/>
 
                         <Button text={ "I don't have an account" }
                                 size={ 'M' }

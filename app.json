@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "SmartHomeApp",
+    "name": "SmartHome",
     "slug": "SmartHomeApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,6 +21,9 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.shmatozz.SmartHomeApp"
+    },
+    "androidNavigationBar": {
+      "visible": "leanback"
     },
     "web": {
       "bundler": "metro",

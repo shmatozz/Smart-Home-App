@@ -7,7 +7,7 @@ import Stepper from "@/components/visual/Stepper";
 import Colors from "@/constants/Colors";
 import Button from "@/components/buttons/Button";
 import IconButton from "@/components/buttons/IconButton";
-import {useRouter} from "expo-router";
+import Login from "@/app/(auth)/login";
 
 const onboardingText = [
     {
@@ -25,46 +25,52 @@ const onboardingText = [
 ]
 
 const Onboarding = () => {
-    const router = useRouter();
-
     const [step, setStep] = useState(1);
+    const [watched, setWatched] = useState(false)
 
     return (
         <ImageBackground source={ require("../../assets/images/background.png")}
                          style={ styles.imageBackground } >
-            <SafeAreaView style={ styles.safeArea }>
-                <BlurView style={ styles.blurContainer } intensity={16.4}>
-                    <View style={ styles.stepperContainer }>
-                        <Stepper stepsCount={ 3 } currentStep={ step }/>
-                    </View>
+            {
+                !watched &&
+                <SafeAreaView style={ styles.safeArea }>
+                    <BlurView style={ styles.blurContainer } intensity={16.4}>
+                        <View style={ styles.stepperContainer }>
+                            <Stepper stepsCount={ 3 } currentStep={ step }/>
+                        </View>
 
-                    <View style={ styles.textContainer }>
-                        <Text style={ styles.title }>{ onboardingText[step - 1].title }</Text>
-                        <Text style={ styles.description }>{ onboardingText[step - 1].description }</Text>
-                    </View>
+                        <View style={ styles.textContainer }>
+                            <Text style={ styles.title }>{ onboardingText[step - 1].title }</Text>
+                            <Text style={ styles.description }>{ onboardingText[step - 1].description }</Text>
+                        </View>
 
-                    <View style={ styles.buttonsContainer }>
-                        {
-                            step <= 2 &&
-                            <Button text={"Skip"} type={'tertiary'} size={'M'} onPress={ () => {
-                                router.replace('../(auth)/login')
-                            }}/>
-                        }
-                        {
-                            step <= 2 &&
-                            <IconButton icon={'arrow-forward'} size={'M'} onPress={() => {
-                                setStep(step + 1)
-                            }}/>
-                        }
-                        {
-                            step == 3 &&
-                            <Button text={"Let's go"} type={'primary'} size={'M'} rightIcon={'arrow-forward'} onPress={() => {
-                                router.replace('../(auth)/login')
-                            }} style={{ flex: 1 }}/>
-                        }
-                    </View>
-                </BlurView>
-            </SafeAreaView>
+                        <View style={ styles.buttonsContainer }>
+                            {
+                                step <= 2 &&
+                                <Button text={"Skip"} type={'tertiary'} size={'M'} onPress={ () => {
+                                    setWatched(true)
+                                }}/>
+                            }
+                            {
+                                step <= 2 &&
+                                <IconButton icon={'arrow-forward'} size={'M'} onPress={() => {
+                                    setStep(step + 1)
+                                }}/>
+                            }
+                            {
+                                step == 3 &&
+                                <Button text={"Let's go"} type={'primary'} size={'M'} rightIcon={'arrow-forward'} onPress={() => {
+                                    setWatched(true)
+                                }} style={{ flex: 1 }}/>
+                            }
+                        </View>
+                    </BlurView>
+                </SafeAreaView>
+            }
+            {
+                watched &&
+                <Login/>
+            }
         </ImageBackground>
     )
 }
