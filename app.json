@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.shmatozz.SmartHomeApp"
+      "package": "com.shmatozz.SmartHomeApp",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "androidNavigationBar": {
       "visible": "leanback"
