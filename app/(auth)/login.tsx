@@ -7,6 +7,7 @@ import Colors from "@/constants/Colors";
 import Button from "@/components/buttons/Button";
 import {useRouter} from "expo-router";
 import TextInput from "@/components/text/TextInput";
+import {setItem} from "@/utils/AsyncStorage";
 
 const Login = () => {
     const router = useRouter();
@@ -47,7 +48,14 @@ const Login = () => {
                                 type={ 'primary' }
                                 style={{ width: '100%' }}
                                 disabled={ !filled }
-                                onPress={ () => { filled ? router.replace("../(tabs)/home") : console.log("Not filled") } }/>
+                                onPress={ () => {
+                                    if (filled) {
+                                        setItem("logged", true);
+                                        router.replace("../(tabs)/home")
+                                    } else {
+                                        console.log("Not filled")
+                                    }
+                                } }/>
 
                         <Button text={ "I don't have an account" }
                                 size={ 'M' }

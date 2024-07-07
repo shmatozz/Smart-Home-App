@@ -8,6 +8,7 @@ import Colors from "@/constants/Colors";
 import Button from "@/components/buttons/Button";
 import IconButton from "@/components/buttons/IconButton";
 import Login from "@/app/(auth)/login";
+import {setItem} from "@/utils/AsyncStorage";
 
 const onboardingText = [
     {
@@ -48,19 +49,21 @@ const Onboarding = () => {
                             {
                                 step <= 2 &&
                                 <Button text={"Skip"} type={'tertiary'} size={'M'} onPress={ () => {
-                                    setWatched(true)
+                                    setWatched(true);
+                                    setItem("firstLaunch", false).then();
                                 }}/>
                             }
                             {
                                 step <= 2 &&
                                 <IconButton icon={'arrow-forward'} size={'M'} onPress={() => {
-                                    setStep(step + 1)
+                                    setStep(step + 1);
                                 }}/>
                             }
                             {
                                 step == 3 &&
                                 <Button text={"Let's go"} type={'primary'} size={'M'} rightIcon={'arrow-forward'} onPress={() => {
-                                    setWatched(true)
+                                    setWatched(true);
+                                    setItem("firstLaunch", false).then();
                                 }} style={{ flex: 1 }}/>
                             }
                         </View>
