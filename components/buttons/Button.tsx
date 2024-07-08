@@ -1,35 +1,35 @@
 import React, { useState } from "react";
 import {Text, View, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-native";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '@/constants/Colors';
 
 interface ButtonProps {
-    leftIcon?: keyof typeof MaterialIcons.glyphMap;
-    rightIcon?: keyof typeof MaterialIcons.glyphMap;
+    leftIcon?: boolean;
+    rightIcon?: boolean;
     text?: string;
     size?: 'S' | 'M';
     type?: 'primary' | 'secondary' | 'tertiary';
     disabled?: boolean;
     onPress?: () => void;
     style?: StyleProp<ViewStyle> | null;
+    children?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
-                                           leftIcon,
-                                           rightIcon,
+                                           leftIcon = false,
+                                           rightIcon= false,
                                            text = "",
                                            size = 'S',
                                            type = 'primary',
                                            disabled = false,
                                            onPress = () => console.log("Button pressed"),
                                            style = null,
+                                           children,
                                        }) => {
     const [isPress, setIsPress] = useState(false);
 
     let buttonSize;
     let buttonText;
     let buttonStyle;
-    let iconSize;
 
     switch (type) {
         case 'primary':
@@ -48,11 +48,9 @@ const Button: React.FC<ButtonProps> = ({
     if (size === 'M') {
         buttonSize = [styles.container, { height: 52 }];
         buttonText = [buttonStyle.buttonText, { fontSize: 16 }];
-        iconSize = 24;
     } else {
         buttonSize = styles.container;
         buttonText = buttonStyle.buttonText;
-        iconSize = 16;
     }
 
     if (disabled && (type == 'secondary' || type == 'tertiary')) {
@@ -67,15 +65,17 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     return (
-        <Pressable {...touchProps}>
-            <View style={buttonSize}>
-                {leftIcon && (
-                    <MaterialIcons name={leftIcon} size={iconSize} color={buttonStyle.iconColor.color} />
-                )}
-                <Text style={ buttonText }>{text}</Text>
-                {rightIcon && (
-                    <MaterialIcons name={rightIcon} size={iconSize} color={buttonStyle.iconColor.color} />
-                )}
+        <Pressable { ...touchProps }>
+            <View style={ buttonSize }>
+                {
+                    leftIcon && children
+                }
+
+                <Text style={ buttonText }>{ text }</Text>
+
+                {
+                    rightIcon && children
+                }
             </View>
         </Pressable>
     );

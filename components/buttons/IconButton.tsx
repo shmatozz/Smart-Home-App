@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '@/constants/Colors';
 
 interface ButtonProps {
-    icon?: keyof typeof MaterialIcons.glyphMap;
     size?: 'S' | 'M';
     type?: 'primary' | 'secondary' | 'tertiary';
     disabled?: boolean;
     onPress?: () => void;
+    children: React.ReactNode;
 }
 
 const IconButton: React.FC<ButtonProps> = ({
-                                           icon,
                                            size = 'S',
                                            type = 'primary',
                                            disabled = false,
                                            onPress = () => console.log("Button pressed"),
+                                           children,
                                        }) => {
     const [isPress, setIsPress] = useState(false);
 
     let buttonSize;
     let buttonStyle;
-    let iconSize;
 
     switch (type) {
         case 'primary':
@@ -40,10 +38,8 @@ const IconButton: React.FC<ButtonProps> = ({
 
     if (size === 'M') {
         buttonSize = 52;
-        iconSize = 24;
     } else {
         buttonSize = 40;
-        iconSize = 16;
     }
 
     const touchProps = {
@@ -59,7 +55,7 @@ const IconButton: React.FC<ButtonProps> = ({
     return (
         <Pressable {...touchProps}>
             <View style={ styles.container }>
-                <MaterialIcons name={ icon } size={ iconSize } color={ buttonStyle.iconColor.color } />
+                { children }
             </View>
         </Pressable>
     );

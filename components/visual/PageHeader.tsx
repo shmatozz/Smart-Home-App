@@ -33,23 +33,35 @@ const Header: React.FC<HeaderProps> = ({
                                        }) => {
     return (
         <View style={ styles.container }>
-            { backIcon && <Pressable onPress={ () => onBackPress() }>
-                <MaterialIcons name={"arrow-back"} size={ 28 } color={ Colors.light.base['70'] }/>
-            </Pressable> }
+            {
+                backIcon &&
+                <Pressable onPress={ () => onBackPress() }>
+                    <MaterialIcons name={"arrow-back"} size={ 28 } color={ Colors.light.base['70'] }/>
+                </Pressable>
+            }
 
-            { accountIcon && <Pressable onPress={ () => onAccountPress() }>
-                <MaterialIcons name="account-circle" size={ 32 } color={ Colors.light.base['70'] }/>
-            </Pressable> }
+            {
+                accountIcon &&
+                <Pressable onPress={ () => onAccountPress() }>
+                    <MaterialIcons name="account-circle" size={ 32 } color={ Colors.light.base['70'] }/>
+                </Pressable>
+            }
 
             <Text style={ styles.text }>{ title }</Text>
 
-            { firstIcon && <Pressable onPress={ () => onFirstPress() }>
-                <MaterialIcons name={ firstIcon } size={ 28 } color={ Colors.light.base['70'] }/>
-            </Pressable> }
+            {
+                firstIcon &&
+                <Pressable onPress={ () => onFirstPress() }>
+                    <MaterialIcons name={ firstIcon } size={ 28 } color={ Colors.light.base['70'] }/>
+                </Pressable>
+            }
 
-            { secondIcon && <Pressable onPress={ () => onSecondPress() }>
-                <MaterialIcons name={ secondIcon } size={ 28 } color={ Colors.light.base['70'] }/>
-            </Pressable> }
+            {
+                secondIcon &&
+                <Pressable onPress={ () => onSecondPress() }>
+                    <MaterialIcons name={ secondIcon } size={ 28 } color={ Colors.light.base['70'] }/>
+                </Pressable>
+            }
         </View>
     )
 }

@@ -6,22 +6,24 @@ import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-na
 
 interface DropdownSelectProps {
     placeholder?: string;
-    leftIcon?: keyof typeof MaterialIcons.glyphMap | null;
+    leftIcon?: boolean;
     options: string[];
     selectedOption: string;
     onOptionSelected: (option: string) => void;
     size?: 'S' | 'M';
-    style?: StyleProp<ViewStyle> | null,
+    style?: StyleProp<ViewStyle> | null;
+    children?: React.ReactNode;
 }
 
 const DropdownSelect: React.FC<DropdownSelectProps> = ({
                                                            placeholder = 'Select',
-                                                           leftIcon = null,
+                                                           leftIcon = false,
                                                            options,
                                                            selectedOption,
                                                            onOptionSelected,
                                                            size = 'M',
                                                            style = null,
+                                                           children,
                                                        }) => {
     const [isOpen, setIsOpen] = useState(false);
     const optionsHeight = useSharedValue(0);
@@ -57,17 +59,17 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     return (
         <View style={ [styles.contentContainer, style] }>
             <Animated.View style={ [styles.optionsContainer, animatedStyle] }>
-                { options.map((option, index) => (
-                    <Pressable key={ index } onPress={ () => handleOptionSelect(option) } style={ styles.option }>
-                        <Text style={ styles.optionText }>{ option }</Text>
-                    </Pressable>
-                )) }
+                {
+                    options.map((option, index) => (
+                        <Pressable key={ index } onPress={ () => handleOptionSelect(option) } style={ styles.option }>
+                            <Text style={ styles.optionText }>{ option }</Text>
+                        </Pressable>
+                    ))
+                }
             </Animated.View>
 
             <Pressable onPress={ toggleDropdown } style={ styles.selectedContainer }>
-                { leftIcon && <MaterialIcons name={ leftIcon }
-                                             size={ 24 }
-                                             color={ Colors.light.blue["50"] }/> }
+                { leftIcon && children }
 
                 <Text style={ selectedOption === 'null' ? styles.placeholderText : styles.selectedText }>
                     { selectedOption === 'null' ? placeholder : selectedOption }

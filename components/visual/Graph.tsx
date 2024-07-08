@@ -2,6 +2,8 @@ import React, { useEffect, useState} from "react";
 import {View, Text, StyleSheet, Pressable} from "react-native";
 import Colors from "@/constants/Colors";
 import DropdownSelect from "@/components/choice/DropdownSelect";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const Graph = () => {
     const [period, setPeriod] = useState('Day');
@@ -53,14 +55,18 @@ const Graph = () => {
                                 options={ ['Day', 'Week', 'Month'] }
                                 selectedOption={ period }
                                 onOptionSelected={ setPeriod }
-                                leftIcon={ 'edit-calendar' }
-                                style={{ flex: 1 }}/>
+                                leftIcon={ true }
+                                style={{ flex: 1 }}>
+                    <MaterialCommunityIcons name={ "calendar-month" } size={ 24 } color={ Colors.light.blue["50"] }/>
+                </DropdownSelect>
 
                 <DropdownSelect options={ ['All', 'Air', 'Lights', 'Audio'] }
                                 selectedOption={ devicesCategory }
                                 onOptionSelected={ setDevicesCategory }
-                                leftIcon={ 'devices-other' }
-                                style={{ flex: 1 }}/>
+                                leftIcon={ true }
+                                style={{ flex: 1 }}>
+                    <MaterialIcons name={ "devices-other" } size={ 24 } color={ Colors.light.blue["50"] }/>
+                </DropdownSelect>
             </View>
         </View>
     );

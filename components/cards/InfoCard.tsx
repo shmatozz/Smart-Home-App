@@ -5,20 +5,19 @@ import {
     StyleSheet, Pressable,
 } from 'react-native';
 import Colors from "@/constants/Colors";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 interface InfoCardProps {
-    icon: keyof typeof MaterialIcons.glyphMap,
     title: string,
     info: string,
     onPress?: () => void,
+    children: React.ReactNode,
 }
 
 const InfoCard: React.FC<InfoCardProps> = ({
-                                                icon,
                                                 title,
                                                 info,
                                                 onPress = () => console.log("Info card pressed"),
+                                                children,
                                            }) => {
     const touchProps = {
         style: styles.touchContainer,
@@ -28,7 +27,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
     return (
         <Pressable {...touchProps}>
             <View style={ styles.container }>
-                <MaterialIcons name={ icon } size={ 32 } color={ Colors.light.blue['50'] }/>
+                { children }
 
                 <Text style={ styles.title }>{ title }</Text>
 
