@@ -36,26 +36,29 @@ const SegmentedSelect : React.FC<SegmentedSelectProps> = ({
     return (
         <View style={ [styles.container, style] }>
             <Animated.View style={ [styles.animatedBackground, animatedStyle, { width: `${100 / titles.length}%` }] } />
-            { titles.map((title, i) => (
-                <Pressable key={ i }
-                           style={ styles.optionContainer }
-                           onPress={ () => handlePress(i) }
-                           onLayout={ (event) => {
-                               if (optionWidth === 0) {
-                                   const { width } = event.nativeEvent.layout;
-                                   setOptionWidth(width);
-                               }
-                           } }
-                >
-                    { icons && (
-                        <MaterialIcons name={ icons[i] }
-                                       size={ 20 }
-                                       color={ i === selected ? selectedOption.optionIcon.color : styles.optionIcon.color }
-                        />
-                    ) }
-                    <Text style={ i === selected ? selectedOption.optionText : styles.optionText }>{ title }</Text>
-                </Pressable>
-            ))}
+            {
+                titles.map((title, i) => (
+                    <Pressable key={ i }
+                               style={ styles.optionContainer }
+                               onPress={ () => handlePress(i) }
+                               onLayout={ (event) => {
+                                   if (optionWidth === 0) {
+                                       const { width } = event.nativeEvent.layout;
+                                       setOptionWidth(width);
+                                   }
+                               } }
+                    >
+                        {
+                            icons &&
+                            <MaterialIcons name={ icons[i] }
+                                           size={ 20 }
+                                           color={ i === selected ? selectedOption.optionIcon.color : styles.optionIcon.color }
+                            />
+                        }
+                        <Text style={ i === selected ? selectedOption.optionText : styles.optionText }>{ title }</Text>
+                    </Pressable>
+                ))
+            }
         </View>
     );
 };
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
     },
     animatedBackground: {
         position: 'absolute',
-        height: '100%',
+        height: '102%',
         backgroundColor: Colors.light.blue['50'],
         zIndex: -1,
     },
