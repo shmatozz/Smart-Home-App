@@ -6,6 +6,8 @@ import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
 import React from "react";
 import DeviceCard from "@/components/cards/DeviceCard";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const Room = () => {
     let router = useRouter();
@@ -31,12 +33,19 @@ const Room = () => {
                 ListHeaderComponent={
                     <View style={ styles.listHeaderContainer }>
                         <View style={ styles.infoCards }>
-                            <InfoCard icon={ "thermostat" }
-                                      title={ "Room\ntemperature" }
+                            <InfoCard title={ "Room\ntemperature" }
                                       info={ "25°" }
-                                      onPress={() => { router.push({ pathname: '../room/climate', params: { room: room.room }}) }}/>
-                            <InfoCard icon={ "devices-other" } title={ "Active\ndevices" } info={ "2" }/>
-                            <InfoCard icon={ "bolt" } title={ "Electricity usage" } info={ "15 kWh" }/>
+                                      onPress={() => { router.push({ pathname: '../room/climate', params: { room: room.room }}) }}>
+                                <MaterialCommunityIcons name={ "thermometer" } size={ 32 } color={ Colors.light.blue["50"]}/>
+                            </InfoCard>
+
+                            <InfoCard title={ "Active\ndevices" } info={ "5" }>
+                                <MaterialIcons name={ "devices-other" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                            </InfoCard>
+
+                            <InfoCard title={ "Electricity usage" } info={ "36 kWh" }>
+                                <MaterialIcons name={ "bolt" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                            </InfoCard>
                         </View>
 
                         <View style={ styles.devicesContainer }>

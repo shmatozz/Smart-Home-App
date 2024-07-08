@@ -64,7 +64,8 @@ const Security = () => {
                         <DropdownSelect options={ ['All', 'Indoors', 'Outdoors'] }
                                         selectedOption={ selectedCameras }
                                         onOptionSelected={ setSelectedCameras }
-                                        size={'S'} />
+                                        size={'S'}>
+                        </DropdownSelect>
                     </View>
 
                     <View style={ styles.camerasPreviewContainer }>

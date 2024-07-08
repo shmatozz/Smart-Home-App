@@ -5,6 +5,7 @@ import Colors from "@/constants/Colors";
 import Header from "@/components/visual/PageHeader";
 import InfoCard from "@/components/cards/InfoCard";
 import Graph from "@/components/visual/Graph";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Stats = () => {
     return (
@@ -16,8 +17,13 @@ const Stats = () => {
 
             <View style={ styles.contentContainer }>
                 <View style={ styles.cardsContainer }>
-                    <InfoCard icon={'calendar-today'} title={'Today\nelectricity used'} info={'44 kWh'}/>
-                    <InfoCard icon={'calendar-month'} title={'This month\nelectricity used'} info={'770 kWh'}/>
+                    <InfoCard title={'Today\nelectricity used'} info={'44 kWh'}>
+                        <MaterialCommunityIcons name={ "calendar-today" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                    </InfoCard>
+
+                    <InfoCard title={'This month\nelectricity used'} info={'770 kWh'}>
+                        <MaterialCommunityIcons name={ "calendar-month" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                    </InfoCard>
                 </View>
 
                 <View style={ styles.graphContainer }>

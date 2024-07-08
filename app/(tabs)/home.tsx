@@ -1,13 +1,16 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView, StatusBar, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {useRouter} from "expo-router";
+import { useRouter } from "expo-router";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
 import Button from "@/components/buttons/Button";
 import ImageCard from "@/components/cards/ImageCard";
 import DeviceCard from "@/components/cards/DeviceCard";
+import {setItem} from "@/utils/AsyncStorage";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 const Home = () => {
     const router = useRouter()
@@ -19,21 +22,33 @@ const Home = () => {
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
-            <Header title={"Welcome, Matvey!"} firstIcon={"notifications"}/>
+            <Header title={"Welcome, Matvey!"} firstIcon={"notifications"} onAccountPress={ () => {
+                setItem("logged", false);
+            }}/>
 
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"}>
                 <View style={ styles.contentContainer }>
                     <View style={ styles.infoCards }>
-                        <InfoCard icon={ "thermostat" } title={ "Inside\ntemperature" } info={ "26°" }/>
-                        <InfoCard icon={ "devices-other" } title={ "Active\ndevices" } info={ "5" }/>
-                        <InfoCard icon={ "bolt" } title={ "Electricity usage" } info={ "36 kWh" }/>
+                        <InfoCard title={ "Inside\ntemperature" } info={ "26°" }>
+                            <MaterialCommunityIcons name={ "thermometer" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                        </InfoCard>
+
+                        <InfoCard title={ "Active\ndevices" } info={ "5" }>
+                            <MaterialIcons name={ "devices-other" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                        </InfoCard>
+
+                        <InfoCard title={ "Electricity usage" } info={ "36 kWh" }>
+                            <MaterialIcons name={ "bolt" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                        </InfoCard>
                     </View>
 
                     <View style={ styles.roomsContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Text style={ styles.roomsTitle }>{ "Your Rooms" }</Text>
+
                             <Button text={ "See all" } type={ "tertiary" }
-                                    onPress={() => router.navigate('room/rooms') } />
+                                    onPress={() => router.navigate('room/rooms') }>
+                            </Button>
                         </View>
                     </View>
 
@@ -43,18 +58,20 @@ const Home = () => {
                                 overScrollMode={'never'}>
                         <View style={{ width: 12 }}/>
                         <View style={{ flexDirection: 'row' }}>
-                            { roomsData.map((item, index) => (
-                                <View key={item.title}
-                                      style={{ marginHorizontal: 4 }}>
-                                    <ImageCard image={ item.image }
-                                               title={ item.title }
-                                               subtitle={ item.subtitle }
-                                               style={{ height: 144, width: cardWidth, }}
-                                               key={ index }
-                                               onPress={ () => router.navigate({ pathname: "room/rooms", params: { redirect: 1, room: item.title }})}
-                                    />
-                                </View>
-                            ))}
+                            {
+                                roomsData.map((item, index) => (
+                                    <View key={item.title}
+                                          style={{ marginHorizontal: 4 }}>
+                                        <ImageCard image={ item.image }
+                                                   title={ item.title }
+                                                   subtitle={ item.subtitle }
+                                                   style={{ height: 144, width: cardWidth, }}
+                                                   key={ index }
+                                                   onPress={ () => router.navigate({ pathname: "room/rooms", params: { redirect: 1, room: item.title }})}
+                                        />
+                                    </View>
+                                ))
+                            }
                         </View>
                         <View style={{ width: 12 }}/>
                     </ScrollView>
@@ -62,17 +79,20 @@ const Home = () => {
                     <View style={ styles.recentDevicesContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Text style={ styles.roomsTitle }>{ "Recent devices" }</Text>
+
                             <Button text={ "See all" } type={ "tertiary" } />
                         </View>
 
                         <View style={{ gap: 12 }}>
-                            { devicesData.map((device, index) => (
-                                <DeviceCard key={ index }
-                                            image={ device.image }
-                                            title={ device.title }
-                                            subtitle={ device.subtitle }
-                                            type={ 'horizontal' }/>
-                            ))}
+                            {
+                                devicesData.map((device, index) => (
+                                    <DeviceCard key={ index }
+                                                image={ device.image }
+                                                title={ device.title }
+                                                subtitle={ device.subtitle }
+                                                type={ 'horizontal' }/>
+                                ))
+                            }
                         </View>
                     </View>
                 </View>

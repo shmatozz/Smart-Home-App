@@ -6,6 +6,7 @@ import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
 import TemperatureConfig from "@/components/visual/TemperatureConfig";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 const RoomClimate = () => {
     const router = useRouter();
@@ -29,9 +30,18 @@ const RoomClimate = () => {
 
             <View style={ styles.contentContainer }>
                 <View style={ styles.infoContainer }>
-                    <InfoCard icon={ "thermostat" } title={ "Room\ntemperature" } info={ "25°" }/>
-                    <InfoCard icon={ "water-drop" } title={ "Humidity" } info={ "45%" }/>
-                    <InfoCard icon={ "co2" } title={ "Oxygen saturation" } info={ "98%" }/>
+                    <InfoCard title={ "Room\ntemperature" } info={ "25°" }>
+                        <MaterialCommunityIcons name={ "thermometer" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                    </InfoCard>
+
+                    <InfoCard title={ "Humidity" } info={ "45%" }>
+                        <MaterialCommunityIcons name={ "water-percent" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                    </InfoCard>
+
+                    <InfoCard title={ "Oxygen saturation" } info={ "98%" }>
+                        <MaterialCommunityIcons name={ "molecule-co2" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                    </InfoCard>
+
                 </View>
 
                 <View style={ styles.settingsContainer }>
