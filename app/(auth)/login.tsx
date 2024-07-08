@@ -1,13 +1,14 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import {View, Text, ImageBackground, StyleSheet, Pressable} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {BlurView} from "expo-blur";
+import { View, Text, ImageBackground, StyleSheet, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BlurView } from "expo-blur";
 import Colors from "@/constants/Colors";
 import Button from "@/components/buttons/Button";
-import {useRouter} from "expo-router";
+import { useRouter } from "expo-router";
 import TextInput from "@/components/text/TextInput";
-import {setItem} from "@/utils/AsyncStorage";
+import { setItem } from "@/utils/AsyncStorage";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
 const Login = () => {
     const router = useRouter();
@@ -74,14 +75,20 @@ const Login = () => {
                         <Button text={ "VK ID" }
                                 size={ 'M' }
                                 type={ 'tertiary' }
+                                leftIcon={ true }
                                 style={{ flex: 1 }}
-                                onPress={ () => { alert("Not supported yet(") } }/>
+                                onPress={ () => { alert("Not supported yet(") } }>
+                            <Entypo name={ 'vk' } size={ 24 } color={ Colors.light.blue["50"] }/>
+                        </Button>
 
                         <Button text={ "Yandex ID" }
                                 size={ 'M' }
                                 type={ 'tertiary' }
+                                leftIcon={ true }
                                 style={{ flex: 1  }}
-                                onPress={ () => { alert("Not supported yet(") } }/>
+                                onPress={ () => { alert("Not supported yet(") } }>
+                            <FontAwesome5 name={ 'yandex-international' } size={ 24 } color={ Colors.light.blue["50"] }/>
+                        </Button>
                     </View>
                 </BlurView>
             </SafeAreaView>

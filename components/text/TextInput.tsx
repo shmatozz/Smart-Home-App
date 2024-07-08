@@ -13,23 +13,25 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 interface TextInputProps {
     placeholder?: string,
     helperText?: string | null,
-    leftIcon?: keyof typeof MaterialIcons.glyphMap | null;
-    rightIcon?: keyof typeof MaterialIcons.glyphMap | null;
+    leftIcon?: boolean;
+    rightIcon?: boolean;
     size?: 'S' | 'M';
     password?: boolean;
     text: string;
     onChangeText: (text: string) => void;
+    children?: React.ReactNode;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
                                                  placeholder,
                                                  helperText = null,
-                                                 leftIcon = null,
-                                                 rightIcon = null,
+                                                 leftIcon = false,
+                                                 rightIcon = false,
                                                  size = 'S',
                                                  password = false,
                                                  text,
                                                  onChangeText,
+                                                 children,
                                              }) => {
     const [focused, setFocused] = useState(false);
 
@@ -72,26 +74,29 @@ const TextInput: React.FC<TextInputProps> = ({
         <View>
             <Pressable {...touchProps}>
                 <View style={ styles.container }>
-
-                    { leftIcon && <MaterialIcons name={ leftIcon } size={ iconSize } color={ focused ? Colors.light.blue["50"] : Colors.light.base["40"] } /> }
+                    {
+                        leftIcon && children
+                    }
 
                     <View style={{ flexDirection: 'column', flex: 1}}>
                         <Text style={[label, text.length > 0 && labelInput, focused && labelFocused]}>{ placeholder }</Text>
 
-                        {(focused || text.length > 0) && <DefaultTextInput
-                            autoFocus={ focused }
-                            style={{ fontSize: textSize, color: Colors.light.base['90']}}
-                            onChangeText={ onChangeText }
-                            onPressIn={ () => setFocused(true) }
-                            cursorColor={ Colors.light.base["40"] }
-                            selectionColor={ Colors.light.blue["50"] }
-                            onSubmitEditing={ () => setFocused(false) }
-                            secureTextEntry={ password }
-                            value={ text }
-                            onEndEditing={ () => setFocused(false) }
-                            autoCapitalize={'none'}
-                        />}
-
+                        {
+                            (focused || text.length > 0) &&
+                            <DefaultTextInput
+                                autoFocus={ focused }
+                                style={{ fontSize: textSize, color: Colors.light.base['90']}}
+                                onChangeText={ onChangeText }
+                                onPressIn={ () => setFocused(true) }
+                                cursorColor={ Colors.light.base["40"] }
+                                selectionColor={ Colors.light.blue["50"] }
+                                onSubmitEditing={ () => setFocused(false) }
+                                secureTextEntry={ password }
+                                value={ text }
+                                onEndEditing={ () => setFocused(false) }
+                                autoCapitalize={'none'}
+                            />
+                        }
                     </View>
 
                     <Pressable style={{ height: '100%', justifyContent: 'center' }} onPress={() => {
@@ -101,11 +106,17 @@ const TextInput: React.FC<TextInputProps> = ({
                         { text.length > 0 && <MaterialIcons name="clear" size={ iconSize } color={ Colors.light.base["50"] } /> }
                     </Pressable>
 
-                    { rightIcon && <MaterialIcons name={ rightIcon } size={ iconSize } color={ focused ? Colors.light.blue["50"] : Colors.light.base["40"] } /> }
+                    {
+                        rightIcon && children
+                    }
 
                 </View>
             </Pressable>
-            { helperText && <Text style={styles.helperText}>{ helperText }</Text> }
+
+            {
+                helperText &&
+                <Text style={styles.helperText}>{ helperText }</Text>
+            }
         </View>
     );
 };

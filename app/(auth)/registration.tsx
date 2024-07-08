@@ -1,10 +1,11 @@
 import React from "react";
-import {View, Text, ImageBackground, StyleSheet} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {BlurView} from "expo-blur";
+import { View, Text, ImageBackground, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BlurView } from "expo-blur";
 import Colors from "@/constants/Colors";
-import {useRouter} from "expo-router";
+import { useRouter } from "expo-router";
 import Button from "@/components/buttons/Button";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const Registration = () => {
     const router = useRouter();
@@ -34,9 +35,11 @@ const Registration = () => {
                     <Button text={ "Back" }
                             size={ 'M' }
                             type={ 'primary' }
-                            leftIcon={ 'arrow-back' }
+                            leftIcon={ true }
                             style={{ width: '100%' }}
-                            onPress={ () => { router.back() }}/>
+                            onPress={ () => { router.back() }}>
+                        <MaterialIcons name={ 'arrow-back' } size={ 24 } color={ Colors.light.base["0"] }/>
+                    </Button>
                 </BlurView>
             </SafeAreaView>
         </ImageBackground>

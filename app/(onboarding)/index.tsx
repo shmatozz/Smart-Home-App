@@ -1,14 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import {View, Text, ImageBackground, StyleSheet} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {BlurView} from "expo-blur";
+import { View, Text, ImageBackground, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BlurView } from "expo-blur";
 import Stepper from "@/components/visual/Stepper";
 import Colors from "@/constants/Colors";
 import Button from "@/components/buttons/Button";
 import IconButton from "@/components/buttons/IconButton";
 import Login from "@/app/(auth)/login";
-import {setItem} from "@/utils/AsyncStorage";
+import { setItem } from "@/utils/AsyncStorage";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const onboardingText = [
     {
@@ -55,16 +56,20 @@ const Onboarding = () => {
                             }
                             {
                                 step <= 2 &&
-                                <IconButton icon={'arrow-forward'} size={'M'} onPress={() => {
+                                <IconButton size={'M'} onPress={() => {
                                     setStep(step + 1);
-                                }}/>
+                                }}>
+                                    <MaterialIcons name={ 'arrow-forward' } size={ 24 } color={ Colors.light.base['0'] }/>
+                                </IconButton>
                             }
                             {
                                 step == 3 &&
-                                <Button text={"Let's go"} type={'primary'} size={'M'} rightIcon={'arrow-forward'} onPress={() => {
+                                <Button text={"Let's go"} type={'primary'} size={'M'} rightIcon={ true } onPress={() => {
                                     setWatched(true);
                                     setItem("firstLaunch", false).then();
-                                }} style={{ flex: 1 }}/>
+                                }} style={{ flex: 1 }}>
+                                    <MaterialIcons name={ 'arrow-forward' } size={ 24 } color={ Colors.light.base['0'] }/>
+                                </Button>
                             }
                         </View>
                     </BlurView>
