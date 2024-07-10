@@ -10,6 +10,7 @@ import IconButton from "@/components/buttons/IconButton";
 import Login from "@/app/(auth)/login";
 import { setItem } from "@/utils/AsyncStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {BodyS, Headers} from "@/constants/Fonts";
 
 const onboardingText = [
     {
@@ -42,8 +43,13 @@ const Onboarding = () => {
                         </View>
 
                         <View style={ styles.textContainer }>
-                            <Text style={ styles.title }>{ onboardingText[step - 1].title }</Text>
-                            <Text style={ styles.description }>{ onboardingText[step - 1].description }</Text>
+                            <Text style={[ Headers.H4, { color: Colors.light.base["0"], textAlign: 'center' } ]}>
+                                { onboardingText[step - 1].title }
+                            </Text>
+
+                            <Text style={[ BodyS.Regular, { color: Colors.light.base["10"], textAlign: 'center' } ]}>
+                                { onboardingText[step - 1].description }
+                            </Text>
                         </View>
 
                         <View style={ styles.buttonsContainer }>
@@ -109,18 +115,6 @@ const styles = StyleSheet.create({
         gap: 24,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    title: {
-        fontSize: 26,
-        fontFamily: 'Inter',
-        color: Colors.light.base["0"],
-        textAlign: 'center',
-    },
-    description: {
-        fontSize: 14,
-        fontFamily: 'Inter',
-        color: Colors.light.base["10"],
-        textAlign: 'center',
     },
     buttonsContainer: {
         flexDirection: 'row',

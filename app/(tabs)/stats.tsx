@@ -6,6 +6,7 @@ import Header from "@/components/visual/PageHeader";
 import InfoCard from "@/components/cards/InfoCard";
 import Graph from "@/components/visual/Graph";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {Headers} from "@/constants/Fonts";
 
 const Stats = () => {
     return (
@@ -27,7 +28,7 @@ const Stats = () => {
                 </View>
 
                 <View style={ styles.graphContainer }>
-                    <Text style={ styles.title }>Graphics</Text>
+                    <Text style={ Headers.H5 }>Graphics</Text>
 
                     <Graph/>
                 </View>
@@ -54,11 +55,6 @@ const styles = StyleSheet.create({
     graphContainer: {
         flex: 1,
         paddingTop: 20,
-    },
-    title: {
-        fontSize: 20,
-        fontFamily: 'Inter',
-        color: Colors.light.base["90"],
     },
     selectContainer: {
         paddingVertical: 16,

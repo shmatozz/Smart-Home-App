@@ -8,6 +8,7 @@ import React from "react";
 import DeviceCard from "@/components/cards/DeviceCard";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Headers } from "@/constants/Fonts";
 
 const Room = () => {
     let router = useRouter();
@@ -49,7 +50,7 @@ const Room = () => {
                         </View>
 
                         <View style={ styles.devicesContainer }>
-                            <Text style={ styles.title }>Available devices</Text>
+                            <Text style={ Headers.H5 }>Available devices</Text>
                         </View>
                     </View>
                 }
@@ -99,11 +100,6 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         gap: 16,
     },
-    title: {
-        fontSize: 20,
-        fontFamily: "Inter",
-        color: Colors.light.base["90"]
-    }
 })
 
 const devicesData = [

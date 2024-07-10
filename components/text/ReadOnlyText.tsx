@@ -5,6 +5,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import Colors from "@/constants/Colors";
+import {BodyS, Caption} from "@/constants/Fonts";
 
 
 interface ReadOnlyTextProps {
@@ -18,8 +19,8 @@ const ReadOnlyText: React.FC<ReadOnlyTextProps> = ({
                                              }) => {
     return (
         <View style={ styles.container }>
-            <Text style={ styles.label }>{ label }</Text>
-            <Text style={ styles.text }>{ text }</Text>
+            <Text style={[ Caption.Regular, { color: Colors.light.base["40"] } ]}>{ label }</Text>
+            <Text style={[ BodyS.Regular ]}>{ text }</Text>
         </View>
     );
 };

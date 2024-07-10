@@ -9,6 +9,7 @@ import { useRouter } from "expo-router";
 import TextInput from "@/components/text/TextInput";
 import { setItem } from "@/utils/AsyncStorage";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+import {BodyS} from "@/constants/Fonts";
 
 const Login = () => {
     const router = useRouter();
@@ -39,7 +40,9 @@ const Login = () => {
                                    onChangeText={ setPassword }/>
 
                         <Pressable onPress={ () => console.log("Forget password") }>
-                            <Text style={ styles.forgotPasswordText }>Forgot password?</Text>
+                            <Text style={[ BodyS.Regular, { color: Colors.light.base["40"] }]}>
+                                Forgot password?
+                            </Text>
                         </Pressable>
                     </View>
 
@@ -67,7 +70,11 @@ const Login = () => {
 
                     <View style={ styles.splitterContainer }>
                         <View style={{ flex: 1, height: 2, backgroundColor: "white" }}/>
-                        <Text style={ styles.loginViaText }>or login via</Text>
+
+                        <Text style={[ BodyS.Regular, { color: Colors.light.base["0"] }]}>
+                            or login via
+                        </Text>
+
                         <View style={{ flex: 1, height: 2, backgroundColor: "white" }}/>
                     </View>
 
@@ -119,11 +126,6 @@ const styles = StyleSheet.create({
         gap: 8,
         alignItems: 'flex-end',
     },
-    forgotPasswordText: {
-        fontSize: 14,
-        fontFamily: 'Inter',
-        color: Colors.light.base["40"],
-    },
     buttonsContainer: {
         flex: 1,
         flexDirection: 'column',
@@ -134,11 +136,6 @@ const styles = StyleSheet.create({
         gap: 16,
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    loginViaText: {
-        fontSize: 14,
-        fontFamily: 'Inter',
-        color: Colors.light.base["0"],
     },
     loginViaButtonsContainer: {
         flexDirection: 'row',

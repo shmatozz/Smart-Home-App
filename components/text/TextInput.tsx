@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Colors from "@/constants/Colors";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {BodyM, BodyS, Caption} from "@/constants/Fonts";
 
 
 interface TextInputProps {
@@ -49,18 +50,18 @@ const TextInput: React.FC<TextInputProps> = ({
             inputContainerFocused = styles.inputContainerFocused;
             iconSize = 16;
             textSize = 14;
-            label = styles.label;
-            labelFocused = styles.labelFocused;
-            labelInput = styles.labelInput;
+            label = [BodyS.Regular, { color: Colors.light.base['40'] }];
+            labelFocused = [Caption.Regular, { color: Colors.light.blue['50'] }];
+            labelInput = [Caption.Regular, { color: Colors.light.base['50'] }];
             break;
         case 'M':
             inputContainer = [styles.inputContainer, { height: 64 }];
             inputContainerFocused = [styles.inputContainerFocused, { height: 64 }];
             iconSize = 24;
             textSize = 16;
-            label = [styles.label, { fontSize: 16 }];
-            labelFocused = [styles.labelFocused, { fontSize: 14 } ];
-            labelInput = [styles.labelInput, { fontSize: 14 } ];
+            label = [BodyM.Regular, { color: Colors.light.base['40'] }];
+            labelFocused = [BodyS.Regular, { color: Colors.light.blue['50'] } ];
+            labelInput = [BodyS.Regular, { color: Colors.light.base['50'] } ];
             break
     }
 
@@ -115,7 +116,9 @@ const TextInput: React.FC<TextInputProps> = ({
 
             {
                 helperText &&
-                <Text style={styles.helperText}>{ helperText }</Text>
+                <Text style={[ Caption.Regular, { color: Colors.light.base['40'], marginTop: 4 } ]}>
+                    { helperText }
+                </Text>
             }
         </View>
     );
@@ -128,21 +131,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
-    },
-    label: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.base['40'],
-    },
-    labelFocused: {
-        fontSize: 12,
-        fontFamily: "Inter",
-        color: Colors.light.blue['50'],
-    },
-    labelInput: {
-        fontSize: 12,
-        fontFamily: "Inter",
-        color: Colors.light.base['50'],
     },
     inputContainer: {
         flexDirection: 'column',
@@ -167,12 +155,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.light.base["0"],
         paddingHorizontal: 12,
         paddingVertical: 6,
-    },
-    helperText: {
-        fontSize: 12,
-        fontFamily: "Inter",
-        color: Colors.light.base['40'],
-        marginTop: 4,
     },
 });
 

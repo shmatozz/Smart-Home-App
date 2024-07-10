@@ -4,6 +4,7 @@ import Colors from "@/constants/Colors";
 import DropdownSelect from "@/components/choice/DropdownSelect";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {BodyS, Caption} from "@/constants/Fonts";
 
 const Graph = () => {
     const [period, setPeriod] = useState('Day');
@@ -34,7 +35,9 @@ const Graph = () => {
                             {
                                 selected == index &&
                                 <View style={ styles.infoContainer }>
-                                    <Text style={ styles.infoText }>{ item.consumption + ' kWh'}</Text>
+                                    <Text style={[ Caption.Regular, { color: Colors.light.base["0"] } ]}>
+                                        { item.consumption + ' kWh'}
+                                    </Text>
                                 </View>
                             }
 
@@ -45,7 +48,10 @@ const Graph = () => {
                             ] }
                                        onPress={ () => setSelected(index) }/>
                         </View>
-                        <Text style={ graphStyles.unitText }>{ item.unit }</Text>
+
+                        <Text style={[ BodyS.Regular, { textAlign: 'center' }]}>
+                            { item.unit }
+                        </Text>
                     </View>
                 )) }
             </View>
@@ -92,11 +98,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         zIndex: 1,
     },
-    infoText: {
-        fontSize: 12,
-        fontFamily: "Inter",
-        color: Colors.light.base["0"],
-    }
 })
 
 const graphStyles = StyleSheet.create({
@@ -111,12 +112,6 @@ const graphStyles = StyleSheet.create({
         height: '100%',
         flexDirection: 'column',
         overflow: 'visible',
-    },
-    unitText: {
-        fontSize: 14,
-        fontFamily: 'Inter',
-        color: Colors.light.base["90"],
-        textAlign: 'center',
     },
     barContainer: {
         flex: 1,

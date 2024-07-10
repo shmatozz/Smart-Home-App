@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
     },
     progressValue: {
         fontSize: 28,
-        fontFamily: 'Inter',
+        fontFamily: 'Inter-Medium',
         color: Colors.light.base["80"],
     },
     title: {
         fontSize: 14,
-        fontFamily: 'Inter',
+        fontFamily: 'Inter-Regular',
         color: Colors.light.base["50"],
         top: -10,
     }

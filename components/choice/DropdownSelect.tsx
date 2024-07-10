@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-nat
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Colors from "@/constants/Colors";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import {BodyM, BodyS} from "@/constants/Fonts";
 
 interface DropdownSelectProps {
     placeholder?: string;
@@ -28,7 +29,7 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const optionsHeight = useSharedValue(0);
 
-    let styles: { contentContainer: any; optionsContainer: any; option: any; optionText: any; selectedContainer: any; placeholderText: any; selectedText: any; };
+    let styles: { contentContainer: any; optionsContainer: any; option: any; selectedContainer: any; };
     let optionSize: number;
 
     if (size == 'S') {
@@ -62,7 +63,13 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
                 {
                     options.map((option, index) => (
                         <Pressable key={ index } onPress={ () => handleOptionSelect(option) } style={ styles.option }>
-                            <Text style={ styles.optionText }>{ option }</Text>
+                            <Text style={
+                                size == 'S' ?
+                                    [BodyS.Regular, { color: Colors.light.blue['50'] }] :
+                                    [BodyM.Regular, { color: Colors.light.blue['50'] }]
+                            }>
+                                { option }
+                            </Text>
                         </Pressable>
                     ))
                 }
@@ -71,7 +78,11 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
             <Pressable onPress={ toggleDropdown } style={ styles.selectedContainer }>
                 { leftIcon && children }
 
-                <Text style={ selectedOption === 'null' ? styles.placeholderText : styles.selectedText }>
+                <Text style={
+                    selectedOption === 'null' ?
+                        (size == 'S' ? [ BodyS.Italic, { color: Colors.light.blue['40'], flex: 1 }] : [ BodyM.Italic, { color: Colors.light.blue['40'], flex: 1 }] ) :
+                        (size == 'S' ? [ BodyS.Regular, { color: Colors.light.blue['50'], flex: 1 }] : [ BodyM.Regular, { color: Colors.light.blue['50'], flex: 1 }] )
+                }>
                     { selectedOption === 'null' ? placeholder : selectedOption }
                 </Text>
 
@@ -112,28 +123,10 @@ const stylesM = StyleSheet.create({
         flexDirection: 'row',
         backfaceVisibility: 'hidden',
     },
-    selectedText: {
-        flex: 1,
-        fontSize: 16,
-        fontFamily: 'Inter',
-        color: Colors.light.blue['50'],
-    },
-    placeholderText: {
-        flex: 1,
-        fontSize: 16,
-        fontFamily: 'Inter',
-        fontStyle: 'italic',
-        color: Colors.light.blue['40'],
-    },
     option: {
         height: 48,
         justifyContent: 'center',
         paddingHorizontal: 16,
-    },
-    optionText: {
-        fontSize: 16,
-        fontFamily: 'Inter',
-        color: Colors.light.blue['50'],
     },
 });
 
@@ -167,28 +160,10 @@ const stylesS = StyleSheet.create({
         flexDirection: 'row',
         backfaceVisibility: 'hidden',
     },
-    selectedText: {
-        flex: 1,
-        fontSize: 14,
-        fontFamily: 'Inter',
-        color: Colors.light.blue['50'],
-    },
-    placeholderText: {
-        flex: 1,
-        fontSize: 14,
-        fontFamily: 'Inter',
-        fontStyle: 'italic',
-        color: Colors.light.blue['40'],
-    },
     option: {
         height: 36,
         justifyContent: 'center',
         paddingHorizontal: 16,
-    },
-    optionText: {
-        fontSize: 14,
-        fontFamily: 'Inter',
-        color: Colors.light.blue['50'],
     },
 });
 

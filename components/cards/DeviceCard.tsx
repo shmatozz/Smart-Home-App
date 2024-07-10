@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Colors from "@/constants/Colors";
 import Switch from "@/components/choice/Switch";
+import {BodyS, Headers} from "@/constants/Fonts";
 
 interface DeviceCardProps {
     image: string | null,
@@ -39,8 +40,8 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                            style={ [styles.image, { borderTopLeftRadius: 12, borderBottomLeftRadius: 12, }] }/>
 
                     <View style={ styles.textContainer }>
-                        <Text style={ styles.title }>{ title }</Text>
-                        { subtitle && <Text style={ styles.subtitle }>{ subtitle }</Text> }
+                        <Text style={ Headers.H5 }>{ title }</Text>
+                        { subtitle && <Text style={ BodyS.Regular }>{ subtitle }</Text> }
                     </View>
 
                     <Switch style={{ flex: 0 }}
@@ -98,16 +99,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
-    title: {
-        color: Colors.light.base["90"],
-        fontSize: 20,
-        fontFamily: "Inter"
-    },
-    subtitle: {
-        color: Colors.light.base["70"],
-        fontSize: 14,
-        fontFamily: "Inter"
-    }
 });
 
 export default DeviceCard;

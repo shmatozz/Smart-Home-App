@@ -6,6 +6,8 @@ import Colors from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import Button from "@/components/buttons/Button";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Headers } from "@/constants/Fonts";
+import {Entypo, FontAwesome5} from "@expo/vector-icons";
 
 const Registration = () => {
     const router = useRouter();
@@ -15,21 +17,32 @@ const Registration = () => {
                          style={ styles.imageBackground } >
             <SafeAreaView style={ styles.safeArea }>
                 <BlurView style={ styles.blurContainer } intensity={16.4}>
-                    <Text style={ styles.text }>No registration in design yet(</Text>
-                    <Text style={ styles.text }>You still can connect socials</Text>
+                    <Text style={[ Headers.H5, { color: Colors.light.base["0"], textAlign: 'center' } ]}>
+                        No registration in design yet(
+                    </Text>
+
+                    <Text style={[ Headers.H5, { color: Colors.light.base["0"], textAlign: 'center' } ]}>
+                        You still can connect socials
+                    </Text>
 
                     <View style={ styles.loginViaButtonsContainer }>
                         <Button text={ "VK ID" }
                                 size={ 'M' }
                                 type={ 'tertiary' }
+                                leftIcon={ true }
                                 style={{ flex: 1 }}
-                                onPress={ () => { alert("Not supported yet(") } }/>
+                                onPress={ () => { alert("Not supported yet(") } }>
+                            <Entypo name={ 'vk' } size={ 24 } color={ Colors.light.blue["50"] }/>
+                        </Button>
 
                         <Button text={ "Yandex ID" }
                                 size={ 'M' }
                                 type={ 'tertiary' }
+                                leftIcon={ true }
                                 style={{ flex: 1  }}
-                                onPress={ () => { alert("Not supported yet(") } }/>
+                                onPress={ () => { alert("Not supported yet(") } }>
+                            <FontAwesome5 name={ 'yandex-international' } size={ 24 } color={ Colors.light.blue["50"] }/>
+                        </Button>
                     </View>
 
                     <Button text={ "Back" }
@@ -65,12 +78,6 @@ const styles = StyleSheet.create({
         paddingTop: 24,
         alignItems: 'center',
         justifyContent: 'space-around',
-    },
-    text: {
-        fontSize: 24,
-        fontFamily: 'Inter',
-        color: Colors.light.base["0"],
-        textAlign: 'center',
     },
     loginViaButtonsContainer: {
         flexDirection: 'row',

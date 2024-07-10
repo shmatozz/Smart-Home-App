@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleProp, View, ViewStyle, StyleSheet, Text, Pressable } from "react-native";
 import Colors from "@/constants/Colors";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import {BodyM} from "@/constants/Fonts";
 
 interface SegmentedSelectProps {
     titles: string[];
@@ -61,7 +62,13 @@ const SegmentedSelect: React.FC<SegmentedSelectProps> = ({
                         }}
                     >
                         { renderChildren(i) }
-                        <Text style={i === selected ? selectedOption.optionText : styles.optionText}>{ title }</Text>
+                        <Text style={
+                            i === selected ?
+                            [BodyM.Regular, { color: Colors.light.base['0'] }] :
+                            [BodyM.Regular, { color: Colors.light.blue['50'] }]
+                        }>
+                            { title }
+                        </Text>
                     </Pressable>
                 ))
             }
@@ -95,11 +102,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    optionText: {
-        fontSize: 15,
-        fontFamily: 'Inter',
-        color: Colors.light.blue['50'],
-    },
     optionIcon: {
         color: Colors.light.blue['50'],
     }
@@ -114,11 +116,6 @@ const selectedOption = StyleSheet.create({
         backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    optionText: {
-        fontSize: 15,
-        fontFamily: 'Inter',
-        color: Colors.light.base['0'],
     },
     optionIcon: {
         color: Colors.light.base['0'],

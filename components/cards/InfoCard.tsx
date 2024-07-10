@@ -5,6 +5,7 @@ import {
     StyleSheet, Pressable,
 } from 'react-native';
 import Colors from "@/constants/Colors";
+import {Caption, Headers} from "@/constants/Fonts";
 
 interface InfoCardProps {
     title: string,
@@ -29,9 +30,9 @@ const InfoCard: React.FC<InfoCardProps> = ({
             <View style={ styles.container }>
                 { children }
 
-                <Text style={ styles.title }>{ title }</Text>
+                <Text style={[ Caption.Regular, styles.title ]}>{ title }</Text>
 
-                <Text style={ styles.info }>{ info }</Text>
+                <Text style={ Headers.H5 }>{ info }</Text>
             </View>
         </Pressable>
     )
@@ -61,16 +62,8 @@ const styles = StyleSheet.create({
     },
     title: {
         flex: 1,
-        fontSize: 12,
-        color:  Colors.light.base['90'],
-        fontFamily: "Inter",
         textAlign: 'center',
         textAlignVertical: 'center',
-    },
-    info: {
-        fontSize: 20,
-        color:  Colors.light.base['90'],
-        fontFamily: "Inter"
     },
 });
 

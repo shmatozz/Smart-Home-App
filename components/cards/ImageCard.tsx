@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Colors from "@/constants/Colors";
 import { BlurView } from "expo-blur";
+import {BodyS, Caption} from "@/constants/Fonts";
 
 interface ImageCardProps {
     image: string | null,
@@ -49,8 +50,8 @@ const ImageCard: React.FC<ImageCardProps> = ({
                         selectable && selected ? styles.selectedTextContainer : {}
                     ] }
                               intensity={ 5 }>
-                        <Text style={ [styles.title, { fontSize: fontSize + 2 }] }>{ title }</Text>
-                        { subtitle && <Text style={ [styles.subtitle, { fontSize: fontSize }] }>{ subtitle }</Text> }
+                        <Text style={ [BodyS.Regular, { color: Colors.light.base["0"], fontSize: fontSize + 2 }] }>{ title }</Text>
+                        { subtitle && <Text style={ [Caption.Regular, { color: Colors.light.base["20"], fontSize: fontSize }] }>{ subtitle }</Text> }
                     </BlurView>
                 </ImageBackground>
             </View>
@@ -83,16 +84,6 @@ const styles = StyleSheet.create({
         left: -2,
         bottom: -2,
         width: '102%'
-    },
-    title: {
-        color: Colors.light.base["0"],
-        fontSize: 14,
-        fontFamily: "Inter",
-    },
-    subtitle: {
-        color: Colors.light.base["20"],
-        fontSize: 12,
-        fontFamily: "Inter",
     },
 });
 

@@ -7,6 +7,7 @@ import Colors from "@/constants/Colors";
 import InfoCard from "@/components/cards/InfoCard";
 import TemperatureConfig from "@/components/visual/TemperatureConfig";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {Headers} from "@/constants/Fonts";
 
 const RoomClimate = () => {
     const router = useRouter();
@@ -45,7 +46,7 @@ const RoomClimate = () => {
                 </View>
 
                 <View style={ styles.settingsContainer }>
-                    <Text style={ styles.title }>Temperature settings</Text>
+                    <Text style={ Headers.H5 }>Temperature settings</Text>
 
                     <TemperatureConfig/>
                 </View>
@@ -72,11 +73,6 @@ const styles = StyleSheet.create({
     settingsContainer: {
         flex: 1,
         paddingTop: 20,
-    },
-    title: {
-        fontSize: 20,
-        fontFamily: 'Inter',
-        color: Colors.light.base["90"]
     },
     modeSelectContainer: {
         flexDirection: 'row',

@@ -5,6 +5,7 @@ import {
     Pressable, View, Animated, StyleProp, ViewStyle,
 } from 'react-native';
 import Colors from "@/constants/Colors";
+import {BodyM, BodyS} from "@/constants/Fonts";
 
 interface SwitchProps {
     text?: string,
@@ -50,9 +51,13 @@ const Switch: React.FC<SwitchProps> = ({
     return (
         <Pressable style={ [styles.container, style] } onPress={ () => setState(!state) }>
             <Text style={ [
-                styles.text, style,
-                state ? styles.textColorOn : styles.textColorOff
-            ]}>{ text }</Text>
+                type == 'lock' ? BodyM.Regular : BodyS.Regular,
+                state ? styles.textColorOn : styles.textColorOff,
+                style
+            ]}>
+                { text }
+            </Text>
+
             <View style={ [
                 styles.switchBackground,
                 state ? styles.switchBackgroundOn : styles.switchBackgroundOff]
@@ -74,10 +79,6 @@ const stylesDefault = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
-    },
-    text: {
-        fontFamily: "Inter",
-        fontSize: 14,
     },
     textColorOn: {
         color: Colors.light.base["90"],
@@ -110,10 +111,6 @@ const stylesLock = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
-    },
-    text: {
-        fontFamily: "Inter",
-        fontSize: 16,
     },
     textColorOn: {
         color: Colors.light.blue["50"],

@@ -27,7 +27,8 @@ export let firstLaunch: any;
 
 export default function RootLayout() {
     const [loaded, error] = useFonts({
-        Inter: require('../assets/fonts/Inter-Regular.ttf'),
+        'Inter-Medium': require('../assets/fonts/Inter-Medium.ttf'),
+        'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
         ...FontAwesome.font,
     });
 

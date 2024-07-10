@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Colors from "@/constants/Colors";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Headers } from "@/constants/Fonts";
 
 interface HeaderProps {
     backIcon?: boolean,
@@ -47,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
                 </Pressable>
             }
 
-            <Text style={ styles.text }>{ title }</Text>
+            <Text style={[ Headers.H5, { flex: 1 } ]}>{ title }</Text>
 
             {
                 firstIcon &&
@@ -74,12 +75,6 @@ const styles = StyleSheet.create({
         gap: 16,
         paddingHorizontal: 16,
     },
-    text: {
-        fontSize: 20,
-        color:  Colors.light.base['90'],
-        flex: 1,
-        fontFamily: "Inter"
-    }
 });
 
 export default Header;

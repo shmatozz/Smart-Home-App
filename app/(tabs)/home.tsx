@@ -11,6 +11,7 @@ import DeviceCard from "@/components/cards/DeviceCard";
 import {setItem} from "@/utils/AsyncStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {Headers} from "@/constants/Fonts";
 
 const Home = () => {
     const router = useRouter()
@@ -44,7 +45,9 @@ const Home = () => {
 
                     <View style={ styles.roomsContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <Text style={ styles.roomsTitle }>{ "Your Rooms" }</Text>
+                            <Text style={[ Headers.H5, { flex: 3 } ]}>
+                                { "Your Rooms" }
+                            </Text>
 
                             <Button text={ "See all" } type={ "tertiary" }
                                     onPress={() => router.navigate('room/rooms') }>
@@ -78,7 +81,9 @@ const Home = () => {
 
                     <View style={ styles.recentDevicesContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <Text style={ styles.roomsTitle }>{ "Recent devices" }</Text>
+                            <Text style={[ Headers.H5, { flex: 3 } ]}>
+                                { "Recent devices" }
+                            </Text>
 
                             <Button text={ "See all" } type={ "tertiary" } />
                         </View>
@@ -122,11 +127,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         gap: 16,
         paddingTop: 20,
-    },
-    roomsTitle: {
-        flex: 3,
-        fontFamily: "Inter",
-        fontSize: 20,
     },
     scrollContainer: {
         flex: 1,

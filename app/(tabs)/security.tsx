@@ -6,6 +6,7 @@ import Colors from "@/constants/Colors";
 import Switch from "@/components/choice/Switch";
 import ImageCard from "@/components/cards/ImageCard";
 import DropdownSelect from "@/components/choice/DropdownSelect";
+import {BodyM, Headers} from "@/constants/Fonts";
 
 const Security = () => {
     const [selectedCameras, setSelectedCameras] = useState('All');
@@ -45,7 +46,10 @@ const Security = () => {
                         doorsData.map((item, index) => (
                             <View key={ index }
                                   style={ styles.doorStatus }>
-                                <Text style={ styles.textM }>{ item.name }</Text>
+                                <Text style={[ BodyM.Regular, { flex: 1 }]}>
+                                    { item.name }
+                                </Text>
+
                                 <Switch text={ doorStates[index] ? 'Closed' : 'Opened' }
                                         state={ doorStates[index] }
                                         setState={ (value) => {
@@ -60,7 +64,10 @@ const Security = () => {
 
                 <View style={ styles.camerasContainer }>
                     <View style={ styles.camerasTitleContainer }>
-                        <Text style={ styles.camerasTitle }>Cameras</Text>
+                        <Text style={[ Headers.H5, { flex: 1 } ]}>
+                            Cameras
+                        </Text>
+
                         <DropdownSelect options={ ['All', 'Indoors', 'Outdoors'] }
                                         selectedOption={ selectedCameras }
                                         onOptionSelected={ setSelectedCameras }
@@ -99,12 +106,6 @@ const styles = StyleSheet.create({
         gap: 4,
         marginBottom: 16,
     },
-    textM: {
-        flex: 1,
-        fontSize: 16,
-        fontFamily: "Inter",
-        color: Colors.light.base["90"],
-    },
     doorStatus: {
         flexDirection: 'row',
         padding: 8,
@@ -118,12 +119,6 @@ const styles = StyleSheet.create({
     camerasTitleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    camerasTitle: {
-        flex: 1,
-        fontSize: 20,
-        fontFamily: "Inter",
-        color: Colors.light.base["90"],
     },
     camerasPreviewContainer: {
         flex: 1,

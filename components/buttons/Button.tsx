@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {Text, View, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-native";
 import Colors from '@/constants/Colors';
+import {BodyM, BodyS} from "@/constants/Fonts";
 
 interface ButtonProps {
     leftIcon?: boolean;
@@ -47,10 +48,14 @@ const Button: React.FC<ButtonProps> = ({
 
     if (size === 'M') {
         buttonSize = [styles.container, { height: 52 }];
-        buttonText = [buttonStyle.buttonText, { fontSize: 16 }];
+        buttonText = [BodyM.Medium, { color: Colors.light.base["0"] }];
     } else {
         buttonSize = styles.container;
-        buttonText = buttonStyle.buttonText;
+        buttonText = [BodyS.Medium, { color: Colors.light.base["0"] }];
+    }
+
+    if (type == 'secondary' || type == 'tertiary') {
+        buttonText = [buttonText, { color: Colors.light.blue["50"] }];
     }
 
     if (disabled && (type == 'secondary' || type == 'tertiary')) {
@@ -91,11 +96,6 @@ const styles = StyleSheet.create({
         gap: 8,
         paddingHorizontal: 16,
     },
-    buttonText: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.base["0"],
-    },
 });
 
 const stylesPrimary = StyleSheet.create({
@@ -113,11 +113,6 @@ const stylesPrimary = StyleSheet.create({
         width: 'auto',
         backgroundColor: Colors.light.base["40"],
         borderRadius: 6,
-    },
-    buttonText: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.base["0"],
     },
     iconColor: {
         color: Colors.light.base["0"],
@@ -147,11 +142,6 @@ const stylesSecondary = StyleSheet.create({
         borderColor: Colors.light.base["20"],
         borderWidth: 2,
     },
-    buttonText: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.blue["50"],
-    },
     iconColor: {
         color: Colors.light.blue["50"],
     },
@@ -170,11 +160,6 @@ const stylesTertiary = StyleSheet.create({
     disabled: {
         width: 'auto',
         borderRadius: 6,
-    },
-    buttonText: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.blue["50"],
     },
     iconColor: {
         color: Colors.light.blue["50"],

@@ -7,6 +7,8 @@ import ImageCard from "@/components/cards/ImageCard";
 import TextInput from "@/components/text/TextInput";
 import DropdownSelect from "@/components/choice/DropdownSelect";
 import Button from "@/components/buttons/Button";
+import {BodyM, Headers} from "@/constants/Fonts";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const Add_Device = () => {
     const [deviceName, setDeviceName] = useState("");
@@ -38,7 +40,9 @@ const Add_Device = () => {
                 <View style={ styles.deviceFormContainer }>
                     <View style={ styles.selectRoomContainer }
                           onLayout={ handleLayout }>
-                        <Text style={ [textStyles.title, { paddingHorizontal: 16 }] }>Select room</Text>
+                        <Text style={ [ Headers.H5, { paddingHorizontal: 16 }] }>
+                            Select room
+                        </Text>
 
                         <ScrollView horizontal={ true }
                                     showsHorizontalScrollIndicator={false}
@@ -67,7 +71,7 @@ const Add_Device = () => {
                     </View>
 
                     <View style={ styles.deviceNameContainer }>
-                        <Text style={ textStyles.title }>Name new device</Text>
+                        <Text style={ Headers.H5 }>Name new device</Text>
                         
                         <TextInput text={ deviceName }
                                    onChangeText={ setDeviceName }
@@ -75,15 +79,17 @@ const Add_Device = () => {
                                    size={ 'M' }/>
 
                         <DropdownSelect placeholder={ 'Type' }
-                                        leftIcon={ 'devices-other' }
+                                        leftIcon={ true }
                                         options={ ['Air', 'Lights', 'Audio'] }
                                         selectedOption={ deviceType }
                                         onOptionSelected={ setDeviceType }
-                                        size={ 'M' }/>
+                                        size={ 'M' }>
+                            <MaterialIcons name={ 'devices-other'} size={ 24 } color={ Colors.light.blue["50"] }/>
+                        </DropdownSelect>
                     </View>
 
                     <View style={ styles.confirmContainer }>
-                        <Text style={ textStyles.title }>Pair signal</Text>
+                        <Text style={ Headers.H5 }>Pair signal</Text>
 
                         <Button text={ "Find device signal" }
                                 size={ 'M' }
@@ -94,11 +100,13 @@ const Add_Device = () => {
                 <View style={ styles.smartPairContainer }>
                     <View style={ styles.splitterContainer }>
                         <View style={{ flex: 1, height: 2, backgroundColor: Colors.light.base["90"] }}/>
-                        <Text style={ textStyles.subtitle }>or connect via</Text>
+                        <Text style={ BodyM.Regular }>or connect via</Text>
                         <View style={{ flex: 1, height: 2, backgroundColor: Colors.light.base["90"]  }}/>
                     </View>
 
-                    <Button text={ 'Smart connect using WIFI' } size={ 'M' } type={ 'primary' } leftIcon={ 'wifi' }/>
+                    <Button text={ 'Smart connect using WIFI' } size={ 'M' } type={ 'primary' } leftIcon={ true }>
+                        <MaterialIcons name={ 'wifi' } size={ 24 } color={ Colors.light.base["0"] }/>
+                    </Button>
                 </View>
             </View>
         </SafeAreaView>
@@ -141,19 +149,6 @@ const styles = StyleSheet.create({
         gap: 16,
         flexDirection: 'row',
         alignItems: 'center',
-    },
-})
-
-const textStyles = StyleSheet.create({
-    title: {
-        fontSize: 20,
-        fontFamily: 'Inter',
-        color: Colors.light.base["90"],
-    },
-    subtitle: {
-        fontSize: 16,
-        fontFamily: 'Inter',
-        color: Colors.light.base["90"],
     },
 })
 
