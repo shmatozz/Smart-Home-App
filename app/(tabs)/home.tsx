@@ -8,7 +8,7 @@ import InfoCard from "@/components/cards/InfoCard";
 import Button from "@/components/buttons/Button";
 import ImageCard from "@/components/cards/ImageCard";
 import DeviceCard from "@/components/cards/DeviceCard";
-import {setItem} from "@/utils/AsyncStorage";
+import {setItem} from "@/utils/storage/AsyncStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";

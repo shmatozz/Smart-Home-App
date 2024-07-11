@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ImageBackground, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
@@ -7,20 +6,22 @@ import Colors from "@/constants/Colors";
 import Button from "@/components/buttons/Button";
 import { useRouter } from "expo-router";
 import TextInput from "@/components/text/TextInput";
-import { setItem } from "@/utils/AsyncStorage";
+import { setItem } from "@/utils/storage/AsyncStorage";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import {BodyS} from "@/constants/Fonts";
+import { observer } from "mobx-react-lite";
+import AuthViewModel from "@/utils/viewmodels/AuthViewModel";
+
+const authViewModel = new AuthViewModel();
 
 const Login = () => {
     const router = useRouter();
 
-    const [filled, setFilled] = useState(false);
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-
     useEffect(() => {
-        setFilled(login.length > 0 && password.length > 0);
-    }, [login, password]);
+        authViewModel.setFilled(
+            authViewModel.login.length > 0 && authViewModel.password.length > 0
+        );
+    }, [authViewModel.login, authViewModel.password]);
 
     return (
         <ImageBackground source={ require("../../assets/images/background.png")}
@@ -30,14 +31,14 @@ const Login = () => {
                     <View style={ styles.textFieldsContainer }>
                         <TextInput placeholder={ "E-mail" }
                                    size={ 'M' }
-                                   text={ login }
-                                   onChangeText={ setLogin }/>
+                                   text={ authViewModel.login }
+                                   onChangeText={ authViewModel.setLogin }/>
 
                         <TextInput placeholder={ "Password" }
                                    size={ 'M' }
                                    password={ true }
-                                   text={ password }
-                                   onChangeText={ setPassword }/>
+                                   text={ authViewModel.password }
+                                   onChangeText={ authViewModel.setPassword }/>
 
                         <Pressable onPress={ () => console.log("Forget password") }>
                             <Text style={[ BodyS.Regular, { color: Colors.light.base["40"] }]}>
@@ -51,9 +52,9 @@ const Login = () => {
                                 size={ 'M' }
                                 type={ 'primary' }
                                 style={{ width: '100%' }}
-                                disabled={ !filled }
+                                disabled={ !authViewModel.filled }
                                 onPress={ () => {
-                                    if (filled) {
+                                    if (authViewModel.filled) {
                                         setItem("logged", true);
                                         router.replace("../(tabs)/home")
                                     } else {
@@ -143,4 +144,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Login;
+export default observer(Login);

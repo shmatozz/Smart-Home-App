@@ -8,7 +8,7 @@ import Colors from "@/constants/Colors";
 import Button from "@/components/buttons/Button";
 import IconButton from "@/components/buttons/IconButton";
 import Login from "@/app/(auth)/login";
-import { setItem } from "@/utils/AsyncStorage";
+import { setItem } from "@/utils/storage/AsyncStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {BodyS, Headers} from "@/constants/Fonts";
 

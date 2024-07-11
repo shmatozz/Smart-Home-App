@@ -7,7 +7,7 @@ import {useEffect, useState} from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/components/useColorScheme';
-import {getItem, setItem} from "@/utils/AsyncStorage";
+import {getItem, setItem} from "@/utils/storage/AsyncStorage";
 
 export {
     // Catch any errors thrown by the Layout component.
