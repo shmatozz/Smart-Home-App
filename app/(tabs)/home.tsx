@@ -12,19 +12,22 @@ import {setItem} from "@/utils/storage/AsyncStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
+import HomeViewModel from "@/utils/viewmodels/HomeViewModel";
+
+const homeViewModel = new HomeViewModel();
 
 const Home = () => {
     const router = useRouter()
 
-    const windowWidth = Dimensions.get('window').width - 32 - 8 * (roomsData.length - 1);
-    let cardWidth = windowWidth / roomsData.length;
+    const windowWidth = Dimensions.get('window').width - 32 - 8 * (homeViewModel.getRoomsCount() - 1);
+    let cardWidth = windowWidth / homeViewModel.getRoomsCount();
     if (cardWidth < 144) cardWidth = 144;
 
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
             <Header title={"Welcome, Matvey!"} firstIcon={"notifications"} onAccountPress={ () => {
-                setItem("logged", false);
+                setItem("logged", false).then();
             }}/>
 
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"}>
@@ -62,15 +65,17 @@ const Home = () => {
                         <View style={{ width: 12 }}/>
                         <View style={{ flexDirection: 'row' }}>
                             {
-                                roomsData.map((item, index) => (
+                                homeViewModel.rooms.map((item, index) => (
                                     <View key={item.title}
                                           style={{ marginHorizontal: 4 }}>
                                         <ImageCard image={ item.image }
                                                    title={ item.title }
-                                                   subtitle={ item.subtitle }
+                                                   subtitle={ item.devices + ' devices' }
                                                    style={{ height: 144, width: cardWidth, }}
                                                    key={ index }
-                                                   onPress={ () => router.navigate({ pathname: "room/rooms", params: { redirect: 1, room: item.title }})}
+                                                   onPress={ () => {
+                                                       router.navigate({ pathname: "room/rooms", params: { redirect: 1, room: item.title }})
+                                                   }}
                                         />
                                     </View>
                                 ))
@@ -90,11 +95,13 @@ const Home = () => {
 
                         <View style={{ gap: 12 }}>
                             {
-                                devicesData.map((device, index) => (
+                                homeViewModel.recentDevices.map((device, index) => (
                                     <DeviceCard key={ index }
                                                 image={ device.image }
                                                 title={ device.title }
-                                                subtitle={ device.subtitle }
+                                                subtitle={ device.room }
+                                                working={ device.working }
+                                                setWorking={ (working) => homeViewModel.setDeviceWorking(index, working) }
                                                 type={ 'horizontal' }/>
                                 ))
                             }
@@ -137,39 +144,5 @@ const styles = StyleSheet.create({
         gap: 16,
     }
 });
-
-const roomsData = [
-    {
-        image: "https://www.mebelkaliningrada.ru/wp-content/uploads/2018/12/2750880675.jpg",
-        title: 'Living room', subtitle: '6 devices'
-    },
-    {
-        image: "https://colodu.club/uploads/posts/2022-10/1666684356_21-colodu-club-p-master-spalnya-planirovka-krasivo-21.jpg",
-        title: 'Bedroom', subtitle: '7 devices'
-    },
-    {
-        image: "https://www.service-general.gr/media/widgetkit/kitchen5-c512f9d4d63cc58aa6469df0fd830991.jpg",
-        title: 'Kitchen', subtitle: '9 devices'
-    },
-    {
-        image: "https://gagaru.club/uploads/posts/2023-02/thumbs/1676687091_gagaru-club-p-krasivaya-prikhozhaya-v-dome-vkontakte-8.jpg",
-        title: 'Hallway', subtitle: '3 devices'
-    },
-];
-
-const devicesData = [
-    {
-        image: "https://cdn.mos.cms.futurecdn.net/ZW4ZjyfpcZgoDQnmcw6YLK.jpg",
-        title: 'TV', subtitle: 'Living room',
-    },
-    {
-        image: "https://www.ikea.com/us/en/images/products/blidvaeder-table-lamp-off-white-ceramic-beige__1059592_pe849717_s5.jpg",
-        title: 'Lamp', subtitle: 'Bedroom',
-    },
-    {
-        image: "https://www.netrinc.com/wp-content/uploads/2023/01/Buying-a-Wall-Mounted-Air-Conditioner.jpg",
-        title: 'Air cooler', subtitle: 'Kitchen',
-    }
-]
 
 export default Home;
