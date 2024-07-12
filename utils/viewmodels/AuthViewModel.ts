@@ -1,14 +1,22 @@
-import { makeAutoObservable, action, observable } from "mobx";
+import { makeAutoObservable, action, observable, reaction } from "mobx";
+import { setItem } from "@/utils/storage/AsyncStorage";
 
 class AuthViewModel {
-    constructor() {
-        makeAutoObservable(this);
-    }
-
     @observable public login = '';
     @observable public password = '';
 
     @observable public filled = false;
+
+    constructor() {
+        makeAutoObservable(this);
+
+        reaction(
+            () => [this.login, this.password],
+            ([login, password]) => {
+                this.setFilled(login.length > 0 && password.length > 0);
+            }
+        );
+    }
 
     @action
     public setLogin = (val: string) : void => {
@@ -23,6 +31,10 @@ class AuthViewModel {
     @action
     public setFilled = (val: boolean) : void => {
         this.filled = val;
+    }
+
+    public LogIn = () => {
+        setItem("logged", true).then();
     }
 }
 
