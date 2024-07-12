@@ -9,19 +9,23 @@ import DeviceCard from "@/components/cards/DeviceCard";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Headers } from "@/constants/Fonts";
+import {observer} from "mobx-react-lite";
+import RoomViewModel from "@/utils/viewmodels/RoomViewModel";
 
-const Room = () => {
+const roomViewModel = new RoomViewModel();
+
+const Room = observer(() => {
     let router = useRouter();
 
-    const room = useLocalSearchParams< { room: string }>();
+    roomViewModel.setRoomTitle(useLocalSearchParams< { room: string }>().room!);
 
-    const windowHeight = Dimensions.get('window').height - 350 - 16 * (devicesData.length / 2 + devicesData.length % 2 - 1);
-    let cardHeight = windowHeight / (devicesData.length / 2 + devicesData.length % 2);
+    const windowHeight = Dimensions.get('window').height - 350 - 16 * (roomViewModel.devices.length / 2 + roomViewModel.devices.length % 2 - 1);
+    let cardHeight = windowHeight / (roomViewModel.devices.length / 2 + roomViewModel.devices.length % 2);
     if (cardHeight < 160) cardHeight = 160;
 
     return (
         <SafeAreaView style={ styles.safeArea }>
-            <PageHeader title={ room.room!.toString() }
+            <PageHeader title={ roomViewModel.title }
                         backIcon={ true }
                         onBackPress={() => router.back() }
                         accountIcon={ false }
@@ -36,7 +40,9 @@ const Room = () => {
                         <View style={ styles.infoCards }>
                             <InfoCard title={ "Room\ntemperature" }
                                       info={ "25°" }
-                                      onPress={() => { router.push({ pathname: '../room/climate', params: { room: room.room }}) }}>
+                                      onPress={() => {
+                                          router.push({ pathname: '../room/climate', params: { room: roomViewModel.title }})
+                                      }}>
                                 <MaterialCommunityIcons name={ "thermometer" } size={ 32 } color={ Colors.light.blue["50"]}/>
                             </InfoCard>
 
@@ -54,11 +60,13 @@ const Room = () => {
                         </View>
                     </View>
                 }
-                data={ devicesData }
-                renderItem={({ item }) =>
+                data={ roomViewModel.devices }
+                renderItem={({ item, index }) =>
                     <DeviceCard image={ item.image }
                                 title={ item.title }
                                 type={ 'vertical' }
+                                working={ item.working }
+                                setWorking={ (working) => roomViewModel.setDeviceWorking(index, working) }
                                 style={{ marginHorizontal: 8, height: cardHeight, }}/>}
                 keyExtractor={item => item.title}
                 numColumns={ 2 }
@@ -67,7 +75,7 @@ const Room = () => {
             />
         </SafeAreaView>
     );
-}
+})
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -101,28 +109,5 @@ const styles = StyleSheet.create({
         gap: 16,
     },
 })
-
-const devicesData = [
-    {
-        image: "https://cdn.mos.cms.futurecdn.net/ZW4ZjyfpcZgoDQnmcw6YLK.jpg",
-        title: 'TV', subtitle: 'Living room',
-    },
-    {
-        image: "https://www.ikea.com/us/en/images/products/blidvaeder-table-lamp-off-white-ceramic-beige__1059592_pe849717_s5.jpg",
-        title: 'Lamp', subtitle: 'Living room',
-    },
-    {
-        image: "https://www.lamps.eu/media/product/119170/354x354/wemude-ceiling-light-h3016183-0.jpg",
-        title: 'Main Lights', subtitle: 'Living room',
-    },
-    {
-        image: "https://static1.pocketlintimages.com/wordpress/wp-content/uploads/wm/154419-games-review-hands-on-playstation-5-hands-on-pics-image1-tbq3hzlrkw.jpg",
-        title: 'Play Station', subtitle: 'Living room',
-    },
-    {
-        image: "https://www.netrinc.com/wp-content/uploads/2023/01/Buying-a-Wall-Mounted-Air-Conditioner.jpg",
-        title: 'Air cooler', subtitle: 'Living room',
-    },
-]
 
 export default Room;
