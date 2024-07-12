@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Text,
     View,
@@ -13,6 +13,8 @@ interface DeviceCardProps {
     title: string,
     subtitle?: string | null,
     type: 'horizontal' | 'vertical',
+    working: boolean,
+    setWorking: (working: boolean) => void,
     style?: StyleProp<ViewStyle> | null,
     onPress?: () => void,
 }
@@ -22,10 +24,16 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
                                                  title,
                                                  subtitle,
                                                  type,
+                                                 working,
+                                                 setWorking,
                                                  style = null,
                                                  onPress = () => console.log("Device Card pressed"),
                                              }) => {
-    const [state, setState] = useState(false)
+    const [state, setState] = useState(working);
+
+    useEffect(() => {
+        setWorking(state);
+    }, [state]);
 
     const touchProps = {
         style: styles.touchContainer,
