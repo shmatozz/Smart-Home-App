@@ -5,6 +5,7 @@ import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 export default function TabLayout() {
     // const colorScheme = useColorScheme();
@@ -20,7 +21,7 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen name="room"
-                         options={ {tabBarIcon: ({color}) => <MaterialIcons name="room" size={28} color={ color } />}}
+                         options={ {tabBarIcon: ({color}) => <MaterialCommunityIcons name="floor-plan" size={28} color={ color } />}}
             />
 
             <Tabs.Screen name="add_device"
@@ -28,7 +29,7 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen name="security"
-                         options={{ tabBarIcon: ({color}) => <MaterialIcons name="shield" size={28} color={ color } /> }}
+                         options={{ tabBarIcon: ({color}) => <MaterialCommunityIcons name="shield-home" size={28} color={ color } /> }}
             />
 
             <Tabs.Screen name="stats"

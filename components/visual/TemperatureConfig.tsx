@@ -4,6 +4,7 @@ import CircleSliderSelect from "@/components/choice/CircleSliderSelect";
 import SegmentedSelect from "@/components/choice/SegmentedSelect";
 import Colors from "@/constants/Colors";
 import CircularProgress from "react-native-circular-progress-indicator";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 interface TemperatureConfigProps {
 }
@@ -35,8 +36,11 @@ const TemperatureConfig: React.FC<TemperatureConfigProps> = ({}) => {
             </View>
 
             <SegmentedSelect titles={['Cooling', 'Heating', 'Wetting']}
-                             icons={['severe-cold', 'local-fire-department', 'water']}
-                             onChangeSelected={(i) => mode.current = i } />
+                             onChangeSelected={(i) => mode.current = i } >
+                <MaterialCommunityIcons name={ "snowflake" } size={ 24 } color={ Colors.light.blue["50"] }/>
+                <MaterialCommunityIcons name={ "fire" } size={ 24 } color={ Colors.light.blue["50"] }/>
+                <MaterialCommunityIcons name={ "waves-arrow-up" } size={ 24 } color={ Colors.light.blue["50"] }/>
+            </SegmentedSelect>
         </View>
     )
 }

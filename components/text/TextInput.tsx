@@ -8,28 +8,31 @@ import {
 } from 'react-native';
 import Colors from "@/constants/Colors";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {BodyM, BodyS, Caption} from "@/constants/Fonts";
 
 
 interface TextInputProps {
     placeholder?: string,
     helperText?: string | null,
-    leftIcon?: keyof typeof MaterialIcons.glyphMap | null;
-    rightIcon?: keyof typeof MaterialIcons.glyphMap | null;
+    leftIcon?: boolean;
+    rightIcon?: boolean;
     size?: 'S' | 'M';
     password?: boolean;
     text: string;
     onChangeText: (text: string) => void;
+    children?: React.ReactNode;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
                                                  placeholder,
                                                  helperText = null,
-                                                 leftIcon = null,
-                                                 rightIcon = null,
+                                                 leftIcon = false,
+                                                 rightIcon = false,
                                                  size = 'S',
                                                  password = false,
                                                  text,
                                                  onChangeText,
+                                                 children,
                                              }) => {
     const [focused, setFocused] = useState(false);
 
@@ -47,18 +50,18 @@ const TextInput: React.FC<TextInputProps> = ({
             inputContainerFocused = styles.inputContainerFocused;
             iconSize = 16;
             textSize = 14;
-            label = styles.label;
-            labelFocused = styles.labelFocused;
-            labelInput = styles.labelInput;
+            label = [BodyS.Regular, { color: Colors.light.base['40'] }];
+            labelFocused = [Caption.Regular, { color: Colors.light.blue['50'] }];
+            labelInput = [Caption.Regular, { color: Colors.light.base['50'] }];
             break;
         case 'M':
             inputContainer = [styles.inputContainer, { height: 64 }];
             inputContainerFocused = [styles.inputContainerFocused, { height: 64 }];
             iconSize = 24;
             textSize = 16;
-            label = [styles.label, { fontSize: 16 }];
-            labelFocused = [styles.labelFocused, { fontSize: 14 } ];
-            labelInput = [styles.labelInput, { fontSize: 14 } ];
+            label = [BodyM.Regular, { color: Colors.light.base['40'] }];
+            labelFocused = [BodyS.Regular, { color: Colors.light.blue['50'] } ];
+            labelInput = [BodyS.Regular, { color: Colors.light.base['50'] } ];
             break
     }
 
@@ -72,26 +75,29 @@ const TextInput: React.FC<TextInputProps> = ({
         <View>
             <Pressable {...touchProps}>
                 <View style={ styles.container }>
-
-                    { leftIcon && <MaterialIcons name={ leftIcon } size={ iconSize } color={ focused ? Colors.light.blue["50"] : Colors.light.base["40"] } /> }
+                    {
+                        leftIcon && children
+                    }
 
                     <View style={{ flexDirection: 'column', flex: 1}}>
                         <Text style={[label, text.length > 0 && labelInput, focused && labelFocused]}>{ placeholder }</Text>
 
-                        {(focused || text.length > 0) && <DefaultTextInput
-                            autoFocus={ focused }
-                            style={{ fontSize: textSize, color: Colors.light.base['90']}}
-                            onChangeText={ onChangeText }
-                            onPressIn={ () => setFocused(true) }
-                            cursorColor={ Colors.light.base["40"] }
-                            selectionColor={ Colors.light.blue["50"] }
-                            onSubmitEditing={ () => setFocused(false) }
-                            secureTextEntry={ password }
-                            value={ text }
-                            onEndEditing={ () => setFocused(false) }
-                            autoCapitalize={'none'}
-                        />}
-
+                        {
+                            (focused || text.length > 0) &&
+                            <DefaultTextInput
+                                autoFocus={ focused }
+                                style={{ fontSize: textSize, color: Colors.light.base['90']}}
+                                onChangeText={ onChangeText }
+                                onPressIn={ () => setFocused(true) }
+                                cursorColor={ Colors.light.base["40"] }
+                                selectionColor={ Colors.light.blue["50"] }
+                                onSubmitEditing={ () => setFocused(false) }
+                                secureTextEntry={ password }
+                                value={ text }
+                                onEndEditing={ () => setFocused(false) }
+                                autoCapitalize={'none'}
+                            />
+                        }
                     </View>
 
                     <Pressable style={{ height: '100%', justifyContent: 'center' }} onPress={() => {
@@ -101,11 +107,19 @@ const TextInput: React.FC<TextInputProps> = ({
                         { text.length > 0 && <MaterialIcons name="clear" size={ iconSize } color={ Colors.light.base["50"] } /> }
                     </Pressable>
 
-                    { rightIcon && <MaterialIcons name={ rightIcon } size={ iconSize } color={ focused ? Colors.light.blue["50"] : Colors.light.base["40"] } /> }
+                    {
+                        rightIcon && children
+                    }
 
                 </View>
             </Pressable>
-            { helperText && <Text style={styles.helperText}>{ helperText }</Text> }
+
+            {
+                helperText &&
+                <Text style={[ Caption.Regular, { color: Colors.light.base['40'], marginTop: 4 } ]}>
+                    { helperText }
+                </Text>
+            }
         </View>
     );
 };
@@ -117,21 +131,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
-    },
-    label: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.base['40'],
-    },
-    labelFocused: {
-        fontSize: 12,
-        fontFamily: "Inter",
-        color: Colors.light.blue['50'],
-    },
-    labelInput: {
-        fontSize: 12,
-        fontFamily: "Inter",
-        color: Colors.light.base['50'],
     },
     inputContainer: {
         flexDirection: 'column',
@@ -156,12 +155,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.light.base["0"],
         paddingHorizontal: 12,
         paddingVertical: 6,
-    },
-    helperText: {
-        fontSize: 12,
-        fontFamily: "Inter",
-        color: Colors.light.base['40'],
-        marginTop: 4,
     },
 });
 

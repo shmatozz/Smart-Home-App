@@ -5,8 +5,14 @@ import Colors from "@/constants/Colors";
 import Header from "@/components/visual/PageHeader";
 import InfoCard from "@/components/cards/InfoCard";
 import Graph from "@/components/visual/Graph";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {Headers} from "@/constants/Fonts";
+import {observer} from "mobx-react-lite";
+import StatsViewModel from "@/utils/viewmodels/Stats/StatsViewModel";
 
-const Stats = () => {
+const statsViewModel = new StatsViewModel();
+
+const Stats = observer(() => {
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
@@ -16,19 +22,24 @@ const Stats = () => {
 
             <View style={ styles.contentContainer }>
                 <View style={ styles.cardsContainer }>
-                    <InfoCard icon={'calendar-today'} title={'Today\nelectricity used'} info={'44 kWh'}/>
-                    <InfoCard icon={'calendar-month'} title={'This month\nelectricity used'} info={'770 kWh'}/>
+                    <InfoCard title={'Today\nelectricity used'} info={'44 kWh'}>
+                        <MaterialCommunityIcons name={ "calendar-today" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                    </InfoCard>
+
+                    <InfoCard title={'This month\nelectricity used'} info={'770 kWh'}>
+                        <MaterialCommunityIcons name={ "calendar-month" } size={ 32 } color={ Colors.light.blue["50"] }/>
+                    </InfoCard>
                 </View>
 
                 <View style={ styles.graphContainer }>
-                    <Text style={ styles.title }>Graphics</Text>
+                    <Text style={ Headers.H5 }>Graphics</Text>
 
                     <Graph/>
                 </View>
             </View>
         </SafeAreaView>
     );
-}
+})
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -48,11 +59,6 @@ const styles = StyleSheet.create({
     graphContainer: {
         flex: 1,
         paddingTop: 20,
-    },
-    title: {
-        fontSize: 20,
-        fontFamily: 'Inter',
-        color: Colors.light.base["90"],
     },
     selectContainer: {
         paddingVertical: 16,

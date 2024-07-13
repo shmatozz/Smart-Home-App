@@ -1,35 +1,36 @@
 import React, { useState } from "react";
 import {Text, View, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-native";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '@/constants/Colors';
+import {BodyM, BodyS} from "@/constants/Fonts";
 
 interface ButtonProps {
-    leftIcon?: keyof typeof MaterialIcons.glyphMap;
-    rightIcon?: keyof typeof MaterialIcons.glyphMap;
+    leftIcon?: boolean;
+    rightIcon?: boolean;
     text?: string;
     size?: 'S' | 'M';
     type?: 'primary' | 'secondary' | 'tertiary';
     disabled?: boolean;
     onPress?: () => void;
     style?: StyleProp<ViewStyle> | null;
+    children?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
-                                           leftIcon,
-                                           rightIcon,
+                                           leftIcon = false,
+                                           rightIcon= false,
                                            text = "",
                                            size = 'S',
                                            type = 'primary',
                                            disabled = false,
                                            onPress = () => console.log("Button pressed"),
                                            style = null,
+                                           children,
                                        }) => {
     const [isPress, setIsPress] = useState(false);
 
     let buttonSize;
     let buttonText;
     let buttonStyle;
-    let iconSize;
 
     switch (type) {
         case 'primary':
@@ -47,12 +48,14 @@ const Button: React.FC<ButtonProps> = ({
 
     if (size === 'M') {
         buttonSize = [styles.container, { height: 52 }];
-        buttonText = [buttonStyle.buttonText, { fontSize: 16 }];
-        iconSize = 24;
+        buttonText = [BodyM.Medium, { color: Colors.light.base["0"] }];
     } else {
         buttonSize = styles.container;
-        buttonText = buttonStyle.buttonText;
-        iconSize = 16;
+        buttonText = [BodyS.Medium, { color: Colors.light.base["0"] }];
+    }
+
+    if (type == 'secondary' || type == 'tertiary') {
+        buttonText = [buttonText, { color: Colors.light.blue["50"] }];
     }
 
     if (disabled && (type == 'secondary' || type == 'tertiary')) {
@@ -67,15 +70,17 @@ const Button: React.FC<ButtonProps> = ({
     };
 
     return (
-        <Pressable {...touchProps}>
-            <View style={buttonSize}>
-                {leftIcon && (
-                    <MaterialIcons name={leftIcon} size={iconSize} color={buttonStyle.iconColor.color} />
-                )}
-                <Text style={ buttonText }>{text}</Text>
-                {rightIcon && (
-                    <MaterialIcons name={rightIcon} size={iconSize} color={buttonStyle.iconColor.color} />
-                )}
+        <Pressable { ...touchProps }>
+            <View style={ buttonSize }>
+                {
+                    leftIcon && children
+                }
+
+                <Text style={ buttonText }>{ text }</Text>
+
+                {
+                    rightIcon && children
+                }
             </View>
         </Pressable>
     );
@@ -90,11 +95,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 8,
         paddingHorizontal: 16,
-    },
-    buttonText: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.base["0"],
     },
 });
 
@@ -113,11 +113,6 @@ const stylesPrimary = StyleSheet.create({
         width: 'auto',
         backgroundColor: Colors.light.base["40"],
         borderRadius: 6,
-    },
-    buttonText: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.base["0"],
     },
     iconColor: {
         color: Colors.light.base["0"],
@@ -147,11 +142,6 @@ const stylesSecondary = StyleSheet.create({
         borderColor: Colors.light.base["20"],
         borderWidth: 2,
     },
-    buttonText: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.blue["50"],
-    },
     iconColor: {
         color: Colors.light.blue["50"],
     },
@@ -170,11 +160,6 @@ const stylesTertiary = StyleSheet.create({
     disabled: {
         width: 'auto',
         borderRadius: 6,
-    },
-    buttonText: {
-        fontSize: 14,
-        fontFamily: "Inter",
-        color: Colors.light.blue["50"],
     },
     iconColor: {
         color: Colors.light.blue["50"],
