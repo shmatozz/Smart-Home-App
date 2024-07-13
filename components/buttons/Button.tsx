@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import {Text, View, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-native";
+import {
+    Text,
+    View,
+    StyleSheet,
+    StyleProp,
+    ViewStyle,
+    GestureResponderEvent,
+    Pressable
+} from "react-native";
 import Colors from '@/constants/Colors';
 import {BodyM, BodyS} from "@/constants/Fonts";
 
@@ -10,7 +18,7 @@ interface ButtonProps {
     size?: 'S' | 'M';
     type?: 'primary' | 'secondary' | 'tertiary';
     disabled?: boolean;
-    onPress?: () => void;
+    onPress?: (() => void) | ((event: GestureResponderEvent) => void) | undefined;
     style?: StyleProp<ViewStyle> | null;
     children?: React.ReactNode;
 }
