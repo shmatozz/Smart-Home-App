@@ -9,7 +9,7 @@ import IconButton from "@/components/buttons/IconButton";
 import Login from "@/app/(auth)/login";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {BodyS, Headers} from "@/constants/Fonts";
-import OnboardingViewModel from "@/utils/viewmodels/OnboardingViewModel";
+import OnboardingViewModel from "@/utils/viewmodels/Onboarding/OnboardingViewModel";
 import { observer } from "mobx-react-lite";
 
 const onboardingViewModel = new OnboardingViewModel();

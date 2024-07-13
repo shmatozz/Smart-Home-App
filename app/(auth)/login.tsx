@@ -8,7 +8,7 @@ import TextInput from "@/components/text/TextInput";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { BodyS } from "@/constants/Fonts";
 import { observer } from "mobx-react-lite";
-import AuthViewModel from "@/utils/viewmodels/AuthViewModel";
+import AuthViewModel from "@/utils/viewmodels/Auth/AuthViewModel";
 import {useRouter} from "expo-router";
 
 const authViewModel = new AuthViewModel();

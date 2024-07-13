@@ -9,11 +9,12 @@ import DropdownSelect from "@/components/choice/DropdownSelect";
 import Button from "@/components/buttons/Button";
 import {BodyM, Headers} from "@/constants/Fonts";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {observer} from "mobx-react-lite";
+import AddDeviceViewModel from "@/utils/viewmodels/AddDevice/AddDeviceViewModel";
 
-const Add_Device = () => {
-    const [deviceName, setDeviceName] = useState("");
-    const [deviceType, setDeviceType] = useState("null");
+const addDeviceViewModel = new AddDeviceViewModel();
 
+const Add_Device = observer(() => {
     const [roomsCardsHeight, setRoomsCardsHeight] = useState(0);
     const [roomsCardsWidth, setRoomsCardsWidth] = useState(0);
 
@@ -21,15 +22,13 @@ const Add_Device = () => {
         const { height, width } = event.nativeEvent.layout;
         setRoomsCardsHeight(Math.max(
             240,
-            (height - 28) / roomsData.length
+            (height - 28) / addDeviceViewModel.getRoomsCount()
         ));
         setRoomsCardsWidth(Math.max(
             144,
-            (width - 32 - 8 * (roomsData.length - 1)) / roomsData.length
+            (width - 32 - 8 * (addDeviceViewModel.getRoomsCount() - 1)) / addDeviceViewModel.getRoomsCount()
         ));
     };
-
-    const [selected, setSelected] = useState(-1);
 
     return (
         <SafeAreaView style={ styles.safeArea }>
@@ -50,18 +49,18 @@ const Add_Device = () => {
                             <View style={{ width: 16 }}/>
                             <View style={{ flexDirection: 'row', gap: 8 }}>
                                 {
-                                    roomsData.map((item, index) => (
+                                    addDeviceViewModel.rooms.map((item, index) => (
                                         <ImageCard image={ item.image }
                                                    title={ item.title }
-                                                   subtitle={ item.subtitle }
+                                                   subtitle={ item.devices + " devices" }
                                                    style={{
                                                        height: roomsCardsHeight,
                                                        width: roomsCardsWidth,
                                                    }}
                                                    key={ index }
                                                    selectable={ true }
-                                                   selected={ selected === index }
-                                                   onPress={ () => setSelected(index) }
+                                                   selected={ addDeviceViewModel.selectedRoom === index }
+                                                   onPress={ () => addDeviceViewModel.setSelectedRoom(index) }
                                         />
                                     ))
                                 }
@@ -73,16 +72,16 @@ const Add_Device = () => {
                     <View style={ styles.deviceNameContainer }>
                         <Text style={ Headers.H5 }>Name new device</Text>
                         
-                        <TextInput text={ deviceName }
-                                   onChangeText={ setDeviceName }
+                        <TextInput text={ addDeviceViewModel.deviceName }
+                                   onChangeText={ addDeviceViewModel.setDeviceName }
                                    placeholder={ 'Device Name' }
                                    size={ 'M' }/>
 
                         <DropdownSelect placeholder={ 'Type' }
                                         leftIcon={ true }
                                         options={ ['Air', 'Lights', 'Audio'] }
-                                        selectedOption={ deviceType }
-                                        onOptionSelected={ setDeviceType }
+                                        selectedOption={ addDeviceViewModel.deviceType }
+                                        onOptionSelected={ addDeviceViewModel.setDeviceType }
                                         size={ 'M' }>
                             <MaterialIcons name={ 'devices-other'} size={ 24 } color={ Colors.light.blue["50"] }/>
                         </DropdownSelect>
@@ -93,7 +92,9 @@ const Add_Device = () => {
 
                         <Button text={ "Find device signal" }
                                 size={ 'M' }
-                                type={ 'secondary' }/>
+                                type={ 'secondary' }
+                                onPress={ addDeviceViewModel.startSearchingDeviceSignal }
+                        />
                     </View>
                 </View>
 
@@ -104,14 +105,18 @@ const Add_Device = () => {
                         <View style={{ flex: 1, height: 2, backgroundColor: Colors.light.base["90"]  }}/>
                     </View>
 
-                    <Button text={ 'Smart connect using WIFI' } size={ 'M' } type={ 'primary' } leftIcon={ true }>
+                    <Button text={ 'Smart connect using WIFI' }
+                            size={ 'M' }
+                            type={ 'primary' }
+                            leftIcon={ true }
+                            onPress={ addDeviceViewModel.startSmartWIFIConnect }>
                         <MaterialIcons name={ 'wifi' } size={ 24 } color={ Colors.light.base["0"] }/>
                     </Button>
                 </View>
             </View>
         </SafeAreaView>
     );
-}
+})
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -151,25 +156,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 })
-
-const roomsData = [
-    {
-        image: "https://www.mebelkaliningrada.ru/wp-content/uploads/2018/12/2750880675.jpg",
-        title: 'Living room', subtitle: '6 devices'
-    },
-    {
-        image: "https://colodu.club/uploads/posts/2022-10/1666684356_21-colodu-club-p-master-spalnya-planirovka-krasivo-21.jpg",
-        title: 'Bedroom', subtitle: '7 devices'
-    },
-    {
-        image: "https://www.service-general.gr/media/widgetkit/kitchen5-c512f9d4d63cc58aa6469df0fd830991.jpg",
-        title: 'Kitchen', subtitle: '9 devices'
-    },
-    {
-        image: "https://gagaru.club/uploads/posts/2023-02/thumbs/1676687091_gagaru-club-p-krasivaya-prikhozhaya-v-dome-vkontakte-8.jpg",
-        title: 'Hallway', subtitle: '3 devices'
-    },
-];
-
 
 export default Add_Device;

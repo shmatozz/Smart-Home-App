@@ -10,7 +10,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Headers } from "@/constants/Fonts";
 import {observer} from "mobx-react-lite";
-import RoomViewModel from "@/utils/viewmodels/RoomViewModel";
+import RoomViewModel from "@/utils/viewmodels/Room/RoomViewModel";
 
 const roomViewModel = new RoomViewModel();
 

@@ -8,16 +8,19 @@ import InfoCard from "@/components/cards/InfoCard";
 import TemperatureConfig from "@/components/visual/TemperatureConfig";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
+import {observer} from "mobx-react-lite";
+import ClimateViewModel from "@/utils/viewmodels/Room/ClimateViewModel";
 
-const RoomClimate = () => {
+const climateViewModel = new ClimateViewModel();
+
+const RoomClimate = observer(() => {
     const router = useRouter();
 
     const params = useLocalSearchParams<{ room: string }>()
-    let room = 'error';
 
     if (params.room != undefined) {
         console.log(params);
-        room = params.room;
+        climateViewModel.setRoomTitle(params.room);
     }
 
     return (
@@ -26,7 +29,7 @@ const RoomClimate = () => {
             <Header backIcon={ true }
                     onBackPress={ () => router.back() }
                     accountIcon={ false }
-                    title={ room }
+                    title={ climateViewModel.RoomTitle }
                     firstIcon={ "notifications" } />
 
             <View style={ styles.contentContainer }>
@@ -53,7 +56,7 @@ const RoomClimate = () => {
             </View>
         </SafeAreaView>
     );
-}
+})
 
 const styles = StyleSheet.create({
     safeArea: {

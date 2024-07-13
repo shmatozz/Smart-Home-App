@@ -7,10 +7,12 @@ import Switch from "@/components/choice/Switch";
 import ImageCard from "@/components/cards/ImageCard";
 import DropdownSelect from "@/components/choice/DropdownSelect";
 import {BodyM, Headers} from "@/constants/Fonts";
+import {observer} from "mobx-react-lite";
+import SecurityViewModel from "@/utils/viewmodels/Security/SecurityViewModel";
 
-const Security = () => {
-    const [selectedCameras, setSelectedCameras] = useState('All');
+const securityViewModel = new SecurityViewModel();
 
+const Security = observer(() => {
     const [camerasContainerHeight, setCamerasContainerHeight] = useState(0);
 
     const handleLayout = (event: { nativeEvent: { layout: { height: any; }; }; }) => {
@@ -18,17 +20,9 @@ const Security = () => {
         setCamerasContainerHeight(
             Math.max(
                 160,
-                (height - 158 - 4 * (doorsData.length - 1) - doorsData.length * 40 - 12 * (camerasData.length - 1)) / camerasData.length
+                (height - 158 - 4 * (securityViewModel.getDoorsCount() - 1) - securityViewModel.getDoorsCount() * 40 - 12 * (securityViewModel.getCamerasCount() - 1)) / securityViewModel.getCamerasCount()
             )
         );
-    };
-
-    const [doorStates, setDoorStates] = useState(doorsData.map(door => door.status === 'closed'));
-
-    const setStateAtIndex = (index: number, newValue: boolean) => {
-        const newStates = [...doorStates];
-        newStates[index] = newValue;
-        setDoorStates(newStates);
     };
 
     return (
@@ -43,17 +37,17 @@ const Security = () => {
                         overScrollMode={ 'never' } contentContainerStyle={{ flexGrow: 1}}>
                 <View style={ styles.doorsLockContainer }>
                     {
-                        doorsData.map((item, index) => (
+                        securityViewModel.doors.map((item, index) => (
                             <View key={ index }
                                   style={ styles.doorStatus }>
                                 <Text style={[ BodyM.Regular, { flex: 1 }]}>
-                                    { item.name }
+                                    { item.title }
                                 </Text>
 
-                                <Switch text={ doorStates[index] ? 'Closed' : 'Opened' }
-                                        state={ doorStates[index] }
+                                <Switch text={ securityViewModel.doors[index].closed ? 'Closed' : "Opened" }
+                                        state={ securityViewModel.doors[index].closed }
                                         setState={ (value) => {
-                                            setStateAtIndex(index, value);
+                                            securityViewModel.setDoorState(index, value);
                                         } }
                                         type={ 'lock' }
                                 />
@@ -69,18 +63,18 @@ const Security = () => {
                         </Text>
 
                         <DropdownSelect options={ ['All', 'Indoors', 'Outdoors'] }
-                                        selectedOption={ selectedCameras }
-                                        onOptionSelected={ setSelectedCameras }
-                                        size={'S'}>
+                                        selectedOption={ securityViewModel.selectedCameras }
+                                        onOptionSelected={ securityViewModel.setSelectedCamera }
+                                        size={ 'S' }>
                         </DropdownSelect>
                     </View>
 
                     <View style={ styles.camerasPreviewContainer }>
                         {
-                            camerasData.map((item, index) => (
-                                <ImageCard image={ item.preview }
-                                           title={ item.name }
-                                           size={'M'}
+                            securityViewModel.cameras.map((item, index) => (
+                                <ImageCard image={ item.image }
+                                           title={ item.title }
+                                           size={ 'M' }
                                            style={{ height: camerasContainerHeight }}
                                            key={ index }/>
                             ))
@@ -90,7 +84,7 @@ const Security = () => {
             </ScrollView>
         </SafeAreaView>
     );
-}
+})
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -126,26 +120,5 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.light.base["5"],
     }
 })
-
-const doorsData = [
-    { name: "Main door", status: "closed" },
-    { name: "Gate", status: "opened" },
-    { name: "Gates", status: "closed" },
-]
-
-const camerasData = [
-    {
-        preview: "https://hobbyka.ru/upload/iblock/d25/d2526a8aecea1be55632241ee4b0e10c.jpg",
-        name: "Main courtyard",
-    },
-    {
-        preview: "https://m-strana.ru/upload/resize_cache/sprint.editor/964/830_830_1/96427c3e7182ccbce4f074754f251bb1.jpg",
-        name: "Backyard",
-    },
-    {
-        preview: "https://bigfoto.name/photo/uploads/posts/2024-02/thumbs/1709198930_bigfoto-name-p-landshaftnii-dizain-vdol-zabora-v-chastnom-82.jpg",
-        name: "Behind gate",
-    },
-]
 
 export default Security;

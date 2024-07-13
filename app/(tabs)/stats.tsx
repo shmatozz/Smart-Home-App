@@ -7,8 +7,12 @@ import InfoCard from "@/components/cards/InfoCard";
 import Graph from "@/components/visual/Graph";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
+import {observer} from "mobx-react-lite";
+import StatsViewModel from "@/utils/viewmodels/Stats/StatsViewModel";
 
-const Stats = () => {
+const statsViewModel = new StatsViewModel();
+
+const Stats = observer(() => {
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
@@ -35,7 +39,7 @@ const Stats = () => {
             </View>
         </SafeAreaView>
     );
-}
+})
 
 const styles = StyleSheet.create({
     safeArea: {

@@ -2,7 +2,7 @@ export interface Device {
     image: string;
     title: string;
     working: boolean;
-    room: string | undefined;
+    room?: string;
 }
 
 export const getDevices = (room: string) : Device[] => {

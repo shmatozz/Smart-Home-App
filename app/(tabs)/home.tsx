@@ -12,7 +12,7 @@ import {setItem} from "@/utils/storage/AsyncStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
-import HomeViewModel from "@/utils/viewmodels/HomeViewModel";
+import HomeViewModel from "@/utils/viewmodels/Home/HomeViewModel";
 
 const homeViewModel = new HomeViewModel();
 
