@@ -23,9 +23,6 @@
       "package": "com.shmatozz.SmartHomeApp",
       "softwareKeyboardLayoutMode": "pan"
     },
-    "androidNavigationBar": {
-      "visible": "leanback"
-    },
     "web": {
       "bundler": "metro",
       "output": "static",

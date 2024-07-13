@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Text, View, StyleSheet, ScrollView} from "react-native";
+import React, {useState, useRef} from "react";
+import {Text, View, StyleSheet, ScrollView, Animated, Modal} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/visual/PageHeader";
 import Colors from "@/constants/Colors";
@@ -11,6 +11,7 @@ import {BodyM, Headers} from "@/constants/Fonts";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {observer} from "mobx-react-lite";
 import AddDeviceViewModel from "@/utils/viewmodels/AddDevice/AddDeviceViewModel";
+import AnimatedLottieView from 'lottie-react-native';
 
 const addDeviceViewModel = new AddDeviceViewModel();
 
@@ -18,7 +19,10 @@ const Add_Device = observer(() => {
     const [roomsCardsHeight, setRoomsCardsHeight] = useState(0);
     const [roomsCardsWidth, setRoomsCardsWidth] = useState(0);
 
-    const handleLayout = (event: { nativeEvent: { layout: { height: any; width: any }; }; }) => {
+    const scaleAnim = useRef(new Animated.Value(0)).current;
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    const handleLayout = (event: { nativeEvent: { layout: { height: any; width: any; }; }; }) => {
         const { height, width } = event.nativeEvent.layout;
         setRoomsCardsHeight(Math.max(
             240,
@@ -30,22 +34,42 @@ const Add_Device = observer(() => {
         ));
     };
 
+    const handlePress = (event: { nativeEvent: { pageX: any; pageY: any; }; }) => {
+        const { pageX, pageY } = event.nativeEvent;
+
+        addDeviceViewModel.setPressPosition(pageX, pageY);
+        addDeviceViewModel.setModalVisible(true);
+
+        addDeviceViewModel.startSearchingDeviceSignal();
+
+        Animated.sequence([
+            Animated.timing(scaleAnim, {
+                toValue: 30,
+                duration: 700,
+                useNativeDriver: true,
+            }),
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 500,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    };
+
+    const closeModal = () => {
+        addDeviceViewModel.setModalVisible(false);
+        scaleAnim.setValue(0);
+        fadeAnim.setValue(0);
+    };
+
     return (
         <SafeAreaView style={ styles.safeArea }>
-            <Header title={ "Add new device" }
-                    accountIcon={ false } />
-
+            <Header title={ "Add new device" } accountIcon={ false } />
             <View style={ styles.contentContainer }>
                 <View style={ styles.deviceFormContainer }>
-                    <View style={ styles.selectRoomContainer }
-                          onLayout={ handleLayout }>
-                        <Text style={ [ Headers.H5, { paddingHorizontal: 16 }] }>
-                            Select room
-                        </Text>
-
-                        <ScrollView horizontal={ true }
-                                    showsHorizontalScrollIndicator={false}
-                                    overScrollMode={'never'}>
+                    <View style={ styles.selectRoomContainer } onLayout={ handleLayout }>
+                        <Text style={ [ Headers.H5, { paddingHorizontal: 16 }] }>Select room</Text>
+                        <ScrollView horizontal={ true } showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
                             <View style={{ width: 16 }}/>
                             <View style={{ flexDirection: 'row', gap: 8 }}>
                                 {
@@ -68,15 +92,12 @@ const Add_Device = observer(() => {
                             <View style={{ width: 16 }}/>
                         </ScrollView>
                     </View>
-
                     <View style={ styles.deviceNameContainer }>
                         <Text style={ Headers.H5 }>Name new device</Text>
-                        
                         <TextInput text={ addDeviceViewModel.deviceName }
                                    onChangeText={ addDeviceViewModel.setDeviceName }
                                    placeholder={ 'Device Name' }
                                    size={ 'M' }/>
-
                         <DropdownSelect placeholder={ 'Type' }
                                         leftIcon={ true }
                                         options={ ['Air', 'Lights', 'Audio'] }
@@ -86,18 +107,15 @@ const Add_Device = observer(() => {
                             <MaterialIcons name={ 'devices-other'} size={ 24 } color={ Colors.light.blue["50"] }/>
                         </DropdownSelect>
                     </View>
-
                     <View style={ styles.confirmContainer }>
                         <Text style={ Headers.H5 }>Pair signal</Text>
-
                         <Button text={ "Find device signal" }
                                 size={ 'M' }
                                 type={ 'secondary' }
-                                onPress={ addDeviceViewModel.startSearchingDeviceSignal }
+                                onPress={ handlePress }
                         />
                     </View>
                 </View>
-
                 <View style={ styles.smartPairContainer }>
                     <View style={ styles.splitterContainer }>
                         <View style={{ flex: 1, height: 2, backgroundColor: Colors.light.base["90"] }}/>
@@ -114,9 +132,37 @@ const Add_Device = observer(() => {
                     </Button>
                 </View>
             </View>
+
+            <Modal visible={ addDeviceViewModel.modalVisible } transparent={ true } animationType="fade" >
+                <View style={ styles.modalContainer }>
+                    <Animated.View
+                        style={[
+                            styles.animatedCircle,
+                            {
+                                top: addDeviceViewModel.pressPosition.y - 25,
+                                left: addDeviceViewModel.pressPosition.x - 25,
+                                transform: [{ scale: scaleAnim }],
+                            }
+                        ]}
+                    />
+
+                    <Animated.View style={[ styles.modalContent, { opacity: fadeAnim } ]}>
+                        <Text style={ Headers.H5 }>Searching for device</Text>
+
+                        <AnimatedLottieView
+                            source={ require('../../assets/lottie/test_animation.json') }
+                            autoPlay
+                            loop
+                            style={ styles.lottieView }
+                        />
+
+                        <Button size={ 'M' } type={ 'tertiary' } text={ 'Stop pairing' } onPress={ closeModal }/>
+                    </Animated.View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
-})
+});
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -155,6 +201,33 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-})
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    animatedCircle: {
+        position: 'absolute',
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: Colors.light.base["0"],
+    },
+    modalContent: {
+        width: '80%',
+        height: '40%',
+        backgroundColor: Colors.light.base["0"],
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        padding: 20,
+        gap: 16,
+    },
+    lottieView: {
+        width: "100%",
+        height: "100%",
+    },
+});
 
 export default Add_Device;

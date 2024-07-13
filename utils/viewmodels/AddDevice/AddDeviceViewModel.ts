@@ -7,6 +7,9 @@ class AddDeviceViewModel {
     @observable deviceType: string = "null";
     @observable selectedRoom: number = -1;
 
+    @observable modalVisible: boolean = false;
+    @observable pressPosition = {x: 0, y: 0};
+
     constructor() {
         makeAutoObservable(this);
 
@@ -26,6 +29,17 @@ class AddDeviceViewModel {
     @action
     public setSelectedRoom = (selectedRoom: number): void => {
         this.selectedRoom = selectedRoom;
+    }
+
+    @action
+    public setModalVisible = (visible: boolean): void => {
+        this.modalVisible = visible;
+    }
+
+    @action
+    public setPressPosition = (x: number, y: number): void => {
+        this.pressPosition.x = x;
+        this.pressPosition.y = y;
     }
 
     public getRoomsCount = () : number => {
