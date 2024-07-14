@@ -74,7 +74,7 @@ const Button: React.FC<ButtonProps> = ({
         style: disabled ? buttonStyle.disabled : (isPress ? [buttonStyle.pressed, style] : [buttonStyle.default, style]),
         onPressIn: () => setIsPress(true),
         onPressOut: () => setIsPress(false),
-        onPress: onPress,
+        onPress: disabled ? () => {} : onPress,
     };
 
     return (

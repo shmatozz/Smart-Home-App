@@ -35,6 +35,18 @@ const Add_Device = observer(() => {
     };
 
     const handlePress = (event: { nativeEvent: { pageX: any; pageY: any; }; }) => {
+        if (!addDeviceViewModel.isFilled()) {
+            if (addDeviceViewModel.deviceName.length == 0) {
+                addDeviceViewModel.setDeviceNameError(true);
+            }
+
+            if (addDeviceViewModel.deviceType == "null") {
+                addDeviceViewModel.setDeviceTypeError(true);
+            }
+
+            return
+        }
+
         const { pageX, pageY } = event.nativeEvent;
 
         addDeviceViewModel.setPressPosition(pageX, pageY);
@@ -65,6 +77,7 @@ const Add_Device = observer(() => {
     return (
         <SafeAreaView style={ styles.safeArea }>
             <Header title={ "Add new device" } accountIcon={ false } />
+
             <View style={ styles.contentContainer }>
                 <View style={ styles.deviceFormContainer }>
                     <View style={ styles.selectRoomContainer } onLayout={ handleLayout }>
@@ -92,23 +105,38 @@ const Add_Device = observer(() => {
                             <View style={{ width: 16 }}/>
                         </ScrollView>
                     </View>
+
                     <View style={ styles.deviceNameContainer }>
                         <Text style={ Headers.H5 }>Name new device</Text>
+
                         <TextInput text={ addDeviceViewModel.deviceName }
-                                   onChangeText={ addDeviceViewModel.setDeviceName }
+                                   onChangeText={ (name: string) => {
+                                       addDeviceViewModel.setDeviceName(name);
+                                       addDeviceViewModel.setDeviceNameError(false);
+                                   }}
                                    placeholder={ 'Device Name' }
-                                   size={ 'M' }/>
+                                   size={ 'M' }
+                                   error={ addDeviceViewModel.deviceNameError }
+                        />
+
                         <DropdownSelect placeholder={ 'Type' }
                                         leftIcon={ true }
                                         options={ ['Air', 'Lights', 'Audio'] }
                                         selectedOption={ addDeviceViewModel.deviceType }
-                                        onOptionSelected={ addDeviceViewModel.setDeviceType }
-                                        size={ 'M' }>
+                                        onOptionSelected={ (type: string) => {
+                                            addDeviceViewModel.setDeviceType(type);
+                                            addDeviceViewModel.setDeviceTypeError(false);
+                                        }}
+                                        size={ 'M' }
+                                        error={ addDeviceViewModel.deviceTypeError }
+                        >
                             <MaterialIcons name={ 'devices-other'} size={ 24 } color={ Colors.light.blue["50"] }/>
                         </DropdownSelect>
                     </View>
+
                     <View style={ styles.confirmContainer }>
                         <Text style={ Headers.H5 }>Pair signal</Text>
+
                         <Button text={ "Find device signal" }
                                 size={ 'M' }
                                 type={ 'secondary' }

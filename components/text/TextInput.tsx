@@ -18,6 +18,7 @@ interface TextInputProps {
     rightIcon?: boolean;
     size?: 'S' | 'M';
     password?: boolean;
+    error?: boolean;
     text: string;
     onChangeText: (text: string) => void;
     children?: React.ReactNode;
@@ -30,6 +31,7 @@ const TextInput: React.FC<TextInputProps> = ({
                                                  rightIcon = false,
                                                  size = 'S',
                                                  password = false,
+                                                 error = false,
                                                  text,
                                                  onChangeText,
                                                  children,
@@ -38,6 +40,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
     let inputContainer;
     let inputContainerFocused;
+    let inputContainerError;
     let iconSize;
     let label;
     let textSize;
@@ -48,6 +51,7 @@ const TextInput: React.FC<TextInputProps> = ({
         case 'S':
             inputContainer = styles.inputContainer;
             inputContainerFocused = styles.inputContainerFocused;
+            inputContainerError =  styles.inputContainerError;
             iconSize = 16;
             textSize = 14;
             label = [BodyS.Regular, { color: Colors.light.base['40'] }];
@@ -57,6 +61,7 @@ const TextInput: React.FC<TextInputProps> = ({
         case 'M':
             inputContainer = [styles.inputContainer, { height: 64 }];
             inputContainerFocused = [styles.inputContainerFocused, { height: 64 }];
+            inputContainerError =  [styles.inputContainerError, { height: 64 }];
             iconSize = 24;
             textSize = 16;
             label = [BodyM.Regular, { color: Colors.light.base['40'] }];
@@ -67,7 +72,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
 
     const touchProps = {
-        style: focused ? inputContainerFocused : inputContainer,
+        style: error ? inputContainerError : focused ? inputContainerFocused : inputContainer,
         onPress: () => { setFocused(true); },
     };
 
@@ -151,6 +156,18 @@ const styles = StyleSheet.create({
         width: '100%',
         borderWidth: 1,
         borderColor: Colors.light.blue['50'],
+        borderRadius: 5,
+        backgroundColor: Colors.light.base["0"],
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+    },
+    inputContainerError: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: 50,
+        width: '100%',
+        borderWidth: 1,
+        borderColor: Colors.light.red['60'],
         borderRadius: 5,
         backgroundColor: Colors.light.base["0"],
         paddingHorizontal: 12,

@@ -11,6 +11,7 @@ interface DropdownSelectProps {
     options: string[];
     selectedOption: string;
     onOptionSelected: (option: string) => void;
+    error?: boolean;
     size?: 'S' | 'M';
     style?: StyleProp<ViewStyle> | null;
     children?: React.ReactNode;
@@ -22,6 +23,7 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
                                                            options,
                                                            selectedOption,
                                                            onOptionSelected,
+                                                           error = false,
                                                            size = 'M',
                                                            style = null,
                                                            children,
@@ -29,7 +31,7 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const optionsHeight = useSharedValue(0);
 
-    let styles: { contentContainer: any; optionsContainer: any; option: any; selectedContainer: any; };
+    let styles: { contentContainer: any; errorContainer: any, optionsContainer: any; option: any; selectedContainer: any; };
     let optionSize: number;
 
     if (size == 'S') {
@@ -58,7 +60,7 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     });
 
     return (
-        <View style={ [styles.contentContainer, style] }>
+        <View style={ [error ? styles.errorContainer : styles.contentContainer, style] }>
             <Animated.View style={ [styles.optionsContainer, animatedStyle] }>
                 {
                     options.map((option, index) => (
@@ -100,6 +102,11 @@ const stylesM = StyleSheet.create({
         borderColor: Colors.light.blue["50"],
         borderWidth: 2,
     },
+    errorContainer: {
+        borderRadius: 6,
+        borderColor: Colors.light.red["60"],
+        borderWidth: 2,
+    },
     optionsContainer: {
         position: 'absolute',
         overflow: 'hidden',
@@ -135,6 +142,12 @@ const stylesS = StyleSheet.create({
         flex: 1,
         borderRadius: 6,
         borderColor: Colors.light.blue["50"],
+        borderWidth: 1,
+    },
+    errorContainer: {
+        flex: 1,
+        borderRadius: 6,
+        borderColor: Colors.light.red["60"],
         borderWidth: 1,
     },
     optionsContainer: {

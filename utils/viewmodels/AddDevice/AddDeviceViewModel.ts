@@ -4,7 +4,9 @@ import { getRooms, Room } from "@/utils/models/Room";
 class AddDeviceViewModel {
     @observable rooms: Room[] = [];
     @observable deviceName: string = "";
+    @observable deviceNameError: boolean = false;
     @observable deviceType: string = "null";
+    @observable deviceTypeError: boolean = false;
     @observable selectedRoom: number = -1;
 
     @observable modalVisible: boolean = false;
@@ -22,8 +24,18 @@ class AddDeviceViewModel {
     }
 
     @action
+    public setDeviceNameError = (error: boolean): void => {
+        this.deviceNameError = error;
+    }
+
+    @action
     public setDeviceType = (type: string): void => {
         this.deviceType = type;
+    }
+
+    @action
+    public setDeviceTypeError = (error: boolean): void => {
+        this.deviceTypeError = error;
     }
 
     @action
@@ -44,6 +56,10 @@ class AddDeviceViewModel {
 
     public getRoomsCount = () : number => {
         return this.rooms.length;
+    }
+
+    public isFilled = () : boolean => {
+        return this.deviceName.length > 0 && this.deviceType != "null";
     }
 
     public startSearchingDeviceSignal = () => {
