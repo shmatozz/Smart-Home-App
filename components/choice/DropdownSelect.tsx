@@ -31,7 +31,7 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const optionsHeight = useSharedValue(0);
 
-    let styles: { contentContainer: any; errorContainer: any, optionsContainer: any; option: any; selectedContainer: any; };
+    let styles: { contentContainer: any; optionsContainer: any; option: any; selectedContainer: any; };
     let optionSize: number;
 
     if (size == 'S') {
@@ -60,16 +60,17 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     });
 
     return (
-        <View style={ [error ? styles.errorContainer : styles.contentContainer, style] }>
-            <Animated.View style={ [styles.optionsContainer, animatedStyle] }>
+        <View style={ [styles.contentContainer, style, error ? { borderColor: Colors.light.red["60"] } : { borderColor: Colors.light.blue["50"] }] }>
+            <Animated.View style={ [styles.optionsContainer, animatedStyle, error ? { borderColor: Colors.light.red["60"] } : { borderColor: Colors.light.blue["50"] } ]}>
                 {
                     options.map((option, index) => (
                         <Pressable key={ index } onPress={ () => handleOptionSelect(option) } style={ styles.option }>
-                            <Text style={
+                            <Text style={[
                                 size == 'S' ?
                                     [BodyS.Regular, { color: Colors.light.blue['50'] }] :
-                                    [BodyM.Regular, { color: Colors.light.blue['50'] }]
-                            }>
+                                    [BodyM.Regular, { color: Colors.light.blue['50'] }],
+                                error ? { color: Colors.light.red["60"] } : {}
+                            ]}>
                                 { option }
                             </Text>
                         </Pressable>
@@ -80,17 +81,18 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
             <Pressable onPress={ toggleDropdown } style={ styles.selectedContainer }>
                 { leftIcon && children }
 
-                <Text style={
+                <Text style={[
                     selectedOption === 'null' ?
                         (size == 'S' ? [ BodyS.Italic, { color: Colors.light.blue['40'], flex: 1 }] : [ BodyM.Italic, { color: Colors.light.blue['40'], flex: 1 }] ) :
-                        (size == 'S' ? [ BodyS.Regular, { color: Colors.light.blue['50'], flex: 1 }] : [ BodyM.Regular, { color: Colors.light.blue['50'], flex: 1 }] )
-                }>
+                        (size == 'S' ? [ BodyS.Regular, { color: Colors.light.blue['50'], flex: 1 }] : [ BodyM.Regular, { color: Colors.light.blue['50'], flex: 1 }] ),
+                    error ? { color: Colors.light.red["50"] } : {}
+                ]}>
                     { selectedOption === 'null' ? placeholder : selectedOption }
                 </Text>
 
                 <MaterialIcons name={ isOpen ? 'keyboard-arrow-up' : 'keyboard-arrow-down' }
                                size={ 24 }
-                               color={ Colors.light.blue["50"] }/>
+                               color={ error ? Colors.light.red["60"] : Colors.light.blue["50"] }/>
             </Pressable>
         </View>
     );
@@ -100,11 +102,6 @@ const stylesM = StyleSheet.create({
     contentContainer: {
         borderRadius: 6,
         borderColor: Colors.light.blue["50"],
-        borderWidth: 2,
-    },
-    errorContainer: {
-        borderRadius: 6,
-        borderColor: Colors.light.red["60"],
         borderWidth: 2,
     },
     optionsContainer: {
@@ -142,12 +139,6 @@ const stylesS = StyleSheet.create({
         flex: 1,
         borderRadius: 6,
         borderColor: Colors.light.blue["50"],
-        borderWidth: 1,
-    },
-    errorContainer: {
-        flex: 1,
-        borderRadius: 6,
-        borderColor: Colors.light.red["60"],
         borderWidth: 1,
     },
     optionsContainer: {

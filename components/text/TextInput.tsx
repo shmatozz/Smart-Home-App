@@ -40,7 +40,6 @@ const TextInput: React.FC<TextInputProps> = ({
 
     let inputContainer;
     let inputContainerFocused;
-    let inputContainerError;
     let iconSize;
     let label;
     let textSize;
@@ -51,7 +50,6 @@ const TextInput: React.FC<TextInputProps> = ({
         case 'S':
             inputContainer = styles.inputContainer;
             inputContainerFocused = styles.inputContainerFocused;
-            inputContainerError =  styles.inputContainerError;
             iconSize = 16;
             textSize = 14;
             label = [BodyS.Regular, { color: Colors.light.base['40'] }];
@@ -61,7 +59,6 @@ const TextInput: React.FC<TextInputProps> = ({
         case 'M':
             inputContainer = [styles.inputContainer, { height: 64 }];
             inputContainerFocused = [styles.inputContainerFocused, { height: 64 }];
-            inputContainerError =  [styles.inputContainerError, { height: 64 }];
             iconSize = 24;
             textSize = 16;
             label = [BodyM.Regular, { color: Colors.light.base['40'] }];
@@ -72,7 +69,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
 
     const touchProps = {
-        style: error ? inputContainerError : focused ? inputContainerFocused : inputContainer,
+        style: [focused ? inputContainerFocused : inputContainer, error ? { borderColor: Colors.light.red["60"] } : { } ],
         onPress: () => { setFocused(true); },
     };
 
@@ -85,7 +82,12 @@ const TextInput: React.FC<TextInputProps> = ({
                     }
 
                     <View style={{ flexDirection: 'column', flex: 1}}>
-                        <Text style={[label, text.length > 0 && labelInput, focused && labelFocused]}>{ placeholder }</Text>
+                        <Text style={[
+                            label, text.length > 0 && labelInput, focused && labelFocused,
+                            error ? { color: Colors.light.red["60"] } : { color: Colors.light.base["40"] }
+                        ]}>
+                            { placeholder }
+                        </Text>
 
                         {
                             (focused || text.length > 0) &&
@@ -156,18 +158,6 @@ const styles = StyleSheet.create({
         width: '100%',
         borderWidth: 1,
         borderColor: Colors.light.blue['50'],
-        borderRadius: 5,
-        backgroundColor: Colors.light.base["0"],
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-    },
-    inputContainerError: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        height: 50,
-        width: '100%',
-        borderWidth: 1,
-        borderColor: Colors.light.red['60'],
         borderRadius: 5,
         backgroundColor: Colors.light.base["0"],
         paddingHorizontal: 12,

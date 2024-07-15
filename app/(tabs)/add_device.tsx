@@ -21,6 +21,7 @@ const Add_Device = observer(() => {
 
     const scaleAnim = useRef(new Animated.Value(0)).current;
     const fadeAnim = useRef(new Animated.Value(0)).current;
+    const pulseAnim = useRef(new Animated.Value(1)).current;
 
     const handleLayout = (event: { nativeEvent: { layout: { height: any; width: any; }; }; }) => {
         const { height, width } = event.nativeEvent.layout;
@@ -44,6 +45,7 @@ const Add_Device = observer(() => {
                 addDeviceViewModel.setDeviceTypeError(true);
             }
 
+            triggerPulseAnimation();
             return
         }
 
@@ -68,6 +70,32 @@ const Add_Device = observer(() => {
         ]).start();
     };
 
+    const triggerPulseAnimation = () => {
+        pulseAnim.setValue(1);
+        Animated.sequence([
+            Animated.timing(pulseAnim, {
+                toValue: 1.1,
+                duration: 200,
+                useNativeDriver: true,
+            }),
+            Animated.timing(pulseAnim, {
+                toValue: 1,
+                duration: 200,
+                useNativeDriver: true,
+            }),
+            Animated.timing(pulseAnim, {
+                toValue: 1.1,
+                duration: 200,
+                useNativeDriver: true,
+            }),
+            Animated.timing(pulseAnim, {
+                toValue: 1,
+                duration: 200,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    };
+
     const closeModal = () => {
         addDeviceViewModel.setModalVisible(false);
         scaleAnim.setValue(0);
@@ -82,56 +110,64 @@ const Add_Device = observer(() => {
                 <View style={ styles.deviceFormContainer }>
                     <View style={ styles.selectRoomContainer } onLayout={ handleLayout }>
                         <Text style={ [ Headers.H5, { paddingHorizontal: 16 }] }>Select room</Text>
-                        <ScrollView horizontal={ true } showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
-                            <View style={{ width: 16 }}/>
-                            <View style={{ flexDirection: 'row', gap: 8 }}>
-                                {
-                                    addDeviceViewModel.rooms.map((item, index) => (
-                                        <ImageCard image={ item.image }
-                                                   title={ item.title }
-                                                   subtitle={ item.devices + " devices" }
-                                                   style={{
-                                                       height: roomsCardsHeight,
-                                                       width: roomsCardsWidth,
-                                                   }}
-                                                   key={ index }
-                                                   selectable={ true }
-                                                   selected={ addDeviceViewModel.selectedRoom === index }
-                                                   onPress={ () => addDeviceViewModel.setSelectedRoom(index) }
-                                        />
-                                    ))
-                                }
-                            </View>
-                            <View style={{ width: 16 }}/>
-                        </ScrollView>
+
+                        <Animated.View style={[{ flex: 1 }, (addDeviceViewModel.selectedRoom == -1) && { transform: [{ scale: pulseAnim }] } ]}>
+                            <ScrollView horizontal={ true } showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
+                                <View style={{ width: 16 }}/>
+                                <View style={{ flexDirection: 'row', gap: 8 }}>
+                                    {
+                                        addDeviceViewModel.rooms.map((item, index) => (
+                                            <ImageCard image={ item.image }
+                                                       title={ item.title }
+                                                       subtitle={ item.devices + " devices" }
+                                                       style={{
+                                                           height: roomsCardsHeight,
+                                                           width: roomsCardsWidth,
+                                                       }}
+                                                       key={ index }
+                                                       selectable={ true }
+                                                       selected={ addDeviceViewModel.selectedRoom === index }
+                                                       onPress={ () => addDeviceViewModel.setSelectedRoom(index) }
+                                            />
+                                        ))
+                                    }
+                                </View>
+                                <View style={{ width: 16 }}/>
+                            </ScrollView>
+                        </Animated.View>
                     </View>
 
                     <View style={ styles.deviceNameContainer }>
                         <Text style={ Headers.H5 }>Name new device</Text>
 
-                        <TextInput text={ addDeviceViewModel.deviceName }
-                                   onChangeText={ (name: string) => {
-                                       addDeviceViewModel.setDeviceName(name);
-                                       addDeviceViewModel.setDeviceNameError(false);
-                                   }}
-                                   placeholder={ 'Device Name' }
-                                   size={ 'M' }
-                                   error={ addDeviceViewModel.deviceNameError }
-                        />
+                        <Animated.View style={ addDeviceViewModel.deviceNameError && { transform: [{ scale: pulseAnim }] } }>
+                            <TextInput text={ addDeviceViewModel.deviceName }
+                                       onChangeText={ (name: string) => {
+                                           addDeviceViewModel.setDeviceName(name);
+                                           addDeviceViewModel.setDeviceNameError(false);
+                                       }}
+                                       placeholder={ 'Device Name' }
+                                       size={ 'M' }
+                                       error={ addDeviceViewModel.deviceNameError }
+                            />
+                        </Animated.View>
 
-                        <DropdownSelect placeholder={ 'Type' }
-                                        leftIcon={ true }
-                                        options={ ['Air', 'Lights', 'Audio'] }
-                                        selectedOption={ addDeviceViewModel.deviceType }
-                                        onOptionSelected={ (type: string) => {
-                                            addDeviceViewModel.setDeviceType(type);
-                                            addDeviceViewModel.setDeviceTypeError(false);
-                                        }}
-                                        size={ 'M' }
-                                        error={ addDeviceViewModel.deviceTypeError }
-                        >
-                            <MaterialIcons name={ 'devices-other'} size={ 24 } color={ Colors.light.blue["50"] }/>
-                        </DropdownSelect>
+                        <Animated.View style={ addDeviceViewModel.deviceTypeError && { transform: [{ scale: pulseAnim }] } }>
+                            <DropdownSelect placeholder={ 'Type' }
+                                            leftIcon={ true }
+                                            options={ ['Air', 'Lights', 'Audio'] }
+                                            selectedOption={ addDeviceViewModel.deviceType }
+                                            onOptionSelected={ (type: string) => {
+                                                addDeviceViewModel.setDeviceType(type);
+                                                addDeviceViewModel.setDeviceTypeError(false);
+                                            }}
+                                            size={ 'M' }
+                                            error={ addDeviceViewModel.deviceTypeError }
+                            >
+                                <MaterialIcons name={ 'devices-other'} size={ 24 }
+                                               color={ addDeviceViewModel.deviceTypeError ? Colors.light.red["60"] : Colors.light.blue["50"] }/>
+                            </DropdownSelect>
+                        </Animated.View>
                     </View>
 
                     <View style={ styles.confirmContainer }>
