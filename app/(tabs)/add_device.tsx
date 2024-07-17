@@ -37,14 +37,6 @@ const Add_Device = observer(() => {
 
     const handlePress = (event: { nativeEvent: { pageX: any; pageY: any; }; }) => {
         if (!addDeviceViewModel.isFilled()) {
-            if (addDeviceViewModel.deviceName.length == 0) {
-                addDeviceViewModel.setDeviceNameError(true);
-            }
-
-            if (addDeviceViewModel.deviceType == "null") {
-                addDeviceViewModel.setDeviceTypeError(true);
-            }
-
             triggerPulseAnimation();
             return
         }

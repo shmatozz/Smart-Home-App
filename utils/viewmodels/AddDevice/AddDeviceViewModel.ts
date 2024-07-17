@@ -59,7 +59,15 @@ class AddDeviceViewModel {
     }
 
     public isFilled = () : boolean => {
-        return this.deviceName.length > 0 && this.deviceType != "null";
+        if (this.deviceName.length == 0) {
+            this.setDeviceNameError(true);
+        }
+
+        if (this.deviceType == "null") {
+            this.setDeviceTypeError(true);
+        }
+
+        return this.deviceName.length > 0 && this.deviceType != "null" && this.selectedRoom != -1;
     }
 
     public startSearchingDeviceSignal = () => {

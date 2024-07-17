@@ -84,7 +84,8 @@ const TextInput: React.FC<TextInputProps> = ({
                     <View style={{ flexDirection: 'column', flex: 1}}>
                         <Text style={[
                             label, text.length > 0 && labelInput, focused && labelFocused,
-                            error ? { color: Colors.light.red["60"] } : { color: Colors.light.base["40"] }
+                            error ? { color: Colors.light.red["60"] } :
+                               (focused ? { color: Colors.light.blue["50"] } : { color: Colors.light.base["40"] })
                         ]}>
                             { placeholder }
                         </Text>
