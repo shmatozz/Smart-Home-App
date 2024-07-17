@@ -36,8 +36,8 @@ const Button: React.FC<ButtonProps> = ({
                                        }) => {
     const [isPress, setIsPress] = useState(false);
 
-    let buttonSize;
-    let buttonText;
+    const buttonSize = size == 'M' ? [styles.container, { height: 52 }] : styles.container;
+    let buttonText = size == 'M' ? [BodyM.Medium, { color: Colors.light.base["0"] }] : [BodyS.Medium, { color: Colors.light.base["0"] }];
     let buttonStyle;
 
     switch (type) {
@@ -54,20 +54,12 @@ const Button: React.FC<ButtonProps> = ({
             buttonStyle = stylesPrimary;
     }
 
-    if (size === 'M') {
-        buttonSize = [styles.container, { height: 52 }];
-        buttonText = [BodyM.Medium, { color: Colors.light.base["0"] }];
-    } else {
-        buttonSize = styles.container;
-        buttonText = [BodyS.Medium, { color: Colors.light.base["0"] }];
-    }
-
     if (type == 'secondary' || type == 'tertiary') {
-        buttonText = [buttonText, { color: Colors.light.blue["50"] }];
+        buttonText = [...buttonText, { color: Colors.light.blue["50"] }];
     }
 
     if (disabled && (type == 'secondary' || type == 'tertiary')) {
-        buttonText = [buttonText, { color: Colors.light.base["20"] }]
+        buttonText = [...buttonText, { color: Colors.light.base["20"] }]
     }
 
     const touchProps = {

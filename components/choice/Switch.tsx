@@ -40,13 +40,7 @@ const Switch: React.FC<SwitchProps> = ({
         }
     }, [state])
 
-    let styles;
-
-    if (type === 'lock') {
-        styles = stylesLock;
-    } else {
-        styles = stylesDefault;
-    }
+    const styles = type == 'lock' ? stylesLock : stylesDefault;
 
     return (
         <Pressable style={ [styles.container, style] } onPress={ () => setState(!state) }>

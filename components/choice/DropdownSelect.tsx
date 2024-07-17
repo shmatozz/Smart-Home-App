@@ -31,16 +31,8 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const optionsHeight = useSharedValue(0);
 
-    let styles: { contentContainer: any; optionsContainer: any; option: any; selectedContainer: any; };
-    let optionSize: number;
-
-    if (size == 'S') {
-        styles = stylesS;
-        optionSize = 36;
-    } else {
-        styles = stylesM;
-        optionSize = 48;
-    }
+    const styles = size == 'M' ? stylesM : stylesS;
+    const optionSize: number = size == 'M' ? 48 : 36;
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -60,8 +52,8 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
     });
 
     return (
-        <View style={ [styles.contentContainer, style, error ? { borderColor: Colors.light.red["60"] } : { borderColor: Colors.light.blue["50"] }] }>
-            <Animated.View style={ [styles.optionsContainer, animatedStyle, error ? { borderColor: Colors.light.red["60"] } : { borderColor: Colors.light.blue["50"] } ]}>
+        <View style={ [styles.contentContainer, style, error ? { borderColor: Colors.light.red["60"] } : {}] }>
+            <Animated.View style={ [styles.optionsContainer, animatedStyle, error ? { borderColor: Colors.light.red["60"] } : {} ]}>
                 {
                     options.map((option, index) => (
                         <Pressable key={ index } onPress={ () => handleOptionSelect(option) } style={ styles.option }>

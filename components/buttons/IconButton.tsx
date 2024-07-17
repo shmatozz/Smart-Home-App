@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+  import React, { useState } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
 import Colors from '@/constants/Colors';
 
@@ -19,9 +19,9 @@ const IconButton: React.FC<ButtonProps> = ({
                                        }) => {
     const [isPress, setIsPress] = useState(false);
 
-    let buttonSize;
-    let buttonStyle;
+    const buttonSize =  size == 'M' ? 52 : 40;
 
+    let buttonStyle;
     switch (type) {
         case 'primary':
             buttonStyle = stylesPrimary;
@@ -34,12 +34,6 @@ const IconButton: React.FC<ButtonProps> = ({
             break;
         default:
             buttonStyle = stylesPrimary;
-    }
-
-    if (size === 'M') {
-        buttonSize = 52;
-    } else {
-        buttonSize = 40;
     }
 
     const touchProps = {
