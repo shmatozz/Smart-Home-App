@@ -8,7 +8,6 @@ import InfoCard from "@/components/cards/InfoCard";
 import Button from "@/components/buttons/Button";
 import ImageCard from "@/components/cards/ImageCard";
 import DeviceCard from "@/components/cards/DeviceCard";
-import {setItem} from "@/utils/storage/AsyncStorage";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
@@ -27,7 +26,7 @@ const Home = () => {
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
             <Header title={"Welcome, Matvey!"} firstIcon={"notifications"} onAccountPress={ () => {
-                setItem("logged", false).then();
+                router.push('../home/account');
             }}/>
 
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"}>

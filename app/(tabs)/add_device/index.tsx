@@ -206,7 +206,7 @@ const Add_Device = observer(() => {
                         <Text style={ Headers.H5 }>Searching for device</Text>
 
                         <AnimatedLottieView
-                            source={ require('../../assets/lottie/test_animation.json') }
+                            source={ require('../../../assets/lottie/test_animation.json') }
                             autoPlay
                             loop
                             style={ styles.lottieView }
