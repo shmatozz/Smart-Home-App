@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import {Text, View, StyleSheet, Pressable, StyleProp, ViewStyle} from "react-native";
+import {
+    Text,
+    View,
+    StyleSheet,
+    StyleProp,
+    ViewStyle,
+    GestureResponderEvent,
+    Pressable
+} from "react-native";
 import Colors from '@/constants/Colors';
 import {BodyM, BodyS} from "@/constants/Fonts";
 
@@ -10,7 +18,7 @@ interface ButtonProps {
     size?: 'S' | 'M';
     type?: 'primary' | 'secondary' | 'tertiary';
     disabled?: boolean;
-    onPress?: () => void;
+    onPress?: (() => void) | ((event: GestureResponderEvent) => void) | undefined;
     style?: StyleProp<ViewStyle> | null;
     children?: React.ReactNode;
 }
@@ -28,8 +36,8 @@ const Button: React.FC<ButtonProps> = ({
                                        }) => {
     const [isPress, setIsPress] = useState(false);
 
-    let buttonSize;
-    let buttonText;
+    const buttonSize = size == 'M' ? [styles.container, { height: 52 }] : styles.container;
+    let buttonText = size == 'M' ? [BodyM.Medium, { color: Colors.light.base["0"] }] : [BodyS.Medium, { color: Colors.light.base["0"] }];
     let buttonStyle;
 
     switch (type) {
@@ -46,27 +54,19 @@ const Button: React.FC<ButtonProps> = ({
             buttonStyle = stylesPrimary;
     }
 
-    if (size === 'M') {
-        buttonSize = [styles.container, { height: 52 }];
-        buttonText = [BodyM.Medium, { color: Colors.light.base["0"] }];
-    } else {
-        buttonSize = styles.container;
-        buttonText = [BodyS.Medium, { color: Colors.light.base["0"] }];
-    }
-
     if (type == 'secondary' || type == 'tertiary') {
-        buttonText = [buttonText, { color: Colors.light.blue["50"] }];
+        buttonText = [...buttonText, { color: Colors.light.blue["50"] }];
     }
 
     if (disabled && (type == 'secondary' || type == 'tertiary')) {
-        buttonText = [buttonText, { color: Colors.light.base["20"] }]
+        buttonText = [...buttonText, { color: Colors.light.base["20"] }]
     }
 
     const touchProps = {
         style: disabled ? buttonStyle.disabled : (isPress ? [buttonStyle.pressed, style] : [buttonStyle.default, style]),
         onPressIn: () => setIsPress(true),
         onPressOut: () => setIsPress(false),
-        onPress: onPress,
+        onPress: disabled ? () => {} : onPress,
     };
 
     return (

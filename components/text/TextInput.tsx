@@ -18,6 +18,7 @@ interface TextInputProps {
     rightIcon?: boolean;
     size?: 'S' | 'M';
     password?: boolean;
+    error?: boolean;
     text: string;
     onChangeText: (text: string) => void;
     children?: React.ReactNode;
@@ -30,44 +31,22 @@ const TextInput: React.FC<TextInputProps> = ({
                                                  rightIcon = false,
                                                  size = 'S',
                                                  password = false,
+                                                 error = false,
                                                  text,
                                                  onChangeText,
                                                  children,
                                              }) => {
     const [focused, setFocused] = useState(false);
 
-    let inputContainer;
-    let inputContainerFocused;
-    let iconSize;
-    let label;
-    let textSize;
-    let labelFocused;
-    let labelInput;
-
-    switch (size) {
-        case 'S':
-            inputContainer = styles.inputContainer;
-            inputContainerFocused = styles.inputContainerFocused;
-            iconSize = 16;
-            textSize = 14;
-            label = [BodyS.Regular, { color: Colors.light.base['40'] }];
-            labelFocused = [Caption.Regular, { color: Colors.light.blue['50'] }];
-            labelInput = [Caption.Regular, { color: Colors.light.base['50'] }];
-            break;
-        case 'M':
-            inputContainer = [styles.inputContainer, { height: 64 }];
-            inputContainerFocused = [styles.inputContainerFocused, { height: 64 }];
-            iconSize = 24;
-            textSize = 16;
-            label = [BodyM.Regular, { color: Colors.light.base['40'] }];
-            labelFocused = [BodyS.Regular, { color: Colors.light.blue['50'] } ];
-            labelInput = [BodyS.Regular, { color: Colors.light.base['50'] } ];
-            break
-    }
-
+    const inputContainer = size == 'M' ? [styles.inputContainer, { height: 64 }] : styles.inputContainer;
+    const inputContainerFocused = size == 'M' ? [styles.inputContainerFocused, { height: 64 }] : styles.inputContainerFocused;
+    const iconSize = size == 'M' ? 24 : 16;
+    const label = size == 'M' ? [BodyM.Regular, { color: Colors.light.base['40'] }] : [BodyS.Regular, { color: Colors.light.base['40'] }];
+    const labelFocused = size == 'M' ? [BodyS.Regular, { color: Colors.light.blue['50'] } ] : [Caption.Regular, { color: Colors.light.blue['50'] }];
+    const labelInput = size == 'M' ? [BodyS.Regular, { color: Colors.light.base['50'] } ] : [Caption.Regular, { color: Colors.light.base['50'] }];
 
     const touchProps = {
-        style: focused ? inputContainerFocused : inputContainer,
+        style: [focused ? inputContainerFocused : inputContainer, error ? { borderColor: Colors.light.red["60"] } : { } ],
         onPress: () => { setFocused(true); },
     };
 
@@ -80,13 +59,19 @@ const TextInput: React.FC<TextInputProps> = ({
                     }
 
                     <View style={{ flexDirection: 'column', flex: 1}}>
-                        <Text style={[label, text.length > 0 && labelInput, focused && labelFocused]}>{ placeholder }</Text>
+                        <Text style={[
+                            label, text.length > 0 && labelInput, focused && labelFocused,
+                            error ? { color: Colors.light.red["60"] } :
+                               (focused ? { color: Colors.light.blue["50"] } : { color: Colors.light.base["40"] })
+                        ]}>
+                            { placeholder }
+                        </Text>
 
                         {
                             (focused || text.length > 0) &&
                             <DefaultTextInput
                                 autoFocus={ focused }
-                                style={{ fontSize: textSize, color: Colors.light.base['90']}}
+                                style={{ fontSize: size == 'M' ? 16 : 14, color: Colors.light.base['90']}}
                                 onChangeText={ onChangeText }
                                 onPressIn={ () => setFocused(true) }
                                 cursorColor={ Colors.light.base["40"] }

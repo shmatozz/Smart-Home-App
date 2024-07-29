@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
         flexDirection: 'row',
         gap: 12,
-        bottom: 68,
+        paddingTop: 240,
     },
     progressValue: {
         fontSize: 28,

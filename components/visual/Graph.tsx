@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-        zIndex: 1,
+        zIndex: 0,
     },
 })
 
@@ -110,6 +110,7 @@ const graphStyles = StyleSheet.create({
     bar: {
         backgroundColor: Colors.light.blue["5"],
         borderRadius: 6,
+        zIndex: -1,
     },
     barSelected: {
         backgroundColor: Colors.light.blue["50"],
