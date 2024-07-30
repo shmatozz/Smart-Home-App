@@ -11,6 +11,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Headers } from "@/constants/Fonts";
 import {observer} from "mobx-react-lite";
 import RoomViewModel from "@/utils/viewmodels/Room/RoomViewModel";
+import translate from "@/utils/localization/Localization";
 
 const roomViewModel = new RoomViewModel();
 
@@ -38,7 +39,7 @@ const Room = observer(() => {
                 ListHeaderComponent={
                     <View style={ styles.listHeaderContainer }>
                         <View style={ styles.infoCards }>
-                            <InfoCard title={ "Room\ntemperature" }
+                            <InfoCard title={ translate("room-temperature") }
                                       info={ "25°" }
                                       onPress={() => {
                                           router.push({ pathname: '../room/climate', params: { room: roomViewModel.title }})
@@ -46,17 +47,17 @@ const Room = observer(() => {
                                 <MaterialCommunityIcons name={ "thermometer" } size={ 32 } color={ Colors.light.blue["50"]}/>
                             </InfoCard>
 
-                            <InfoCard title={ "Active\ndevices" } info={ "5" }>
+                            <InfoCard title={ translate("active-devices") } info={ "5" }>
                                 <MaterialIcons name={ "devices-other" } size={ 32 } color={ Colors.light.blue["50"] }/>
                             </InfoCard>
 
-                            <InfoCard title={ "Electricity usage" } info={ "36 kWh" }>
+                            <InfoCard title={ translate("electricity-usage") } info={ "36 kWh" }>
                                 <MaterialIcons name={ "bolt" } size={ 32 } color={ Colors.light.blue["50"] }/>
                             </InfoCard>
                         </View>
 
                         <View style={ styles.devicesContainer }>
-                            <Text style={ Headers.H5 }>Available devices</Text>
+                            <Text style={ Headers.H5 }>{ translate("available-devices") }</Text>
                         </View>
                     </View>
                 }

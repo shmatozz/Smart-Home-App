@@ -7,6 +7,7 @@ import Colors from "@/constants/Colors";
 import ImageCard from "@/components/cards/ImageCard";
 import RoomsViewModel from "@/utils/viewmodels/Room/RoomsViewModel";
 import {observer} from "mobx-react-lite";
+import translate from "@/utils/localization/Localization";
 
 const roomsViewModel = new RoomsViewModel();
 
@@ -27,7 +28,7 @@ const Rooms = observer(() => {
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
-            <Header title={ "Rooms" } firstIcon={"notifications"} />
+            <Header title={ translate("rooms") } firstIcon={ "notifications" } />
 
             <View style={ styles.contentContainer }>
                 <ScrollView style={ styles.scrollContainer }
@@ -39,7 +40,7 @@ const Rooms = observer(() => {
                                 <View key={ item.title }>
                                     <ImageCard image={ item.image }
                                                title={ item.title }
-                                               subtitle={ item.devices + ' devices' }
+                                               subtitle={ item.devices + ' ' + (item.devices == 1 ? translate("device") : translate("devices")) }
                                                size={'M'}
                                                style={{ height: cardHeight, }}
                                                key={ index }

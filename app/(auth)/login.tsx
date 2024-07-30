@@ -10,6 +10,7 @@ import { BodyS } from "@/constants/Fonts";
 import { observer } from "mobx-react-lite";
 import AuthViewModel from "@/utils/viewmodels/Auth/AuthViewModel";
 import {useRouter} from "expo-router";
+import translate from "@/utils/localization/Localization";
 
 const authViewModel = new AuthViewModel();
 
@@ -22,13 +23,13 @@ const Login = observer(() => {
             <SafeAreaView style={ styles.safeArea }>
                 <BlurView style={ styles.blurContainer } intensity={16.4}>
                     <View style={ styles.textFieldsContainer }>
-                        <TextInput placeholder={ "E-mail" }
+                        <TextInput placeholder={ translate("login") }
                                    size={ 'M' }
                                    text={ authViewModel.login }
                                    onChangeText={ authViewModel.setLogin }
                         />
 
-                        <TextInput placeholder={ "Password" }
+                        <TextInput placeholder={ translate("password") }
                                    size={ 'M' }
                                    password={ true }
                                    text={ authViewModel.password }
@@ -37,13 +38,13 @@ const Login = observer(() => {
 
                         <Pressable onPress={ () => console.log("Forget password") }>
                             <Text style={[ BodyS.Regular, { color: Colors.light.base["40"] }]}>
-                                Forgot password?
+                                { translate("forgot-password") }
                             </Text>
                         </Pressable>
                     </View>
 
                     <View style={ styles.buttonsContainer }>
-                        <Button text={ "Login" }
+                        <Button text={ translate("login") }
                                 size={ 'M' }
                                 type={ 'primary' }
                                 style={{ width: '100%' }}
@@ -54,7 +55,7 @@ const Login = observer(() => {
                                 }}
                         />
 
-                        <Button text={ "I don't have an account" }
+                        <Button text={ translate("i-dont-have-an-account") }
                                 size={ 'M' }
                                 type={ 'secondary' }
                                 style={{ width: '100%' }}
@@ -68,7 +69,7 @@ const Login = observer(() => {
                         <View style={{ flex: 1, height: 2, backgroundColor: "white" }}/>
 
                         <Text style={[ BodyS.Regular, { color: Colors.light.base["0"] }]}>
-                            or login via
+                            { translate("or-login-via") }
                         </Text>
 
                         <View style={{ flex: 1, height: 2, backgroundColor: "white" }}/>

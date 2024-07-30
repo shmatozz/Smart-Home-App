@@ -9,6 +9,7 @@ import DropdownSelect from "@/components/choice/DropdownSelect";
 import {BodyM, Headers} from "@/constants/Fonts";
 import {observer} from "mobx-react-lite";
 import SecurityViewModel from "@/utils/viewmodels/Security/SecurityViewModel";
+import translate from "@/utils/localization/Localization";
 
 const securityViewModel = new SecurityViewModel();
 
@@ -28,7 +29,7 @@ const Security = observer(() => {
     return (
         <SafeAreaView style={ styles.safeArea }
                       onLayout={ handleLayout }>
-            <Header title={'Security'}
+            <Header title={ translate("security") }
                     accountIcon={ false }
                     firstIcon={ 'notifications' }/>
 
@@ -44,7 +45,7 @@ const Security = observer(() => {
                                     { item.title }
                                 </Text>
 
-                                <Switch text={ securityViewModel.doors[index].closed ? 'Closed' : "Opened" }
+                                <Switch text={ securityViewModel.doors[index].closed ? translate("closed") : translate("opened") }
                                         state={ securityViewModel.doors[index].closed }
                                         setState={ (value) => {
                                             securityViewModel.setDoorState(index, value);
@@ -59,10 +60,10 @@ const Security = observer(() => {
                 <View style={ styles.camerasContainer }>
                     <View style={ styles.camerasTitleContainer }>
                         <Text style={[ Headers.H5, { flex: 1 } ]}>
-                            Cameras
+                            { translate("cameras") }
                         </Text>
 
-                        <DropdownSelect options={ ['All', 'Indoors', 'Outdoors'] }
+                        <DropdownSelect options={ [translate("all"), translate("indoors"), translate("outdoors")] }
                                         selectedOption={ securityViewModel.selectedCameras }
                                         onOptionSelected={ securityViewModel.setSelectedCamera }
                                         size={ 'S' }>

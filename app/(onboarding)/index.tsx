@@ -11,6 +11,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {BodyS, Headers} from "@/constants/Fonts";
 import OnboardingViewModel from "@/utils/viewmodels/Onboarding/OnboardingViewModel";
 import { observer } from "mobx-react-lite";
+import translate from "@/utils/localization/Localization";
 
 const onboardingViewModel = new OnboardingViewModel();
 
@@ -39,7 +40,7 @@ const Onboarding = observer(() => {
                         <View style={ styles.buttonsContainer }>
                             {
                                 onboardingViewModel.step <= 2 &&
-                                <Button text={"Skip"} type={'tertiary'} size={'M'} onPress={ () => {
+                                <Button text={ translate("skip") } type={ 'tertiary' } size={ 'M' } onPress={ () => {
                                     onboardingViewModel.setWatched(true);
                                 }}/>
                             }
@@ -53,7 +54,7 @@ const Onboarding = observer(() => {
                             }
                             {
                                 onboardingViewModel.step == 3 &&
-                                <Button text={"Let's go"} type={'primary'} size={'M'} rightIcon={ true } onPress={() => {
+                                <Button text={ translate("lets-go") } type={'primary'} size={'M'} rightIcon={ true } onPress={() => {
                                     onboardingViewModel.setWatched(true);
                                 }} style={{ flex: 1 }}>
                                     <MaterialIcons name={ 'arrow-forward' } size={ 24 } color={ Colors.light.base['0'] }/>

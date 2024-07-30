@@ -1,9 +1,10 @@
 import {action, makeAutoObservable, observable} from "mobx";
 import {Camera, getCameras} from "@/utils/models/Camera";
 import {Door, getDoors} from "@/utils/models/Door";
+import translate from "@/utils/localization/Localization";
 
 class SecurityViewModel {
-    @observable public selectedCameras: string = "All";
+    @observable public selectedCameras: string = translate("all");
     @observable public cameras: Camera[] = [];
     @observable public doors: Door[] = [];
 

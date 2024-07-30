@@ -12,6 +12,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {observer} from "mobx-react-lite";
 import AddDeviceViewModel from "@/utils/viewmodels/AddDevice/AddDeviceViewModel";
 import AnimatedLottieView from 'lottie-react-native';
+import translate from "@/utils/localization/Localization";
 
 const addDeviceViewModel = new AddDeviceViewModel();
 
@@ -96,12 +97,14 @@ const Add_Device = observer(() => {
 
     return (
         <SafeAreaView style={ styles.safeArea }>
-            <Header title={ "Add new device" } accountIcon={ false } />
+            <Header title={ translate("add-new-device") } accountIcon={ false } />
 
             <View style={ styles.contentContainer }>
                 <View style={ styles.deviceFormContainer }>
                     <View style={ styles.selectRoomContainer } onLayout={ handleLayout }>
-                        <Text style={ [ Headers.H5, { paddingHorizontal: 16 }] }>Select room</Text>
+                        <Text style={ [ Headers.H5, { paddingHorizontal: 16 }] }>
+                            { translate("select-room") }
+                        </Text>
 
                         <Animated.View style={[{ flex: 1 }, (addDeviceViewModel.selectedRoom == -1) && { transform: [{ scale: pulseAnim }] } ]}>
                             <ScrollView horizontal={ true } showsHorizontalScrollIndicator={false} overScrollMode={'never'}>
@@ -111,7 +114,7 @@ const Add_Device = observer(() => {
                                         addDeviceViewModel.rooms.map((item, index) => (
                                             <ImageCard image={ item.image }
                                                        title={ item.title }
-                                                       subtitle={ item.devices + " devices" }
+                                                       subtitle={ item.devices + ' ' + (item.devices == 1 ? translate("device") : translate("devices")) }
                                                        style={{
                                                            height: roomsCardsHeight,
                                                            width: roomsCardsWidth,
@@ -130,7 +133,9 @@ const Add_Device = observer(() => {
                     </View>
 
                     <View style={ styles.deviceNameContainer }>
-                        <Text style={ Headers.H5 }>Name new device</Text>
+                        <Text style={ Headers.H5 }>
+                            { translate("name-new-device") }
+                        </Text>
 
                         <Animated.View style={ addDeviceViewModel.deviceNameError && { transform: [{ scale: pulseAnim }] } }>
                             <TextInput text={ addDeviceViewModel.deviceName }
@@ -138,16 +143,16 @@ const Add_Device = observer(() => {
                                            addDeviceViewModel.setDeviceName(name);
                                            addDeviceViewModel.setDeviceNameError(false);
                                        }}
-                                       placeholder={ 'Device Name' }
+                                       placeholder={ translate("device-name") }
                                        size={ 'M' }
                                        error={ addDeviceViewModel.deviceNameError }
                             />
                         </Animated.View>
 
                         <Animated.View style={ addDeviceViewModel.deviceTypeError && { transform: [{ scale: pulseAnim }] } }>
-                            <DropdownSelect placeholder={ 'Type' }
+                            <DropdownSelect placeholder={ translate("type") }
                                             leftIcon={ true }
-                                            options={ ['Air', 'Lights', 'Audio'] }
+                                            options={ [translate("air"), translate("lights"), translate("audio")] }
                                             selectedOption={ addDeviceViewModel.deviceType }
                                             onOptionSelected={ (type: string) => {
                                                 addDeviceViewModel.setDeviceType(type);
@@ -163,9 +168,11 @@ const Add_Device = observer(() => {
                     </View>
 
                     <View style={ styles.confirmContainer }>
-                        <Text style={ Headers.H5 }>Pair signal</Text>
+                        <Text style={ Headers.H5 }>
+                            { translate("pair-signal") }
+                        </Text>
 
-                        <Button text={ "Find device signal" }
+                        <Button text={ translate("find-device-signal") }
                                 size={ 'M' }
                                 type={ 'secondary' }
                                 onPress={ handlePress }
@@ -175,11 +182,15 @@ const Add_Device = observer(() => {
                 <View style={ styles.smartPairContainer }>
                     <View style={ styles.splitterContainer }>
                         <View style={{ flex: 1, height: 2, backgroundColor: Colors.light.base["90"] }}/>
-                        <Text style={ BodyM.Regular }>or connect via</Text>
+
+                        <Text style={ BodyM.Regular }>
+                            { translate("or-connect-via") }
+                        </Text>
+
                         <View style={{ flex: 1, height: 2, backgroundColor: Colors.light.base["90"]  }}/>
                     </View>
 
-                    <Button text={ 'Smart connect using WIFI' }
+                    <Button text={ translate("smart-connect-using-wifi") }
                             size={ 'M' }
                             type={ 'primary' }
                             leftIcon={ true }
@@ -203,7 +214,7 @@ const Add_Device = observer(() => {
                     />
 
                     <Animated.View style={[ styles.modalContent, { opacity: fadeAnim } ]}>
-                        <Text style={ Headers.H5 }>Searching for device</Text>
+                        <Text style={ Headers.H5 }>{ translate("searching-for-device") }</Text>
 
                         <AnimatedLottieView
                             source={ require('../../../assets/lottie/test_animation.json') }
@@ -212,7 +223,7 @@ const Add_Device = observer(() => {
                             style={ styles.lottieView }
                         />
 
-                        <Button size={ 'M' } type={ 'tertiary' } text={ 'Stop pairing' } onPress={ closeModal }/>
+                        <Button size={ 'M' } type={ 'tertiary' } text={ translate("stop-pairing" )} onPress={ closeModal }/>
                     </Animated.View>
                 </View>
             </Modal>

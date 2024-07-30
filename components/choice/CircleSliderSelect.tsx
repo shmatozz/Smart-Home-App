@@ -4,6 +4,8 @@ import CircularProgress from "react-native-circular-progress-indicator";
 import Colors from "@/constants/Colors";
 import IconButton from "@/components/buttons/IconButton";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import translate from "@/utils/localization/Localization";
+
 
 interface CircleTemperatureProps {
     value: number,
@@ -25,7 +27,7 @@ const CircleTemperature: React.FC<CircleTemperatureProps> = ({
                               inActiveStrokeColor={ 'transparent' }
                               rotation={ -135 }
                               valueSuffix={ '°' }
-                              title={ 'Temperature' }
+                              title={ translate('temperature') }
                               titleStyle={ styles.title }
                               progressValueStyle={ styles.progressValue }
                               progressFormatter={(value: number) => {

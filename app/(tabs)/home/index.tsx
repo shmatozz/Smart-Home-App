@@ -12,35 +12,41 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
 import HomeViewModel from "@/utils/viewmodels/Home/HomeViewModel";
+import translate from "@/utils/localization/Localization";
+import {setItem} from "@/utils/storage/AsyncStorage";
 
-const homeViewModel = new HomeViewModel();
+const homeVM = new HomeViewModel();
 
 const Home = () => {
-    const router = useRouter()
+    const router = useRouter();
 
-    const windowWidth = Dimensions.get('window').width - 32 - 8 * (homeViewModel.getRoomsCount() - 1);
-    let cardWidth = windowWidth / homeViewModel.getRoomsCount();
+    const windowWidth = Dimensions.get('window').width - 32 - 8 * (homeVM.getRoomsCount() - 1);
+    let cardWidth = windowWidth / homeVM.getRoomsCount();
     if (cardWidth < 144) cardWidth = 144;
 
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
-            <Header title={"Welcome, Matvey!"} firstIcon={"notifications"} onAccountPress={ () => {
+            <Header title={ translate("welcome") + ", Matvey!" } firstIcon={"notifications"} onAccountPress={ () => {
                 router.push('../home/account');
+            }}
+            onFirstPress={() => {
+                setItem("logged", false)
+                setItem("firstLaunch", true)
             }}/>
 
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"}>
                 <View style={ styles.contentContainer }>
                     <View style={ styles.infoCards }>
-                        <InfoCard title={ "Inside\ntemperature" } info={ "26°" }>
+                        <InfoCard title={ translate("inside-temperature") } info={ "26°" }>
                             <MaterialCommunityIcons name={ "thermometer" } size={ 32 } color={ Colors.light.blue["50"] }/>
                         </InfoCard>
 
-                        <InfoCard title={ "Active\ndevices" } info={ "5" }>
+                        <InfoCard title={ translate("active-devices") } info={ "5" }>
                             <MaterialIcons name={ "devices-other" } size={ 32 } color={ Colors.light.blue["50"] }/>
                         </InfoCard>
 
-                        <InfoCard title={ "Electricity usage" } info={ "36 kWh" }>
+                        <InfoCard title={ translate("electricity-usage") } info={ "36 kWh" }>
                             <MaterialIcons name={ "bolt" } size={ 32 } color={ Colors.light.blue["50"] }/>
                         </InfoCard>
                     </View>
@@ -48,10 +54,10 @@ const Home = () => {
                     <View style={ styles.roomsContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Text style={[ Headers.H5, { flex: 3 } ]}>
-                                { "Your Rooms" }
+                                { translate("your-rooms") }
                             </Text>
 
-                            <Button text={ "See all" } type={ "tertiary" }
+                            <Button text={ translate("see-all") } type={ "tertiary" }
                                     onPress={() => router.navigate('room/rooms') }>
                             </Button>
                         </View>
@@ -64,12 +70,12 @@ const Home = () => {
                         <View style={{ width: 12 }}/>
                         <View style={{ flexDirection: 'row' }}>
                             {
-                                homeViewModel.rooms.map((item, index) => (
+                                homeVM.rooms.map((item, index) => (
                                     <View key={item.title}
                                           style={{ marginHorizontal: 4 }}>
                                         <ImageCard image={ item.image }
                                                    title={ item.title }
-                                                   subtitle={ item.devices + ' devices' }
+                                                   subtitle={ item.devices + ' ' + (item.devices == 1 ? translate("device") : translate("devices")) }
                                                    style={{ height: 144, width: cardWidth, }}
                                                    key={ index }
                                                    onPress={ () => {
@@ -86,21 +92,21 @@ const Home = () => {
                     <View style={ styles.recentDevicesContainer }>
                         <View style={{ flexDirection: "row", alignItems: "center" }}>
                             <Text style={[ Headers.H5, { flex: 3 } ]}>
-                                { "Recent devices" }
+                                { translate("recent-devices") }
                             </Text>
 
-                            <Button text={ "See all" } type={ "tertiary" } />
+                            <Button text={ translate("see-all") } type={ "tertiary" } />
                         </View>
 
                         <View style={{ gap: 12 }}>
                             {
-                                homeViewModel.recentDevices.map((device, index) => (
+                                homeVM.recentDevices.map((device, index) => (
                                     <DeviceCard key={ index }
                                                 image={ device.image }
                                                 title={ device.title }
                                                 subtitle={ device.room }
                                                 working={ device.working }
-                                                setWorking={ (working) => homeViewModel.setDeviceWorking(index, working) }
+                                                setWorking={ (working) => homeVM.setDeviceWorking(index, working) }
                                                 type={ 'horizontal' }/>
                                 ))
                             }

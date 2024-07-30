@@ -9,6 +9,7 @@ export interface Consumption {
 export const getConsumption = (period: string, devices: string) : Consumption[]  => {
     switch (period) {
         case "Day":
+        case "День":
             return (
                 [
                     { unit: '7', amount: 11, },
@@ -24,6 +25,7 @@ export const getConsumption = (period: string, devices: string) : Consumption[] 
                 ]
             )
         case "Month":
+        case "Месяц":
             return (
                 [
                     { unit: 'Wed', amount: 55, },
@@ -36,6 +38,7 @@ export const getConsumption = (period: string, devices: string) : Consumption[] 
                 ]
             )
         case "Week":
+        case "Неделя":
             return (
                 [
                     { unit: 'Jan', amount: 900, },
