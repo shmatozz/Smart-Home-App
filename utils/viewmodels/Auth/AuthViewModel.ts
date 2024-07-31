@@ -33,7 +33,12 @@ class AuthViewModel {
         this.filled = val;
     }
 
+    @action
     public LogIn = () => {
+        this.login = '';
+        this.password = '';
+        this.filled = false;
+
         setItem("logged", true).then();
     }
 }
