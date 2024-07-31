@@ -8,16 +8,17 @@ import InfoCard from "@/components/cards/InfoCard";
 import Button from "@/components/buttons/Button";
 import ImageCard from "@/components/cards/ImageCard";
 import DeviceCard from "@/components/cards/DeviceCard";
+import Notifications from "@/components/visual/Notifications"
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
 import HomeViewModel from "@/utils/viewmodels/Home/HomeViewModel";
 import translate from "@/utils/localization/Localization";
-import {setItem} from "@/utils/storage/AsyncStorage";
+import {observer} from "mobx-react-lite";
 
 const homeVM = new HomeViewModel();
 
-const Home = () => {
+const Home = observer(() => {
     const router = useRouter();
 
     const windowWidth = Dimensions.get('window').width - 32 - 8 * (homeVM.getRoomsCount() - 1);
@@ -27,13 +28,11 @@ const Home = () => {
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
-            <Header title={ translate("welcome") + ", Matvey!" } firstIcon={"notifications"} onAccountPress={ () => {
-                router.push('../home/account');
-            }}
-            onFirstPress={() => {
-                setItem("logged", false)
-                setItem("firstLaunch", true)
-            }}/>
+            <Header title={ translate("welcome") + ", Matvey!" }
+                    firstIcon={"notifications"}
+                    onFirstPress={ () => homeVM.setNotificationVisible(true) }
+                    onAccountPress={ () => router.push('../home/account') }
+            />
 
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"}>
                 <View style={ styles.contentContainer }>
@@ -114,9 +113,12 @@ const Home = () => {
                     </View>
                 </View>
             </ScrollView>
+
+            <Notifications visible={ homeVM.notificationVisible }
+                           setVisible={ homeVM.setNotificationVisible }/>
         </SafeAreaView>
     );
-}
+})
 
 const styles = StyleSheet.create({
     safeArea: {
