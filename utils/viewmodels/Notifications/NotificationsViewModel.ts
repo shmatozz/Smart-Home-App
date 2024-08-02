@@ -12,8 +12,9 @@ class NotificationsViewModel {
 
     @action
     public deleteNotification(index: number) {
-        console.log(123)
-        this.notifications.splice(index, 1);
+        const notificationsNew = this.notifications.slice();
+        notificationsNew.splice(index, 1);
+        this.notifications = notificationsNew;
     }
 }
 
