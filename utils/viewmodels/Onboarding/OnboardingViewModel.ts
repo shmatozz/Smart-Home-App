@@ -1,12 +1,10 @@
 import { makeAutoObservable, action, observable, reaction } from "mobx";
 import { setItem } from "@/utils/storage/AsyncStorage";
-import { getOnboardings, Onboardings } from "@/utils/models/Onboardings";
+import translate from "@/utils/localization/Localization";
 
 class OnboardingViewModel {
     @observable step  = 1;
     @observable watched = false;
-
-    private onboardings: Onboardings[] = getOnboardings();
 
     constructor() {
         makeAutoObservable(this);
@@ -34,11 +32,11 @@ class OnboardingViewModel {
     }
 
     public getTitle = () : string => {
-        return this.onboardings[this.step - 1].title;
+        return translate("onboarding-title-" + (this.step).toString());
     }
 
     public getDescription = () : string => {
-        return this.onboardings[this.step - 1].description;
+        return translate("onboarding-text-" + (this.step).toString());
     }
 }
 

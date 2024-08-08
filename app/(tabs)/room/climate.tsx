@@ -10,6 +10,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
 import {observer} from "mobx-react-lite";
 import ClimateViewModel from "@/utils/viewmodels/Room/ClimateViewModel";
+import translate from "@/utils/localization/Localization";
 
 const climateViewModel = new ClimateViewModel();
 
@@ -34,22 +35,22 @@ const RoomClimate = observer(() => {
 
             <View style={ styles.contentContainer }>
                 <View style={ styles.infoContainer }>
-                    <InfoCard title={ "Room\ntemperature" } info={ "25°" }>
+                    <InfoCard title={ translate("room-temperature") } info={ "25°" }>
                         <MaterialCommunityIcons name={ "thermometer" } size={ 32 } color={ Colors.light.blue["50"] }/>
                     </InfoCard>
 
-                    <InfoCard title={ "Humidity" } info={ "45%" }>
+                    <InfoCard title={ translate("humidity") } info={ "45%" }>
                         <MaterialCommunityIcons name={ "water-percent" } size={ 32 } color={ Colors.light.blue["50"] }/>
                     </InfoCard>
 
-                    <InfoCard title={ "Oxygen saturation" } info={ "98%" }>
+                    <InfoCard title={ translate("oxygen-saturation") } info={ "98%" }>
                         <MaterialCommunityIcons name={ "molecule-co2" } size={ 32 } color={ Colors.light.blue["50"] }/>
                     </InfoCard>
 
                 </View>
 
                 <View style={ styles.settingsContainer }>
-                    <Text style={ Headers.H5 }>Temperature settings</Text>
+                    <Text style={ Headers.H5 }>{ translate("temperature-settings") }</Text>
 
                     <TemperatureConfig/>
                 </View>

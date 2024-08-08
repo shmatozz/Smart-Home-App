@@ -1,9 +1,10 @@
 import {action, makeAutoObservable, observable, reaction} from "mobx";
 import {Consumption, getConsumption} from "@/utils/models/Consumption";
+import translate from "@/utils/localization/Localization";
 
 class GraphViewModel {
-    @observable public period: string = "Day";
-    @observable public devicesCategory: string = "All";
+    @observable public period: string = translate("day");
+    @observable public devicesCategory: string = translate("all");
     @observable public consumptionData: Consumption[] = [];
     @observable public selected: number | null = null;
 

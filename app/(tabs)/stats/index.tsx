@@ -9,6 +9,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {Headers} from "@/constants/Fonts";
 import {observer} from "mobx-react-lite";
 import StatsViewModel from "@/utils/viewmodels/Stats/StatsViewModel";
+import translate from "@/utils/localization/Localization";
 
 const statsViewModel = new StatsViewModel();
 
@@ -16,23 +17,23 @@ const Stats = observer(() => {
     return (
         <SafeAreaView style={ styles.safeArea }>
             <StatusBar barStyle='dark-content' />
-            <Header title={"Statistics"}
-                    firstIcon={"notifications"}
+            <Header title={ translate("statistic") }
+                    firstIcon={ "notifications" }
                     accountIcon={ false }/>
 
             <View style={ styles.contentContainer }>
                 <View style={ styles.cardsContainer }>
-                    <InfoCard title={'Today\nelectricity used'} info={'44 kWh'}>
+                    <InfoCard title={ translate("today-electricity-used") } info={'44 kWh'}>
                         <MaterialCommunityIcons name={ "calendar-today" } size={ 32 } color={ Colors.light.blue["50"] }/>
                     </InfoCard>
 
-                    <InfoCard title={'This month\nelectricity used'} info={'770 kWh'}>
+                    <InfoCard title={ translate("this-month-electricity-used") } info={'770 kWh'}>
                         <MaterialCommunityIcons name={ "calendar-month" } size={ 32 } color={ Colors.light.blue["50"] }/>
                     </InfoCard>
                 </View>
 
                 <View style={ styles.graphContainer }>
-                    <Text style={ Headers.H5 }>Graphics</Text>
+                    <Text style={ Headers.H5 }>{ translate("graphics") }</Text>
 
                     <Graph/>
                 </View>

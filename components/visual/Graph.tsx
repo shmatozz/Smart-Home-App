@@ -7,6 +7,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {BodyS, Caption} from "@/constants/Fonts";
 import {observer} from "mobx-react-lite";
 import GraphViewModel from "@/utils/viewmodels/Stats/GraphViewModel";
+import translate from "@/utils/localization/Localization";
 
 const graphViewModel = new GraphViewModel();
 
@@ -45,8 +46,8 @@ const Graph = observer(() => {
             </View>
 
             <View style={ styles.selectContainer }>
-                <DropdownSelect placeholder={ 'Period' }
-                                options={ ['Day', 'Week', 'Month'] }
+                <DropdownSelect placeholder={ translate("period") }
+                                options={ [translate("day"), translate("week"), translate("month")] }
                                 selectedOption={ graphViewModel.period }
                                 onOptionSelected={ graphViewModel.setPeriod }
                                 leftIcon={ true }
@@ -54,7 +55,7 @@ const Graph = observer(() => {
                     <MaterialCommunityIcons name={ "calendar-month" } size={ 24 } color={ Colors.light.blue["50"] }/>
                 </DropdownSelect>
 
-                <DropdownSelect options={ ['All', 'Air', 'Lights', 'Audio'] }
+                <DropdownSelect options={ [translate("all"), translate("air"), translate("lights"), translate("audio")] }
                                 selectedOption={ graphViewModel.devicesCategory }
                                 onOptionSelected={ graphViewModel.setDevicesCategory }
                                 leftIcon={ true }

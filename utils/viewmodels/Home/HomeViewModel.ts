@@ -5,6 +5,7 @@ import {Device, getRecentDevices} from "@/utils/models/Device";
 class HomeViewModel {
     @observable public rooms: Room[] = [];
     @observable public recentDevices: Device[] = [];
+    @observable public notificationVisible: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -22,6 +23,10 @@ class HomeViewModel {
         this.recentDevices[index].working = working;
     }
 
+    @action
+    public setNotificationVisible = (visible: boolean) => {
+        this.notificationVisible = visible;
+    }
 }
 
 export default HomeViewModel;
