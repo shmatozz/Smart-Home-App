@@ -13,7 +13,8 @@
       "backgroundColor": "#5B84DA"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "my.test.smart.home.app"
     },
     "android": {
       "adaptiveIcon": {
