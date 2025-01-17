@@ -2,7 +2,6 @@ import React from "react";
 import { Redirect } from "expo-router";
 import { firstLaunch, logged } from "@/app/_layout";
 
-// add test comm
 const Splash = () => {
     if (logged) {
         return ( <Redirect href="/(tabs)/home" /> );
